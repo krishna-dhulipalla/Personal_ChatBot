@@ -17,9 +17,9 @@ from langchain_core.prompts import ChatPromptTemplate
 from langchain.schema.runnable.passthrough import RunnableAssign
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_huggingface import HuggingFaceEmbeddings
-from langchain.vectorstores import FAISS
+from langchain_community.vectorstores import FAISS
+from langchain_community.retrievers import BM25Retriever
 from langchain.docstore.document import Document
-from langchain.retrievers import BM25Retriever
 from langchain_openai import ChatOpenAI
 from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
 
@@ -248,10 +248,15 @@ def hybrid_retrieve(inputs, exclude_terms=None):
     }
     
 def safe_json_parse(s: str) -> Dict:
-    return json.loads(s) if isinstance(s, str) and "valid_chunks" in s else {
-        "valid_chunks": [], 
-        "is_out_of_scope": True, 
-        "justification": "Fallback due to invalid LLM output"
+    try:
+        if isinstance(s, str) and "valid_chunks" in s:
+            return json.loads(s)
+    except json.JSONDecodeError:
+        pass
+    return {
+        "valid_chunks": [],
+        "is_out_of_scope": True,
+        "justification": "Fallback due to invalid or missing LLM output"
     }
 
 # Rewrite generation
@@ -384,6 +389,7 @@ with gr.Blocks(css="""
                 "Where did Krishna work?",
                 "What did he study at Virginia Tech?"
             ],
+            type= "messages",
         )
 
 demo.launch()
