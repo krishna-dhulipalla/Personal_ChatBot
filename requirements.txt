@@ -14,3 +14,4 @@ sentence-transformers
 faiss-cpu
 transformers
 scikit-learn
+rank-bm25
