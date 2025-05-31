@@ -1,6 +1,6 @@
 fastapi
 uvicorn
-gradio
+gradio==3.50.2  # Specific compatible version
 rich
 numpy
 python-dotenv
