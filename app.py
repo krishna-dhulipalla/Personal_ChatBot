@@ -35,6 +35,13 @@ if not api_key:
 # Constants
 FAISS_PATH = "faiss_store/v30_600_150"
 CHUNKS_PATH = "all_chunks.json"
+
+if not Path(FAISS_PATH).exists():
+    raise FileNotFoundError(f"FAISS index not found at {FAISS_PATH}")
+
+if not Path(CHUNKS_PATH).exists():
+    raise FileNotFoundError(f"Chunks file not found at {CHUNKS_PATH}")
+
 KRISHNA_BIO = """Krishna Vamsi Dhulipalla is a graduate student in Computer Science at Virginia Tech (M.Eng, expected 2024), with over 3 years of experience across data engineering, machine learning research, and real-time analytics. He specializes in building scalable data systems and intelligent LLM-powered applications, with strong expertise in Python, PyTorch, Hugging Face Transformers, and end-to-end ML pipelines.
 
 He has led projects involving retrieval-augmented generation (RAG), feature selection for genomic classification, fine-tuning domain-specific LLMs (e.g., DNABERT, HyenaDNA), and real-time forecasting systems using Kafka, Spark, and Airflow. His cloud proficiency spans AWS (S3, SageMaker, ECS, CloudWatch), GCP (BigQuery, Cloud Composer), and DevOps tools like Docker, Kubernetes, and MLflow.
@@ -317,16 +324,13 @@ answer_chain = (
 )
 
 # Full Pipeline
-full_pipeline = (
-    hybrid_chain
-    | RunnableAssign({"validation": validation_chain})
-    | RunnableAssign({"answer": answer_chain})
-)
+full_pipeline = hybrid_chain | RunnableAssign({"validation": validation_chain}) | answer_chain
 
 import gradio as gr
+import time
 
 def chat_interface(message, history):
-    # Handle different input formats
+    # Handle input formatting
     if isinstance(message, list) and len(message) > 0:
         if isinstance(message[-1], dict):
             user_input = message[-1].get("content", "")
@@ -335,6 +339,7 @@ def chat_interface(message, history):
     else:
         user_input = str(message)
 
+    # Prepare inputs for pipeline
     inputs = {
         "query": user_input,
         "all_queries": [user_input],
@@ -346,12 +351,18 @@ def chat_interface(message, history):
     }
     
     response = ""
-    for chunk in full_pipeline.stream(inputs):
-        if isinstance(chunk, str):
-            response += chunk
-        elif isinstance(chunk, dict) and "answer" in chunk:
-            response += chunk["answer"]
-        yield [{"role": "assistant", "content": response}]
+    try:
+        for chunk in full_pipeline.stream(inputs):
+            if isinstance(chunk, str):
+                response += chunk
+            elif isinstance(chunk, dict) and "answer" in chunk:
+                response += chunk["answer"]
+            
+            # Yield simpler format
+            yield response
+    except Exception as e:
+        response = f"Error: {str(e)}"
+        yield response
 
 with gr.Blocks(css="""
      html, body, .gradio-container {
@@ -385,22 +396,36 @@ with gr.Blocks(css="""
         height: 98%;
     }
 """) as demo:
-    with gr.Column(elem_classes="chatbox-container"):
-        gr.Markdown("## 💬 Ask Krishna's AI Assistant")
-        gr.Markdown("💡 Ask anything about Krishna Vamsi Dhulipalla")
-        chatbot = gr.Chatbot(elem_classes="chatbot", type="messages")
-        textbox = gr.Textbox(placeholder="Ask a question about Krishna...", elem_classes="textbox")
+    chatbot = gr.Chatbot(elem_classes="chatbot")
+    msg = gr.Textbox(placeholder="Ask a question about Krishna...", elem_classes="textbox")
+    clear = gr.ClearButton([msg, chatbot])
 
-        gr.ChatInterface(
-            fn=chat_interface,
-            chatbot=chatbot,
-            textbox=textbox,
-            examples=[
-                "What are Krishna's research interests?",
-                "Where did Krishna work?",
-                "What did he study at Virginia Tech?",
-            ],
-            type="messages"
-        )
+    def respond(message, chat_history):
+        bot_message = ""
+        for chunk in chat_interface(message, chat_history):
+            bot_message = chunk
+            chat_history[-1] = (message, bot_message)
+            yield chat_history
 
-demo.launch(cache_examples=False)  
+    msg.submit(
+        lambda message, chat_history: chat_history + [(message, "")],
+        [msg, chatbot],
+        [chatbot],
+        queue=False
+    ).then(
+        respond,
+        [msg, chatbot],
+        [chatbot]
+    )
+    
+    gr.Examples(
+        examples=[
+            "What are Krishna's research interests?",
+            "Where did Krishna work?",
+            "What did he study at Virginia Tech?",
+        ],
+        inputs=msg
+    )
+
+if __name__ == "__main__":
+    demo.queue().launch(debug=True, cache_examples=False)
