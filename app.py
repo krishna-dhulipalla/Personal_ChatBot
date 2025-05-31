@@ -2,6 +2,8 @@ import os
 import json
 import re
 import hashlib
+import gradio as gr
+import time
 from functools import partial
 from collections import defaultdict
 from pathlib import Path
@@ -27,7 +29,7 @@ from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
 #load_dotenv(dotenv_path)
 #api_key = os.getenv("NVIDIA_API_KEY")
 #os.environ["NVIDIA_API_KEY"] = api_key
-
+load_dotenv()
 api_key = os.environ.get("NVIDIA_API_KEY")
 if not api_key:
     raise RuntimeError("🚨 NVIDIA_API_KEY not found in environment! Please add it in Hugging Face Secrets.")
@@ -326,91 +328,103 @@ answer_chain = (
 # Full Pipeline
 full_pipeline = hybrid_chain | RunnableAssign({"validation": validation_chain}) | answer_chain
 
-import gradio as gr
-import time
 
 def chat_interface(message, history):
-    # Handle input formatting
-    if isinstance(message, list) and len(message) > 0:
-        if isinstance(message[-1], dict):
-            user_input = message[-1].get("content", "")
-        else:
-            user_input = message[-1]
-    else:
-        user_input = str(message)
-
-    # Prepare inputs for pipeline
-    inputs = {
-        "query": user_input,
-        "all_queries": [user_input],
-        "all_texts": all_chunks,
-        "k_per_query": 3,
-        "alpha": 0.7,
-        "vectorstore": vectorstore,
-        "full_document": "",
-    }
-    
-    response = ""
+    """Handle chat interface with error handling"""
     try:
+        # Handle input formatting
+        if isinstance(message, list) and len(message) > 0:
+            if isinstance(message[-1], dict):
+                user_input = message[-1].get("content", "")
+            else:
+                user_input = message[-1]
+        else:
+            user_input = str(message)
+
+        # Prepare inputs
+        inputs = {
+            "query": user_input,
+            "all_queries": [user_input],
+            "all_texts": all_chunks,
+            "k_per_query": 3,
+            "alpha": 0.7,
+            "vectorstore": vectorstore,
+            "full_document": "",
+        }
+        
+        # Process through pipeline
+        response = ""
         for chunk in full_pipeline.stream(inputs):
             if isinstance(chunk, str):
                 response += chunk
             elif isinstance(chunk, dict) and "answer" in chunk:
                 response += chunk["answer"]
-            
-            # Yield simpler format
             yield response
     except Exception as e:
-        response = f"Error: {str(e)}"
-        yield response
+        yield f"🚨 Error: {str(e)}"
 
+# Custom ChatInterface implementation
 with gr.Blocks(css="""
-     html, body, .gradio-container {
-        height: 100%;
-        margin: 0;
-        padding: 0;
-    }
     .gradio-container {
         width: 90%;
         max-width: 1000px;
         margin: 0 auto;
         padding: 1rem;
     }
-
     .chatbox-container {
         display: flex;
         flex-direction: column;
-        height: 95%;
+        height: 95vh;
     }
-
     .chatbot {
         flex: 1;
         overflow-y: auto;
         min-height: 500px;
     }
-
     .textbox {
         margin-top: 1rem;
     }
-    #component-523 {
-        height: 98%;
-    }
 """) as demo:
-    chatbot = gr.Chatbot(elem_classes="chatbot")
-    msg = gr.Textbox(placeholder="Ask a question about Krishna...", elem_classes="textbox")
-    clear = gr.ClearButton([msg, chatbot])
-
+    with gr.Column(elem_classes="chatbox-container"):
+        gr.Markdown("## 💬 Ask Krishna's AI Assistant")
+        gr.Markdown("💡 Ask anything about Krishna Vamsi Dhulipalla")
+        
+        chatbot = gr.Chatbot(elem_classes="chatbot")
+        msg = gr.Textbox(placeholder="Ask a question about Krishna...", 
+                         elem_classes="textbox")
+        clear = gr.Button("Clear Chat")
+        
+        # Example questions
+        gr.Examples(
+            examples=[
+                "What are Krishna's research interests?",
+                "Where did Krishna work?",
+                "What did he study at Virginia Tech?",
+            ],
+            inputs=msg,
+            label="Example Questions"
+        )
+    
     def respond(message, chat_history):
+        """Handle user message and generate response"""
         bot_message = ""
         for chunk in chat_interface(message, chat_history):
             bot_message = chunk
-            chat_history[-1] = (message, bot_message)
+            # Update last message in history
+            if chat_history:
+                chat_history[-1] = (message, bot_message)
+            else:
+                chat_history.append((message, bot_message))
             yield chat_history
 
+    def user(user_message, history):
+        """Append user message to history"""
+        return "", history + [[user_message, None]]
+    
     msg.submit(
-        lambda message, chat_history: chat_history + [(message, "")],
-        [msg, chatbot],
-        [chatbot],
+        user, 
+        [msg, chatbot], 
+        [msg, chatbot], 
         queue=False
     ).then(
         respond,
@@ -418,14 +432,14 @@ with gr.Blocks(css="""
         [chatbot]
     )
     
-    gr.Examples(
-        examples=[
-            "What are Krishna's research interests?",
-            "Where did Krishna work?",
-            "What did he study at Virginia Tech?",
-        ],
-        inputs=msg
-    )
+    clear.click(lambda: None, None, chatbot, queue=False)
 
 if __name__ == "__main__":
-    demo.queue().launch(debug=True, cache_examples=False)
+    # Add resource verification
+    print(f"FAISS path exists: {Path(FAISS_PATH).exists()}")
+    print(f"Chunks path exists: {Path(CHUNKS_PATH).exists()}")
+    print(f"Vectorstore type: {type(vectorstore)}")
+    print(f"All chunks count: {len(all_chunks)}")
+    
+    # Launch with queue management
+    demo.queue(concurrency_count=1).launch()
