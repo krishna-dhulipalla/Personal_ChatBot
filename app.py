@@ -23,10 +23,14 @@ from langchain.retrievers import BM25Retriever
 from langchain_openai import ChatOpenAI
 from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
 
-dotenv_path = os.path.join(os.getcwd(), ".env")
-load_dotenv(dotenv_path)
-api_key = os.getenv("NVIDIA_API_KEY")
-os.environ["NVIDIA_API_KEY"] = api_key
+#dotenv_path = os.path.join(os.getcwd(), ".env")
+#load_dotenv(dotenv_path)
+#api_key = os.getenv("NVIDIA_API_KEY")
+#os.environ["NVIDIA_API_KEY"] = api_key
+
+api_key = os.environ.get("NVIDIA_API_KEY")
+if not api_key:
+    raise RuntimeError("🚨 NVIDIA_API_KEY not found in environment! Please add it in Hugging Face Secrets.")
 
 # Constants
 FAISS_PATH = "faiss_store/v30_600_150"
@@ -70,7 +74,7 @@ relevance_llm = ChatNVIDIA(model="meta/llama3-70b-instruct") | StrOutputParser()
 answer_llm = ChatOpenAI(
     model="gpt-4-1106-preview",              
     temperature=0.3,             
-    openai_api_key=os.getenv("OPENAI_API_KEY"),
+    openai_api_key=os.environ.get("OPENAI_API_KEY"),
     streaming=True,
     callbacks=[StreamingStdOutCallbackHandler()] 
 ) | StrOutputParser()
