@@ -333,19 +333,13 @@ def chat_interface(message, history):
     """Handle chat interface with error handling"""
     try:
         # Handle input formatting
-        if isinstance(message, list) and len(message) > 0:
-            if isinstance(message[-1], dict):
-                user_input = message[-1].get("content", "")
-            else:
-                user_input = message[-1]
-        else:
-            user_input = str(message)
-
+        user_input = message
+        
         # Prepare inputs
         inputs = {
             "query": user_input,
             "all_queries": [user_input],
-            "all_texts": all_chunks,
+            "all_texts": all_texts,
             "k_per_query": 3,
             "alpha": 0.7,
             "vectorstore": vectorstore,
@@ -411,7 +405,7 @@ with gr.Blocks(css="""
         for chunk in chat_interface(message, chat_history):
             bot_message = chunk
             # Update last message in history
-            if chat_history:
+            if chat_history and len(chat_history) > 0:
                 chat_history[-1] = (message, bot_message)
             else:
                 chat_history.append((message, bot_message))
@@ -441,5 +435,5 @@ if __name__ == "__main__":
     print(f"Vectorstore type: {type(vectorstore)}")
     print(f"All chunks count: {len(all_chunks)}")
     
-    # Launch with queue management
+    # Launch the application
     demo.launch(debug=True)
