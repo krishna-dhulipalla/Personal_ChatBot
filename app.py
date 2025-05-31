@@ -330,103 +330,73 @@ full_pipeline = hybrid_chain | RunnableAssign({"validation": validation_chain}) 
 
 
 def chat_interface(message, history):
-    """Handle chat interface with error handling"""
-    try:
-        # Handle input formatting
-        user_input = message
-        
-        # Prepare inputs
-        inputs = {
-            "query": user_input,
-            "all_queries": [user_input],
-            "all_texts": all_texts,
-            "k_per_query": 3,
-            "alpha": 0.7,
-            "vectorstore": vectorstore,
-            "full_document": "",
-        }
-        
-        # Process through pipeline
-        response = ""
-        for chunk in full_pipeline.stream(inputs):
-            if isinstance(chunk, str):
-                response += chunk
-            elif isinstance(chunk, dict) and "answer" in chunk:
-                response += chunk["answer"]
+    inputs = {
+        "query": message,
+        "all_queries": [message],
+        "all_texts": all_chunks,
+        "k_per_query": 3,
+        "alpha": 0.7,
+        "vectorstore": vectorstore,
+        "full_document": "",
+    }
+    response = ""
+    for chunk in full_pipeline.stream(inputs):
+        if isinstance(chunk, str):
+            response += chunk
             yield response
-    except Exception as e:
-        yield f"🚨 Error: {str(e)}"
+        elif isinstance(chunk, dict) and "answer" in chunk:
+            response += chunk["answer"]
+            yield response
 
-# Custom ChatInterface implementation
 with gr.Blocks(css="""
+     html, body, .gradio-container {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+    }
     .gradio-container {
         width: 90%;
         max-width: 1000px;
         margin: 0 auto;
         padding: 1rem;
     }
+
     .chatbox-container {
         display: flex;
         flex-direction: column;
-        height: 95vh;
+        height: 95%;
     }
+
     .chatbot {
         flex: 1;
         overflow-y: auto;
         min-height: 500px;
     }
+
     .textbox {
         margin-top: 1rem;
+    }
+    #component-523 {
+        height: 98%;
     }
 """) as demo:
     with gr.Column(elem_classes="chatbox-container"):
         gr.Markdown("## 💬 Ask Krishna's AI Assistant")
         gr.Markdown("💡 Ask anything about Krishna Vamsi Dhulipalla")
-        
-        chatbot = gr.Chatbot(elem_classes="chatbot")
-        msg = gr.Textbox(placeholder="Ask a question about Krishna...", 
-                         elem_classes="textbox")
-        clear = gr.Button("Clear Chat")
-        
-        # Example questions
-        gr.Examples(
+        chatbot = gr.Chatbot(elem_classes="chatbot", type="messages")
+        textbox = gr.Textbox(placeholder="Ask a question about Krishna...", elem_classes="textbox")
+
+        gr.ChatInterface(
+            fn=chat_interface,
+            chatbot=chatbot,
+            textbox=textbox,
             examples=[
                 "What are Krishna's research interests?",
                 "Where did Krishna work?",
-                "What did he study at Virginia Tech?",
+                "What did he study at Virginia Tech?"
             ],
-            inputs=msg,
-            label="Example Questions"
+            type= "messages",
         )
-    
-    def respond(message, chat_history):
-        """Handle user message and generate response"""
-        bot_message = ""
-        for chunk in chat_interface(message, chat_history):
-            bot_message = chunk
-            # Update last message in history
-            if chat_history and len(chat_history) > 0:
-                chat_history[-1] = (message, bot_message)
-            else:
-                chat_history.append((message, bot_message))
-            yield chat_history
-
-    def user(user_message, history):
-        """Append user message to history"""
-        return "", history + [[user_message, None]]
-    
-    msg.submit(
-        user, 
-        [msg, chatbot], 
-        [msg, chatbot], 
-        queue=False
-    ).then(
-        respond,
-        [msg, chatbot],
-        [chatbot]
-    )
-    
-    clear.click(lambda: None, None, chatbot, queue=False)
 
 if __name__ == "__main__":
     # Add resource verification
