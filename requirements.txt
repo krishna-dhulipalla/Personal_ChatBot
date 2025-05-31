@@ -1,6 +1,6 @@
 fastapi
 uvicorn
-gradio
+gradio==5.31.0
 rich
 numpy
 python-dotenv
