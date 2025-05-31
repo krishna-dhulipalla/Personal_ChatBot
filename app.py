@@ -71,6 +71,8 @@ vectorstore, all_chunks, all_texts, metadatas = initialize_resources()
 # LLMs
 repharser_llm = ChatNVIDIA(model="mistralai/mistral-7b-instruct-v0.3") | StrOutputParser()
 relevance_llm = ChatNVIDIA(model="meta/llama3-70b-instruct") | StrOutputParser()
+if not os.environ.get("OPENAI_API_KEY"):
+    raise RuntimeError("OPENAI_API_KEY not found in environment!")
 answer_llm = ChatOpenAI(
     model="gpt-4-1106-preview",              
     temperature=0.3,             
@@ -324,10 +326,14 @@ full_pipeline = (
 import gradio as gr
 
 def chat_interface(message, history):
-    if isinstance(message, list) and len(message) > 0 and isinstance(message[-1], dict):
-        user_input = message[-1].get("content", "")
+    # Handle different input formats
+    if isinstance(message, list) and len(message) > 0:
+        if isinstance(message[-1], dict):
+            user_input = message[-1].get("content", "")
+        else:
+            user_input = message[-1]
     else:
-        user_input = message  # fallback if plain string
+        user_input = str(message)
 
     inputs = {
         "query": user_input,
@@ -338,13 +344,13 @@ def chat_interface(message, history):
         "vectorstore": vectorstore,
         "full_document": "",
     }
+    
     response = ""
     for chunk in full_pipeline.stream(inputs):
         if isinstance(chunk, str):
             response += chunk
         elif isinstance(chunk, dict) and "answer" in chunk:
             response += chunk["answer"]
-
         yield [{"role": "assistant", "content": response}]
 
 with gr.Blocks(css="""
@@ -390,11 +396,11 @@ with gr.Blocks(css="""
             chatbot=chatbot,
             textbox=textbox,
             examples=[
-                {"role": "user", "content": "What are Krishna's research interests?"},
-                {"role": "user", "content": "Where did Krishna work?"},
-                {"role": "user", "content": "What did he study at Virginia Tech?"},
+                "What are Krishna's research interests?",
+                "Where did Krishna work?",
+                "What did he study at Virginia Tech?",
             ],
-            type= "messages"
+            type="messages"
         )
 
-demo.launch()
+demo.launch(cache_examples=False)  
