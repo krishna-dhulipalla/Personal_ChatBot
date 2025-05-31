@@ -442,4 +442,4 @@ if __name__ == "__main__":
     print(f"All chunks count: {len(all_chunks)}")
     
     # Launch with queue management
-    demo.queue(concurrency_count=1).launch()
+    demo.launch(debug=True)
