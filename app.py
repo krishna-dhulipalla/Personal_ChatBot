@@ -377,7 +377,7 @@ with gr.Blocks(css="""
     with gr.Column(elem_classes="chatbox-container"):
         gr.Markdown("## 💬 Ask Krishna's AI Assistant")
         gr.Markdown("💡 Ask anything about Krishna Vamsi Dhulipalla")
-        chatbot = gr.Chatbot(elem_classes="chatbot")
+        chatbot = gr.Chatbot(elem_classes="chatbot", type="messages")
         textbox = gr.Textbox(placeholder="Ask a question about Krishna...", elem_classes="textbox")
 
         gr.ChatInterface(
