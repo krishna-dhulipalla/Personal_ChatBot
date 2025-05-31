@@ -324,9 +324,14 @@ full_pipeline = (
 import gradio as gr
 
 def chat_interface(message, history):
+    if isinstance(message, list) and len(message) > 0 and isinstance(message[-1], dict):
+        user_input = message[-1].get("content", "")
+    else:
+        user_input = message  # fallback if plain string
+
     inputs = {
-        "query": message,
-        "all_queries": [message],
+        "query": user_input,
+        "all_queries": [user_input],
         "all_texts": all_chunks,
         "k_per_query": 3,
         "alpha": 0.7,
@@ -337,10 +342,10 @@ def chat_interface(message, history):
     for chunk in full_pipeline.stream(inputs):
         if isinstance(chunk, str):
             response += chunk
-            yield response
         elif isinstance(chunk, dict) and "answer" in chunk:
             response += chunk["answer"]
-            yield response
+
+        yield [{"role": "assistant", "content": response}]
 
 with gr.Blocks(css="""
      html, body, .gradio-container {
@@ -385,11 +390,11 @@ with gr.Blocks(css="""
             chatbot=chatbot,
             textbox=textbox,
             examples=[
-                "What are Krishna's research interests?",
-                "Where did Krishna work?",
-                "What did he study at Virginia Tech?"
+                {"role": "user", "content": "What are Krishna's research interests?"},
+                {"role": "user", "content": "Where did Krishna work?"},
+                {"role": "user", "content": "What did he study at Virginia Tech?"},
             ],
-            type= "messages",
+            type= "messages"
         )
 
 demo.launch()
