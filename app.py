@@ -5,6 +5,7 @@ import hashlib
 import gradio as gr
 import time
 from functools import partial
+import concurrent.futures
 from collections import defaultdict
 from pathlib import Path
 from typing import List, Dict, Any
@@ -76,6 +77,8 @@ def initialize_resources():
     return vectorstore, all_chunks, all_texts, metadatas
 
 vectorstore, all_chunks, all_texts, metadatas = initialize_resources()
+
+bm25_retriever = BM25Retriever.from_texts(texts=all_texts, metadatas=metadatas)
 
 # LLMs
 repharser_llm = ChatNVIDIA(model="mistralai/mistral-7b-instruct-v0.3") | StrOutputParser()
@@ -162,10 +165,10 @@ answer_prompt_relevant = ChatPromptTemplate.from_template(
     "Answer:"
 )
 
-
 answer_prompt_fallback = ChatPromptTemplate.from_template(
     "You are Krishna’s personal AI assistant. The user asked a question unrelated to Krishna’s background.\n"
     "Respond with a touch of humor, then guide the conversation back to Krishna’s actual skills, experiences, or projects.\n\n"
+    "Make it clear that everything you mention afterward comes from Krishna's actual profile.\n\n"
     "Krishna's Background:\n{profile}\n\n"
     "User Question:\n{query}\n\n"
     "Your Answer:"
@@ -178,13 +181,13 @@ def parse_rewrites(raw_response: str) -> list[str]:
 def hybrid_retrieve(inputs, exclude_terms=None):
     # if exclude_terms is None:
     #     exclude_terms = ["cgpa", "university", "b.tech", "m.s.", "certification", "coursera", "edx", "goal", "aspiration", "linkedin", "publication", "ieee", "doi", "degree"]
-
+    bm25_retriever = inputs["bm25_retriever"]
     all_queries = inputs["all_queries"]
-    bm25_retriever = BM25Retriever.from_texts(texts=all_texts, metadatas=metadatas)
     bm25_retriever.k = inputs["k_per_query"]
     vectorstore = inputs["vectorstore"]
     alpha = inputs["alpha"]
     top_k = inputs.get("top_k", 15)
+    k_per_query = inputs["k_per_query"]
 
     scored_chunks = defaultdict(lambda: {
         "vector_scores": [],
@@ -192,23 +195,45 @@ def hybrid_retrieve(inputs, exclude_terms=None):
         "content": None,
         "metadata": None,
     })
-
-    for subquery in all_queries:
-        vec_hits = vectorstore.similarity_search_with_score(subquery, k=inputs["k_per_query"])
+    
+    # Function to process each subquery
+    def process_subquery(subquery, k_per_query=3):
+        # Vector retrieval
+        vec_hits = vectorstore.similarity_search_with_score(subquery, k=k_per_query)
+        vec_results = []
         for doc, score in vec_hits:
             key = hashlib.md5(doc.page_content.encode("utf-8")).hexdigest()
-            scored_chunks[key]["vector_scores"].append(score)
-            scored_chunks[key]["content"] = doc.page_content
-            scored_chunks[key]["metadata"] = doc.metadata
-
+            vec_results.append((key, doc, score))
+        
+        # BM25 retrieval
         bm_hits = bm25_retriever.invoke(subquery)
+        bm_results = []
         for rank, doc in enumerate(bm_hits):
             key = hashlib.md5(doc.page_content.encode("utf-8")).hexdigest()
-            bm_score = 1.0 - (rank / inputs["k_per_query"])
-            scored_chunks[key]["bm25_score"] += bm_score
-            scored_chunks[key]["content"] = doc.page_content
-            scored_chunks[key]["metadata"] = doc.metadata
+            bm_score = 1.0 - (rank / k_per_query)
+            bm_results.append((key, doc, bm_score))
+            
+        return vec_results, bm_results
 
+     # Process subqueries in parallel
+    with concurrent.futures.ThreadPoolExecutor() as executor:
+        futures = [executor.submit(process_subquery, q) for q in all_queries]
+        for future in concurrent.futures.as_completed(futures):
+            vec_results, bm_results = future.result()
+            
+            # Process vector results
+            for key, doc, score in vec_results:
+                scored_chunks[key]["vector_scores"].append(score)
+                scored_chunks[key]["content"] = doc.page_content
+                scored_chunks[key]["metadata"] = doc.metadata
+                
+            # Process BM25 results
+            for key, doc, bm_score in bm_results:
+                scored_chunks[key]["bm25_score"] += bm_score
+                scored_chunks[key]["content"] = doc.page_content
+                scored_chunks[key]["metadata"] = doc.metadata
+
+    # Rest of the scoring and filtering logic remains the same
     all_vec_means = [np.mean(v["vector_scores"]) for v in scored_chunks.values() if v["vector_scores"]]
     max_vec = max(all_vec_means) if all_vec_means else 1
     min_vec = min(all_vec_means) if all_vec_means else 0
@@ -221,8 +246,6 @@ def hybrid_retrieve(inputs, exclude_terms=None):
         final_score = alpha * norm_vec + (1 - alpha) * bm25_score
 
         content = chunk["content"].lower()
-        # if any(term in content for term in exclude_terms):
-        #     continue
         if final_score < 0.05 or len(content.strip()) < 100:
             continue
 
@@ -334,7 +357,7 @@ def chat_interface(message, history):
         "k_per_query": 3,
         "alpha": 0.7,
         "vectorstore": vectorstore,
-        "full_document": "",
+        "bm25_retriever": bm25_retriever,
     }
     response = ""
     for chunk in full_pipeline.stream(inputs):
@@ -358,7 +381,7 @@ demo = gr.ChatInterface(
 )
 
 if __name__ == "__main__":
-    demo.launch(debug=True)
+    demo.launch(max_threads=4, prevent_thread_lock=True, debug=True)
 
 # with gr.Blocks(css="""
 #      html, body, .gradio-container {
