@@ -79,6 +79,7 @@ vectorstore, all_chunks, all_texts, metadatas = initialize_resources()
 
 # LLMs
 repharser_llm = ChatNVIDIA(model="mistralai/mistral-7b-instruct-v0.3") | StrOutputParser()
+instruct_llm = ChatNVIDIA(model="mistralai/mixtral-8x22b-instruct-v0.1") | StrOutputParser()
 relevance_llm = ChatNVIDIA(model="meta/llama3-70b-instruct") | StrOutputParser()
 if not os.environ.get("OPENAI_API_KEY"):
     raise RuntimeError("OPENAI_API_KEY not found in environment!")
@@ -97,46 +98,39 @@ repharser_prompt = ChatPromptTemplate.from_template(
 )
 
 relevance_prompt = ChatPromptTemplate.from_template("""
-You are Krishna's personal AI assistant validator.
-Your job is to review a user's question and a list of retrieved document chunks.
-Identify which chunks (if any) directly help answer the question. Return **all relevant chunks**.
+You are Krishna's personal AI assistant classifier.
 
----
-⚠️ Do NOT select chunks just because they include keywords or technical terms.
+Your job is to decide whether a user's question can be meaningfully answered using the provided document chunks.
 
-Exclude chunks that:
-- Mention universities, CGPA, or education history (they show qualifications, not skills)
-- List certifications or course names (they show credentials, not skills used)
-- Describe goals, future plans, or job aspirations
-- Contain tools mentioned in passing without describing actual usage
-
-Only include chunks if they contain **evidence of specific knowledge, tools used, skills applied, or experience demonstrated.**
+Think carefully and return a JSON object with:
+- "is_out_of_scope": true if none of the chunks contain information relevant to the question.
+- "justification": a short sentence explaining your decision.
 
 ---
 
-🔎 Examples:
+Rules:
+- Chunks are snippets from Krishna’s resume, project history, and personal background.
+- If none of the chunks contain evidence, examples, or details that directly help answer the question, mark it as out of scope.
+- Do NOT rely on keyword matches. Use reasoning to decide whether the content actually addresses the question.
 
-Q1: "What are Krishna's skills?"
-- Chunk A: Lists programming languages, ML tools, and projects → ✅
-- Chunk B: Talks about a Coursera certificate in ML → ❌
-- Chunk C: States a CGPA and master’s degree → ❌
-- Chunk D: Describes tools Krishna used in his work → ✅
+Examples:
+
+Q: "What are Krishna's favorite movies?"
+Chunks: Mostly about research, skills, and work experience.
 
 Output:
 {{
-  "valid_chunks": [A, D],
-  "is_out_of_scope": false,
-  "justification": "Chunks A and D describe tools and skills Krishna has actually used."
+  "is_out_of_scope": true,
+  "justification": "No chunk discusses Krishna's personal preferences like movies."
 }}
 
-Q2: "What is Krishna's favorite color?"
-- All chunks are about technical work or academic history → ❌
+Q: "What ML tools has Krishna used in projects?"
+Chunks: Mentions PyTorch, Kafka, Hugging Face, Spark.
 
 Output:
 {{
-  "valid_chunks": [],
-  "is_out_of_scope": true,
-  "justification": "None of the chunks are related to the user's question about preferences or colors."
+  "is_out_of_scope": false,
+  "justification": "Chunks mention tools Krishna used directly in his work."
 }}
 
 ---
@@ -149,13 +143,15 @@ User Question:
 Chunks:
 {contents}
 
-Return only the JSON object. Think carefully before selecting any chunk.
+Return only the JSON object.
 """)
+
 
 answer_prompt_relevant = ChatPromptTemplate.from_template(
     "You are Krishna's personal AI assistant. Your job is to answer the user’s question clearly and professionally using the provided context.\n"
     "Rather than copying sentences, synthesize relevant insights and explain them like a knowledgeable peer.\n\n"
     "Krishna's Background:\n{profile}\n\n"
+    "Note: The context might include some unrelated or noisy information. Focus only on content that directly supports your answer.\n\n"
     "Make your response rich and informative by:\n"
     "- Combining relevant facts from multiple parts of the context\n"
     "- Using natural, human-style language (not just bullet points)\n"
@@ -166,9 +162,10 @@ answer_prompt_relevant = ChatPromptTemplate.from_template(
     "Answer:"
 )
 
+
 answer_prompt_fallback = ChatPromptTemplate.from_template(
     "You are Krishna’s personal AI assistant. The user asked a question unrelated to Krishna’s background.\n"
-    "Gently let the user know, and then pivot to something Krishna is actually involved in to keep the conversation helpful.\n\n"
+    "Respond with a touch of humor, then guide the conversation back to Krishna’s actual skills, experiences, or projects.\n\n"
     "Krishna's Background:\n{profile}\n\n"
     "User Question:\n{query}\n\n"
     "Your Answer:"
@@ -260,16 +257,15 @@ def hybrid_retrieve(inputs, exclude_terms=None):
     
 def safe_json_parse(s: str) -> Dict:
     try:
-        if isinstance(s, str) and "valid_chunks" in s:
+        if isinstance(s, str) and "is_out_of_scope" in s:
             return json.loads(s)
     except json.JSONDecodeError:
         pass
     return {
-        "valid_chunks": [],
         "is_out_of_scope": True,
         "justification": "Fallback due to invalid or missing LLM output"
     }
-
+    
 # Rewrite generation
 rephraser_chain = (
     repharser_prompt
@@ -299,15 +295,16 @@ extract_validation_inputs = RunnableLambda(lambda x: {
 validation_chain = (
     extract_validation_inputs
     | relevance_prompt
-    | relevance_llm
+    | instruct_llm
     | RunnableLambda(safe_json_parse)
 )
 
 # Answer Generation
 def prepare_answer_inputs(x: Dict) -> Dict:
     context = KRISHNA_BIO if x["validation"]["is_out_of_scope"] else "\n\n".join(
-        [x["chunks"][i-1]["content"] for i in x["validation"]["valid_chunks"]])
-    
+        [chunk["content"] for chunk in x["chunks"]]
+    )
+
     return {
         "query": x["query"],
         "profile": KRISHNA_BIO,
