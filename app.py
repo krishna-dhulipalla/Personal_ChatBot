@@ -494,21 +494,57 @@ def chat_interface(message, history):
             "query": message,
             "answer": full_response
         })
-            
-demo = gr.ChatInterface(
-    fn=chat_interface,
-    title="💬 Ask Krishna's AI Assistant",
-    description="💡 Ask anything about Krishna Vamsi Dhulipalla",
-    # examples=[
-    #     "What are Krishna's research interests?",
-    #     "Where did Krishna work?",
-    #     "What did he study at Virginia Tech?"
-    # ],
-    theme="default"
-)
 
-if __name__ == "__main__":
-    demo.launch(max_threads=4, prevent_thread_lock=True, debug=True)
+with gr.Blocks(css="""
+     html, body, .gradio-container {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+    }
+    .gradio-container {
+        width: 90%;
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 1rem;
+    }
+
+    .chatbox-container {
+        display: flex;
+        flex-direction: column;
+        height: 95%;
+    }
+
+    .chatbot {
+        flex: 1;
+        overflow-y: auto;
+        min-height: 500px;
+    }
+
+    .textbox {
+        margin-top: 1rem;
+    }
+    #component-523 {
+        height: 98%;
+    }
+""") as demo:
+    with gr.Column(elem_classes="chatbox-container"):
+        gr.Markdown("## 💬 Ask Krishna's AI Assistant")
+        gr.Markdown("💡 Ask anything about Krishna Vamsi Dhulipalla")
+        chatbot = gr.Chatbot(elem_classes="chatbot")
+        textbox = gr.Textbox(placeholder="Ask a question about Krishna...", elem_classes="textbox")
+
+        gr.ChatInterface(
+            fn=chat_interface,
+            chatbot=chatbot,
+            textbox=textbox,
+            examples=[
+                "What are Krishna's research interests?",
+                "Where did Krishna work?",
+                "What did he study at Virginia Tech?"
+            ],
+        )
+
+demo.launch(max_threads=4, prevent_thread_lock=True, debug=True)
 
 # with gr.Blocks(css="""
 #      html, body, .gradio-container {
