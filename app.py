@@ -3,28 +3,29 @@ import json
 import re
 import hashlib
 import gradio as gr
-import time
 from functools import partial
 import concurrent.futures
 from collections import defaultdict
 from pathlib import Path
-from typing import List, Dict, Any
+from typing import List, Dict, Any, Optional, List, Literal, Type
 import numpy as np
 from dotenv import load_dotenv
 from rich.console import Console
 from rich.style import Style
+from pydantic import BaseModel, Field
 from langchain_core.runnables import RunnableLambda
 from langchain_nvidia_ai_endpoints import ChatNVIDIA
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.prompts import ChatPromptTemplate
 from langchain.schema.runnable.passthrough import RunnableAssign
 from langchain.text_splitter import RecursiveCharacterTextSplitter
-from langchain_community.embeddings import HuggingFaceEmbeddings 
-from langchain_community.vectorstores import FAISS
-from langchain_community.retrievers import BM25Retriever
+from langchain_huggingface import HuggingFaceEmbeddings
+from langchain.vectorstores import FAISS
 from langchain.docstore.document import Document
+from langchain.retrievers import BM25Retriever
 from langchain_openai import ChatOpenAI
 from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
+from langchain.output_parsers import PydanticOutputParser
 
 #dotenv_path = os.path.join(os.getcwd(), ".env")
 #load_dotenv(dotenv_path)
@@ -45,13 +46,13 @@ if not Path(FAISS_PATH).exists():
 if not Path(CHUNKS_PATH).exists():
     raise FileNotFoundError(f"Chunks file not found at {CHUNKS_PATH}")
 
-KRISHNA_BIO = """Krishna Vamsi Dhulipalla is a graduate student in Computer Science at Virginia Tech (M.Eng, expected 2024), with over 3 years of experience across data engineering, machine learning research, and real-time analytics. He specializes in building scalable data systems and intelligent LLM-powered applications, with strong expertise in Python, PyTorch, Hugging Face Transformers, and end-to-end ML pipelines.
+KRISHNA_BIO = """Krishna Vamsi Dhulipalla is a 2024 graduate of the M.Eng program in Computer Science at Virginia Tech, with over 3 years of experience across data engineering, machine learning research, and real-time analytics. He specializes in building scalable data systems and intelligent LLM-powered applications, with strong expertise in Python, PyTorch, Hugging Face Transformers, and end-to-end ML pipelines.
 
 He has led projects involving retrieval-augmented generation (RAG), feature selection for genomic classification, fine-tuning domain-specific LLMs (e.g., DNABERT, HyenaDNA), and real-time forecasting systems using Kafka, Spark, and Airflow. His cloud proficiency spans AWS (S3, SageMaker, ECS, CloudWatch), GCP (BigQuery, Cloud Composer), and DevOps tools like Docker, Kubernetes, and MLflow.
 
-Krishna’s academic focus areas include genomic sequence modeling, transformer optimization, MLOps automation, and cross-domain generalization. He has published research in bioinformatics and ML applications for circadian transcription prediction and transcription factor binding.
+Krishna’s research has focused on genomic sequence modeling, transformer optimization, MLOps automation, and cross-domain generalization. He has published work in bioinformatics and machine learning applications for circadian transcription prediction and transcription factor binding.
 
-He is certified in NVIDIA’s RAG Agents with LLMs, Google Cloud Data Engineering, AWS ML Specialization, and has a proven ability to blend research and engineering in real-world systems. Krishna is passionate about scalable LLM infra, data-centric AI, and domain-adaptive ML solutions."""
+He holds certifications in NVIDIA’s RAG Agents with LLMs, Google Cloud Data Engineering, and AWS ML Specialization. Krishna is passionate about scalable LLM infrastructure, data-centric AI, and domain-adaptive ML solutions — combining deep technical expertise with real-world engineering impact."""
 
 def initialize_console():
     console = Console()
@@ -80,16 +81,30 @@ vectorstore, all_chunks, all_texts, metadatas = initialize_resources()
 
 bm25_retriever = BM25Retriever.from_texts(texts=all_texts, metadatas=metadatas)
 
+# Define the KnowledgeBase model
+class KnowledgeBase(BaseModel):
+    user_name: str = Field('unknown', description="The name of the user chatting with Krishna's assistant, or 'unknown' if not provided")
+    company: Optional[str] = Field(None, description="The company or organization the user is associated with, if mentioned")
+    last_input: str = Field("", description="The most recent user question or message")
+    last_output: str = Field("", description="The most recent assistant response to the user")
+    summary_history: List[str] = Field(default_factory=list, description="Summarized conversation history over turns")
+    recent_interests: List[str] = Field(default_factory=list, description="User's recurring interests or topics they ask about, e.g., 'LLMs', 'Krishna's research', 'career advice'")
+    last_followups: List[str] = Field(default_factory=list, description="List of follow-up suggestions from the last assistant response")
+    tone: Optional[Literal['formal', 'casual', 'playful', 'direct', 'uncertain']] = Field(None, description="Inferred tone or attitude from the user based on recent input")
+
+# Initialize the knowledge base
+knowledge_base = KnowledgeBase()
+
+
 # LLMs
-repharser_llm = ChatNVIDIA(model="mistralai/mistral-7b-instruct-v0.3") | StrOutputParser()
+# repharser_llm = ChatNVIDIA(model="mistralai/mistral-7b-instruct-v0.3") | StrOutputParser()
+repharser_llm = ChatNVIDIA(model="microsoft/phi-3-mini-4k-instruct") | StrOutputParser()
 instruct_llm = ChatNVIDIA(model="mistralai/mixtral-8x22b-instruct-v0.1") | StrOutputParser()
 relevance_llm = ChatNVIDIA(model="meta/llama3-70b-instruct") | StrOutputParser()
-if not os.environ.get("OPENAI_API_KEY"):
-    raise RuntimeError("OPENAI_API_KEY not found in environment!")
 answer_llm = ChatOpenAI(
-    model="gpt-4-1106-preview",              
+    model="gpt-4o",              
     temperature=0.3,             
-    openai_api_key=os.environ.get("OPENAI_API_KEY"),
+    openai_api_key=os.getenv("OPENAI_API_KEY"),
     streaming=True,
     callbacks=[StreamingStdOutCallbackHandler()] 
 ) | StrOutputParser()
@@ -97,43 +112,60 @@ answer_llm = ChatOpenAI(
 
 # Prompts
 repharser_prompt = ChatPromptTemplate.from_template(
-    "Rewrite the question below in 4 diverse ways to retrieve semantically similar information.Ensure diversity in phrasings across style, voice, and abstraction:\n\nQuestion: {query}\n\nRewrites:"
+    "Rewrite the question below in 3 different ways to help retrieve related information. Vary tone, style, and phrasing, but keep the meaning the same."
+    "Question: {query}"
+    "\n\nRewrites:"
+    "1."
+    "2."
+    "3."
 )
 
 relevance_prompt = ChatPromptTemplate.from_template("""
 You are Krishna's personal AI assistant classifier.
 
-Your job is to decide whether a user's question can be meaningfully answered using the provided document chunks.
+Your job is to decide whether a user's question can be meaningfully answered using the provided document chunks **or** relevant user memory.
 
-Think carefully and return a JSON object with:
-- "is_out_of_scope": true if none of the chunks contain information relevant to the question.
-- "justification": a short sentence explaining your decision.
+Return a JSON object:
+- "is_out_of_scope": true if the chunks and memory cannot help answer the question
+- "justification": a short sentence explaining your decision
 
 ---
 
-Rules:
-- Chunks are snippets from Krishna’s resume, project history, and personal background.
-- If none of the chunks contain evidence, examples, or details that directly help answer the question, mark it as out of scope.
-- Do NOT rely on keyword matches. Use reasoning to decide whether the content actually addresses the question.
+Special instructions:
+
+✅ Treat short or vague queries like "yes", "tell me more", "go on", or "give me" as follow-up prompts. 
+Assume the user is asking for **continuation** of the previous assistant response or follow-ups stored in memory. Consider that context as *in-scope*.
+
+✅ Also consider if the user's question can be answered using stored memory (like their name, company, interests, or last follow-up topics).
+
+Do NOT classify these types of queries as "out of scope".
+
+Only mark as out-of-scope if the user asks something truly unrelated to both:
+- Krishna's background
+- Stored user memory
+
+---
 
 Examples:
 
-Q: "What are Krishna's favorite movies?"
-Chunks: Mostly about research, skills, and work experience.
-
-Output:
-{{
-  "is_out_of_scope": true,
-  "justification": "No chunk discusses Krishna's personal preferences like movies."
-}}
-
-Q: "What ML tools has Krishna used in projects?"
-Chunks: Mentions PyTorch, Kafka, Hugging Face, Spark.
+Q: "Tell me more"
+Chunks: previously retrieved info about Krishna's ML tools  
+Memory: User previously asked about PyTorch and ML pipelines
 
 Output:
 {{
   "is_out_of_scope": false,
-  "justification": "Chunks mention tools Krishna used directly in his work."
+  "justification": "User is requesting a follow-up to a valid context, based on prior conversation"
+}}
+
+Q: "What is Krishna's Hogwarts house?"
+Chunks: None about fiction  
+Memory: User hasn't mentioned fiction/fantasy
+
+Output:
+{{
+  "is_out_of_scope": true,
+  "justification": "The question is unrelated to Krishna or user context"
 }}
 
 ---
@@ -146,37 +178,69 @@ User Question:
 Chunks:
 {contents}
 
-Return only the JSON object.
+User Memory (Knowledge Base):
+{memory}
+
+Return ONLY the JSON object.
 """)
 
 
 answer_prompt_relevant = ChatPromptTemplate.from_template(
-    "You are Krishna's personal AI assistant. Your job is to answer the user’s question clearly and professionally using the provided context.\n"
+    "You are Krishna's personal AI assistant. Your job is to answer the user’s question clearly, thoroughly, and professionally using the provided context.\n"
     "Rather than copying sentences, synthesize relevant insights and explain them like a knowledgeable peer.\n\n"
+    "Use relevant memory about the user to personalize the answer where appropriate.\n\n"
     "Krishna's Background:\n{profile}\n\n"
-    "Note: The context might include some unrelated or noisy information. Focus only on content that directly supports your answer.\n\n"
-    "Make your response rich and informative by:\n"
-    "- Combining relevant facts from multiple parts of the context\n"
-    "- Using natural, human-style language (not just bullet points)\n"
-    "- Expanding briefly on tools or skills when appropriate\n"
-    "- Avoiding repetition, filler, or hallucinations\n\n"
+    "User Memory (Knowledge Base):\n{memory}\n\n"
     "Context:\n{context}\n\n"
+    "Instructions:\n"
+    "- Format your response in **Markdown** for readability.\n"
+    "- Use **section headings with emojis** to organize the answer when helpful (e.g., 🔍 Overview, 🛠️ Tools Used, 📈 Real-World Impact).\n"
+    "- Use bullet points or bold text to highlight tools, skills, or project names.\n"
+    "- Add paragraph breaks between major ideas.\n"
+    "- Keep the tone conversational and helpful — like a smart peer explaining something.\n"
+    "- If the user asks about Krishna’s work experience, provide a **chronological summary** of his roles and key contributions (e.g., UJR, Virginia Tech).\n"
+    "- You may use general knowledge to briefly explain tools (like PyTorch or Kafka), but **do not invent any new facts** about Krishna.\n"
+    "- Avoid filler phrases, repetition, or generic praise (e.g., strengths) unless directly asked.\n"
+    "- End with a friendly follow-up question (no subheading needed here).\n\n"
+    "Example:\n"
+    "**Q: What work experience does Krishna have?**\n"
+    "**A:**\n"
+    "**🔧 Work Experience Overview**\n"
+    "**1. UJR Technologies** – Migrated batch ETL to real-time (Kafka/Spark), Dockerized services, and optimized Snowflake queries.\n"
+    "**2. Virginia Tech** – Built real-time IoT forecasting pipeline (10K sensors, GPT-4), achieving 91% accuracy and 15% energy savings.\n\n"
+    "_Would you like to dive into Krishna’s cloud deployment work using SageMaker and MLflow?_\n\n"
+    "Now generate the answer for the following:\n\n"
     "User Question:\n{query}\n\n"
     "Answer:"
 )
+
 
 answer_prompt_fallback = ChatPromptTemplate.from_template(
     "You are Krishna’s personal AI assistant. The user asked a question unrelated to Krishna’s background.\n"
     "Respond with a touch of humor, then guide the conversation back to Krishna’s actual skills, experiences, or projects.\n\n"
     "Make it clear that everything you mention afterward comes from Krishna's actual profile.\n\n"
     "Krishna's Background:\n{profile}\n\n"
+    "User Memory (Knowledge Base):\n{memory}\n\n"
     "User Question:\n{query}\n\n"
     "Your Answer:"
 )
+
+parser_prompt = ChatPromptTemplate.from_template(
+    "You are Krishna's personal AI assistant, and your task is to maintain a memory of the user you're chatting with.\n"
+    "You just received a new user message and provided a response.\n"
+    "Please update the knowledge base using the schema below.\n\n"
+    "{format_instructions}\n\n"
+    "Previous Knowledge Base:\n{know_base}\n\n"
+    "Latest Assistant Response:\n{output}\n\n"
+    "Latest User Message:\n{input}\n\n"
+    "Return ONLY the updated knowledge base JSON:\n"
+    "If the assistant’s response includes follow-up suggestions or continuation prompts (like 'Would you like to learn more about...'), store them in the `last_followups` field."
+)
+
 # Helper Functions
 def parse_rewrites(raw_response: str) -> list[str]:
     lines = raw_response.strip().split("\n")
-    return [line.strip("0123456789. ").strip() for line in lines if line.strip()][:4]
+    return [line.strip("0123456789. ").strip() for line in lines if line.strip()][:3]
 
 def hybrid_retrieve(inputs, exclude_terms=None):
     # if exclude_terms is None:
@@ -312,7 +376,8 @@ hybrid_chain = generate_rewrites_chain | retrieve_chain
 # Validation
 extract_validation_inputs = RunnableLambda(lambda x: {
     "query": x["query"],
-    "contents": [c["content"] for c in x["chunks"]]
+    "contents": [c["content"] for c in x["chunks"]],
+    "memory": knowledge_base.json()
 })
 
 validation_chain = (
@@ -332,7 +397,8 @@ def prepare_answer_inputs(x: Dict) -> Dict:
         "query": x["query"],
         "profile": KRISHNA_BIO,
         "context": context,
-        "use_fallback": x["validation"]["is_out_of_scope"]
+        "use_fallback": x["validation"]["is_out_of_scope"],
+        "memory": knowledge_base.json()
     }
 
 select_and_prompt = RunnableLambda(lambda x: 
@@ -344,6 +410,57 @@ answer_chain = (
     | select_and_prompt
     | relevance_llm
 )
+
+def RExtract(pydantic_class: Type[BaseModel], llm, prompt):
+    """
+    Runnable Extraction module for updating Krishna Assistant's KnowledgeBase.
+    Fills in a structured schema using PydanticOutputParser.
+    """
+    parser = PydanticOutputParser(pydantic_object=pydantic_class)
+    instruct_merge = RunnableAssign({
+        'format_instructions': lambda x: parser.get_format_instructions()
+    })
+
+    def preparse(raw: str):
+        # Clean malformed LLM outputs
+        if '{' not in raw: raw = '{' + raw
+        if '}' not in raw: raw = raw + '}'
+        return (raw
+                .replace("\\_", "_")
+                .replace("\n", " ")
+                .replace("\]", "]")
+                .replace("\[", "[")
+        )
+
+    return instruct_merge | prompt | llm | RunnableLambda(preparse) | parser
+
+knowledge_extractor = RExtract(
+    pydantic_class=KnowledgeBase,
+    llm=relevance_llm,            
+    prompt=parser_prompt        
+)
+
+def update_kb_after_answer(data: dict):
+    try:
+        kb_input = {
+            "know_base": knowledge_base.json(),
+            "input": data["query"],
+            "output": data["answer"]
+        }
+
+        new_kb = knowledge_extractor.invoke(kb_input)
+        knowledge_base.__dict__.update(new_kb.__dict__)  # update in place
+
+        # Optional: print or log updated KB
+        # print("✅ Knowledge base updated:", knowledge_base.dict())
+
+    except Exception as e:
+        print("❌ Failed to update knowledge base:", str(e))
+
+    return data  # Return unchanged so answer can flow forward
+
+
+update_kb_chain = RunnableLambda(update_kb_after_answer)
 
 # Full Pipeline
 full_pipeline = hybrid_chain | RunnableAssign({"validation": validation_chain}) | answer_chain
@@ -359,14 +476,24 @@ def chat_interface(message, history):
         "vectorstore": vectorstore,
         "bm25_retriever": bm25_retriever,
     }
-    response = ""
+    full_response = ""
+    collected = None
+
     for chunk in full_pipeline.stream(inputs):
-        if isinstance(chunk, str):
-            response += chunk
-            yield response
-        elif isinstance(chunk, dict) and "answer" in chunk:
-            response += chunk["answer"]
-            yield response
+        if isinstance(chunk, dict) and "answer" in chunk:
+            full_response += chunk["answer"]
+            collected = chunk  # store result for memory update
+            yield full_response
+        elif isinstance(chunk, str):
+            full_response += chunk
+            yield full_response
+
+    # After yielding the full response, run knowledge update in background
+    if collected:
+        update_kb_after_answer({
+            "query": message,
+            "answer": full_response
+        })
             
 demo = gr.ChatInterface(
     fn=chat_interface,
