@@ -46,7 +46,7 @@ if not Path(FAISS_PATH).exists():
 if not Path(CHUNKS_PATH).exists():
     raise FileNotFoundError(f"Chunks file not found at {CHUNKS_PATH}")
 
-KRISHNA_BIO = """Krishna Vamsi Dhulipalla is a 2024 graduate of the M.Eng program in Computer Science at Virginia Tech, with over 3 years of experience across data engineering, machine learning research, and real-time analytics. He specializes in building scalable data systems and intelligent LLM-powered applications, with strong expertise in Python, PyTorch, Hugging Face Transformers, and end-to-end ML pipelines.
+KRISHNA_BIO = """Krishna Vamsi Dhulipalla completed M.Eng program in Computer Science at Virginia Tech, awarded degree in december 2024, with over 3 years of experience across data engineering, machine learning research, and real-time analytics. He specializes in building scalable data systems and intelligent LLM-powered applications, with strong expertise in Python, PyTorch, Hugging Face Transformers, and end-to-end ML pipelines.
 
 He has led projects involving retrieval-augmented generation (RAG), feature selection for genomic classification, fine-tuning domain-specific LLMs (e.g., DNABERT, HyenaDNA), and real-time forecasting systems using Kafka, Spark, and Airflow. His cloud proficiency spans AWS (S3, SageMaker, ECS, CloudWatch), GCP (BigQuery, Cloud Composer), and DevOps tools like Docker, Kubernetes, and MLflow.
 
@@ -408,7 +408,7 @@ select_and_prompt = RunnableLambda(lambda x:
 answer_chain = (
     prepare_answer_inputs
     | select_and_prompt
-    | relevance_llm
+    | answer_llm
 )
 
 def RExtract(pydantic_class: Type[BaseModel], llm, prompt):
@@ -512,6 +512,7 @@ with gr.Blocks(css="""
         display: flex;
         flex-direction: column;
         height: 95%;
+        overflow-y: auto;
     }
 
     .chatbot {
@@ -533,75 +534,15 @@ with gr.Blocks(css="""
         chatbot = gr.Chatbot(elem_classes="chatbot")
         textbox = gr.Textbox(placeholder="Ask a question about Krishna...", elem_classes="textbox")
 
-        gr.ChatInterface(
-            fn=chat_interface,
-            chatbot=chatbot,
-            textbox=textbox,
-            examples=[
-                "What are Krishna's research interests?",
-                "Where did Krishna work?",
-                "What did he study at Virginia Tech?"
-            ],
-        )
+demo = gr.ChatInterface(
+    fn=chat_interface,
+    title="💬 Ask Krishna's AI Assistant",
+    description="💡 Ask anything about Krishna Vamsi Dhulipalla",
+    examples=[
+        "What are Krishna's research interests?",
+        "Where did Krishna work?",
+        "What did he study at Virginia Tech?"
+    ],
+)
 
 demo.launch(max_threads=4, prevent_thread_lock=True, debug=True)
-
-# with gr.Blocks(css="""
-#      html, body, .gradio-container {
-#         height: 100%;
-#         margin: 0;
-#         padding: 0;
-#     }
-#     .gradio-container {
-#         width: 90%;
-#         max-width: 1000px;
-#         margin: 0 auto;
-#         padding: 1rem;
-#     }
-
-#     .chatbox-container {
-#         display: flex;
-#         flex-direction: column;
-#         height: 95%;
-#     }
-
-#     .chatbot {
-#         flex: 1;
-#         overflow-y: auto;
-#         min-height: 500px;
-#     }
-
-#     .textbox {
-#         margin-top: 1rem;
-#     }
-#     #component-523 {
-#         height: 98%;
-#     }
-# """) as demo:
-#     with gr.Column(elem_classes="chatbox-container"):
-#         gr.Markdown("## 💬 Ask Krishna's AI Assistant")
-#         gr.Markdown("💡 Ask anything about Krishna Vamsi Dhulipalla")
-#         chatbot = gr.Chatbot(elem_classes="chatbot", type="messages")
-#         textbox = gr.Textbox(placeholder="Ask a question about Krishna...", elem_classes="textbox")
-
-#         gr.ChatInterface(
-#             fn=chat_interface,
-#             chatbot=chatbot,
-#             textbox=textbox,
-#             # examples=[
-#             #     "What are Krishna's research interests?",
-#             #     "Where did Krishna work?",
-#             #     "What did he study at Virginia Tech?"
-#             # ],
-#             type= "messages",
-#         )
-
-# if __name__ == "__main__":
-#     # Add resource verification
-#     print(f"FAISS path exists: {Path(FAISS_PATH).exists()}")
-#     print(f"Chunks path exists: {Path(CHUNKS_PATH).exists()}")
-#     print(f"Vectorstore type: {type(vectorstore)}")
-#     print(f"All chunks count: {len(all_chunks)}")
-    
-#     # Launch the application
-#     demo.launch(debug=True)
