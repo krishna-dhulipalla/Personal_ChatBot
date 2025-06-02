@@ -408,7 +408,7 @@ select_and_prompt = RunnableLambda(lambda x:
 answer_chain = (
     prepare_answer_inputs
     | select_and_prompt
-    | relevance_llm
+    | answer_llm
 )
 
 def RExtract(pydantic_class: Type[BaseModel], llm, prompt):
