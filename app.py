@@ -3,6 +3,7 @@ import json
 import re
 import hashlib
 import gradio as gr
+import threading
 from functools import partial
 import concurrent.futures
 from collections import defaultdict
@@ -95,7 +96,6 @@ class KnowledgeBase(BaseModel):
 # Initialize the knowledge base
 knowledge_base = KnowledgeBase()
 
-
 # LLMs
 # repharser_llm = ChatNVIDIA(model="mistralai/mistral-7b-instruct-v0.3") | StrOutputParser()
 repharser_llm = ChatNVIDIA(model="microsoft/phi-3-mini-4k-instruct") | StrOutputParser()
@@ -105,8 +105,7 @@ answer_llm = ChatOpenAI(
     model="gpt-4o",              
     temperature=0.3,             
     openai_api_key=os.getenv("OPENAI_API_KEY"),
-    streaming=True,
-    callbacks=[StreamingStdOutCallbackHandler()] 
+    streaming=True
 ) | StrOutputParser()
 
 
@@ -377,7 +376,7 @@ hybrid_chain = generate_rewrites_chain | retrieve_chain
 extract_validation_inputs = RunnableLambda(lambda x: {
     "query": x["query"],
     "contents": [c["content"] for c in x["chunks"]],
-    "memory": knowledge_base.json()
+    "memory": knowledge_base.model_dump_json() 
 })
 
 validation_chain = (
@@ -398,7 +397,7 @@ def prepare_answer_inputs(x: Dict) -> Dict:
         "profile": KRISHNA_BIO,
         "context": context,
         "use_fallback": x["validation"]["is_out_of_scope"],
-        "memory": knowledge_base.json()
+        "memory": knowledge_base.model_dump_json() 
     }
 
 select_and_prompt = RunnableLambda(lambda x: 
@@ -436,31 +435,38 @@ def RExtract(pydantic_class: Type[BaseModel], llm, prompt):
 
 knowledge_extractor = RExtract(
     pydantic_class=KnowledgeBase,
-    llm=relevance_llm,            
+    llm=instruct_llm,            
     prompt=parser_prompt        
 )
 
-def update_kb_after_answer(data: dict):
+def update_knowledge_base(user_input: str, assistant_response: str):
+    """Update the knowledge base asynchronously after response is sent"""
+    global knowledge_base
+    
     try:
+        # print("\n" + "="*50)
+        # print("🔥 STARTING KNOWLEDGE BASE UPDATE")
+        # print(f"User Input: {user_input}")
+        # print(f"Assistant Response: {assistant_response[:100]}...")
+        
+        # Prepare input for knowledge extractor
         kb_input = {
-            "know_base": knowledge_base.json(),
-            "input": data["query"],
-            "output": data["answer"]
+            "know_base": knowledge_base.model_dump_json(),  # Fixed deprecation
+            "input": user_input,
+            "output": assistant_response
         }
 
+        #print("🧠 Calling knowledge extractor...")
         new_kb = knowledge_extractor.invoke(kb_input)
-        knowledge_base.__dict__.update(new_kb.__dict__)  # update in place
+        knowledge_base = new_kb  # Update global knowledge base
 
-        # Optional: print or log updated KB
-        # print("✅ Knowledge base updated:", knowledge_base.dict())
-
+        # Detailed debug output
+        print("✅ KNOWLEDGE BASE UPDATED SUCCESSFULLY")
+        
     except Exception as e:
-        print("❌ Failed to update knowledge base:", str(e))
-
-    return data  # Return unchanged so answer can flow forward
-
-
-update_kb_chain = RunnableLambda(update_kb_after_answer)
+        print(f"❌ KNOWLEDGE BASE UPDATE FAILED: {str(e)}")
+        import traceback
+        traceback.print_exc()
 
 # Full Pipeline
 full_pipeline = hybrid_chain | RunnableAssign({"validation": validation_chain}) | answer_chain
@@ -479,21 +485,25 @@ def chat_interface(message, history):
     full_response = ""
     collected = None
 
+    # Stream the response to user
     for chunk in full_pipeline.stream(inputs):
         if isinstance(chunk, dict) and "answer" in chunk:
             full_response += chunk["answer"]
-            collected = chunk  # store result for memory update
+            collected = chunk
             yield full_response
         elif isinstance(chunk, str):
             full_response += chunk
             yield full_response
 
-    # After yielding the full response, run knowledge update in background
-    if collected:
-        update_kb_after_answer({
-            "query": message,
-            "answer": full_response
-        })
+    # After streaming completes, update KB in background thread
+    if full_response:
+        import threading
+        update_thread = threading.Thread(
+            target=update_knowledge_base,
+            args=(message, full_response),
+            daemon=True
+        )
+        update_thread.start()
 
 with gr.Blocks(css="""
      html, body, .gradio-container {
@@ -540,7 +550,7 @@ demo = gr.ChatInterface(
     description="💡 Ask anything about Krishna Vamsi Dhulipalla",
     examples=[
         "What are Krishna's research interests?",
-        "Where did Krishna work?",
+        "What are Krishna's skills?",
         "What did he study at Virginia Tech?"
     ],
 )
