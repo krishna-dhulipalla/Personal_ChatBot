@@ -1,3 +1,16 @@
+---
+title: Personal ChatBot
+emoji: 💬
+colorFrom: yellow
+colorTo: purple
+sdk: gradio
+sdk_version: 5.0.1
+app_file: app.py
+pinned: false
+license: apache-2.0
+short_description: Krishna's Persona Chat Bot using Multi RAG network
+---
+
 # 🧠 Krishna's Personal AI Chatbot
 
 A memory-grounded, retrieval-augmented AI assistant built with LangChain, FAISS, BM25, and Llama3 — personalized to Krishna Vamsi Dhulipalla’s career, projects, and technical profile.
