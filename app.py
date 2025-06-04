@@ -20,7 +20,7 @@ from langchain_core.prompts import ChatPromptTemplate
 from langchain.schema.runnable.passthrough import RunnableAssign
 from langchain_huggingface import HuggingFaceEmbeddings
 from langchain.vectorstores import FAISS
-from langchain.retrievers import BM25Retriever
+from langchain_community.retrievers import BM25Retriever
 from langchain_openai import ChatOpenAI
 from langchain.output_parsers import PydanticOutputParser
 
@@ -483,12 +483,7 @@ def chat_interface(message, history):
 
     # After streaming completes, update KB in background thread
     if full_response:
-        update_thread = threading.Thread(
-            target=update_knowledge_base,
-            args=(message, full_response),
-            daemon=True
-        )
-        update_thread.start()
+        update_knowledge_base(message, full_response)  
 
 with gr.Blocks(css="""
      html, body, .gradio-container {
