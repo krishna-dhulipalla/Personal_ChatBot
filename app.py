@@ -3,9 +3,8 @@ import json
 import re
 import hashlib
 import gradio as gr
-import threading
 from functools import partial
-import concurrent.futures
+import threading
 from collections import defaultdict
 from pathlib import Path
 from typing import List, Dict, Any, Optional, List, Literal, Type
@@ -19,13 +18,10 @@ from langchain_nvidia_ai_endpoints import ChatNVIDIA
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.prompts import ChatPromptTemplate
 from langchain.schema.runnable.passthrough import RunnableAssign
-from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_huggingface import HuggingFaceEmbeddings
 from langchain.vectorstores import FAISS
-from langchain.docstore.document import Document
 from langchain.retrievers import BM25Retriever
 from langchain_openai import ChatOpenAI
-from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
 from langchain.output_parsers import PydanticOutputParser
 
 #dotenv_path = os.path.join(os.getcwd(), ".env")
@@ -38,7 +34,7 @@ if not api_key:
     raise RuntimeError("🚨 NVIDIA_API_KEY not found in environment! Please add it in Hugging Face Secrets.")
 
 # Constants
-FAISS_PATH = "faiss_store/v30_600_150"
+FAISS_PATH = "faiss_store/v61_600_150"
 CHUNKS_PATH = "all_chunks.json"
 
 if not Path(FAISS_PATH).exists():
@@ -47,13 +43,16 @@ if not Path(FAISS_PATH).exists():
 if not Path(CHUNKS_PATH).exists():
     raise FileNotFoundError(f"Chunks file not found at {CHUNKS_PATH}")
 
-KRISHNA_BIO = """Krishna Vamsi Dhulipalla completed M.Eng program in Computer Science at Virginia Tech, awarded degree in december 2024, with over 3 years of experience across data engineering, machine learning research, and real-time analytics. He specializes in building scalable data systems and intelligent LLM-powered applications, with strong expertise in Python, PyTorch, Hugging Face Transformers, and end-to-end ML pipelines.
+KRISHNA_BIO = """Krishna Vamsi Dhulipalla completed masters in Computer Science at Virginia Tech, awarded degree in december 2024, with over 3 years of experience across data engineering, machine learning research, and real-time analytics. He specializes in building scalable data systems and intelligent LLM-powered applications, with strong expertise in Python, PyTorch, Hugging Face Transformers, and end-to-end ML pipelines.
 
 He has led projects involving retrieval-augmented generation (RAG), feature selection for genomic classification, fine-tuning domain-specific LLMs (e.g., DNABERT, HyenaDNA), and real-time forecasting systems using Kafka, Spark, and Airflow. His cloud proficiency spans AWS (S3, SageMaker, ECS, CloudWatch), GCP (BigQuery, Cloud Composer), and DevOps tools like Docker, Kubernetes, and MLflow.
 
 Krishna’s research has focused on genomic sequence modeling, transformer optimization, MLOps automation, and cross-domain generalization. He has published work in bioinformatics and machine learning applications for circadian transcription prediction and transcription factor binding.
 
-He holds certifications in NVIDIA’s RAG Agents with LLMs, Google Cloud Data Engineering, and AWS ML Specialization. Krishna is passionate about scalable LLM infrastructure, data-centric AI, and domain-adaptive ML solutions — combining deep technical expertise with real-world engineering impact."""
+He holds certifications in NVIDIA’s RAG Agents with LLMs, Google Cloud Data Engineering, and AWS ML Specialization. Krishna is passionate about scalable LLM infrastructure, data-centric AI, and domain-adaptive ML solutions — combining deep technical expertise with real-world engineering impact.
+\n\n
+Beside carrer, Krishna loves hiking, cricket, and exploring new technologies. He is big fan of Marvel Movies and Space exploration.
+"""
 
 def initialize_console():
     console = Console()
@@ -61,6 +60,12 @@ def initialize_console():
     return partial(console.print, style=base_style)
 
 pprint = initialize_console()
+
+def PPrint(preface="State: "):
+    def print_and_return(x, preface=""):
+        pprint(preface, x)
+        return x
+    return RunnableLambda(partial(print_and_return, preface=preface))
 
 def load_chunks_from_json(path: str = CHUNKS_PATH) -> List[Dict]:
     with open(path, "r", encoding="utf-8") as f:
@@ -111,12 +116,16 @@ answer_llm = ChatOpenAI(
 
 # Prompts
 repharser_prompt = ChatPromptTemplate.from_template(
-    "Rewrite the question below in 3 different ways to help retrieve related information. Vary tone, style, and phrasing, but keep the meaning the same."
-    "Question: {query}"
-    "\n\nRewrites:"
-    "1."
+    "You are a smart retrieval assistant. Rewrite the user's question into 2 different variants optimized for hybrid retrieval systems (BM25 + dense vectors).\n\n"
+    "Your rewrites should:\n"
+    "- Vary tone and phrasing\n"
+    "- Expand or clarify intent if implicit\n"
+    "- Include helpful keywords, synonyms, or topic-specific terms if possible\n"
+    "- Be semantically close but diverse enough to match different chunks in the knowledge base\n\n"
+    "Original Question:\n{query}\n\n"
+    "Rewrites:\n"
+    "1.\n"
     "2."
-    "3."
 )
 
 relevance_prompt = ChatPromptTemplate.from_template("""
@@ -201,18 +210,10 @@ answer_prompt_relevant = ChatPromptTemplate.from_template(
     "- You may use general knowledge to briefly explain tools (like PyTorch or Kafka), but **do not invent any new facts** about Krishna.\n"
     "- Avoid filler phrases, repetition, or generic praise (e.g., strengths) unless directly asked.\n"
     "- End with a friendly follow-up question (no subheading needed here).\n\n"
-    "Example:\n"
-    "**Q: What work experience does Krishna have?**\n"
-    "**A:**\n"
-    "**🔧 Work Experience Overview**\n"
-    "**1. UJR Technologies** – Migrated batch ETL to real-time (Kafka/Spark), Dockerized services, and optimized Snowflake queries.\n"
-    "**2. Virginia Tech** – Built real-time IoT forecasting pipeline (10K sensors, GPT-4), achieving 91% accuracy and 15% energy savings.\n\n"
-    "_Would you like to dive into Krishna’s cloud deployment work using SageMaker and MLflow?_\n\n"
     "Now generate the answer for the following:\n\n"
     "User Question:\n{query}\n\n"
     "Answer:"
 )
-
 
 answer_prompt_fallback = ChatPromptTemplate.from_template(
     "You are Krishna’s personal AI assistant. The user asked a question unrelated to Krishna’s background.\n"
@@ -239,17 +240,15 @@ parser_prompt = ChatPromptTemplate.from_template(
 # Helper Functions
 def parse_rewrites(raw_response: str) -> list[str]:
     lines = raw_response.strip().split("\n")
-    return [line.strip("0123456789. ").strip() for line in lines if line.strip()][:3]
+    return [line.strip("0123456789. ").strip() for line in lines if line.strip()][:2]
 
 def hybrid_retrieve(inputs, exclude_terms=None):
-    # if exclude_terms is None:
-    #     exclude_terms = ["cgpa", "university", "b.tech", "m.s.", "certification", "coursera", "edx", "goal", "aspiration", "linkedin", "publication", "ieee", "doi", "degree"]
     bm25_retriever = inputs["bm25_retriever"]
     all_queries = inputs["all_queries"]
     bm25_retriever.k = inputs["k_per_query"]
     vectorstore = inputs["vectorstore"]
     alpha = inputs["alpha"]
-    top_k = inputs.get("top_k", 15)
+    top_k = inputs.get("top_k", 30)
     k_per_query = inputs["k_per_query"]
 
     scored_chunks = defaultdict(lambda: {
@@ -258,45 +257,37 @@ def hybrid_retrieve(inputs, exclude_terms=None):
         "content": None,
         "metadata": None,
     })
-    
-    # Function to process each subquery
-    def process_subquery(subquery, k_per_query=3):
-        # Vector retrieval
-        vec_hits = vectorstore.similarity_search_with_score(subquery, k=k_per_query)
-        vec_results = []
-        for doc, score in vec_hits:
-            key = hashlib.md5(doc.page_content.encode("utf-8")).hexdigest()
-            vec_results.append((key, doc, score))
-        
-        # BM25 retrieval
+
+    def process_subquery(subquery, k=k_per_query):
+        vec_hits = vectorstore.similarity_search_with_score(subquery, k=k)
         bm_hits = bm25_retriever.invoke(subquery)
-        bm_results = []
-        for rank, doc in enumerate(bm_hits):
-            key = hashlib.md5(doc.page_content.encode("utf-8")).hexdigest()
-            bm_score = 1.0 - (rank / k_per_query)
-            bm_results.append((key, doc, bm_score))
-            
+
+        vec_results = [
+            (hashlib.md5(doc.page_content.encode("utf-8")).hexdigest(), doc, score)
+            for doc, score in vec_hits
+        ]
+
+        bm_results = [
+            (hashlib.md5(doc.page_content.encode("utf-8")).hexdigest(), doc, 1.0 / (rank + 1))
+            for rank, doc in enumerate(bm_hits)
+        ]
+
         return vec_results, bm_results
 
-     # Process subqueries in parallel
-    with concurrent.futures.ThreadPoolExecutor() as executor:
-        futures = [executor.submit(process_subquery, q) for q in all_queries]
-        for future in concurrent.futures.as_completed(futures):
-            vec_results, bm_results = future.result()
-            
-            # Process vector results
-            for key, doc, score in vec_results:
-                scored_chunks[key]["vector_scores"].append(score)
-                scored_chunks[key]["content"] = doc.page_content
-                scored_chunks[key]["metadata"] = doc.metadata
-                
-            # Process BM25 results
-            for key, doc, bm_score in bm_results:
-                scored_chunks[key]["bm25_score"] += bm_score
-                scored_chunks[key]["content"] = doc.page_content
-                scored_chunks[key]["metadata"] = doc.metadata
+    # Process each subquery serially
+    for subquery in all_queries:
+        vec_results, bm_results = process_subquery(subquery)
 
-    # Rest of the scoring and filtering logic remains the same
+        for key, doc, vec_score in vec_results:
+            scored_chunks[key]["vector_scores"].append(vec_score)
+            scored_chunks[key]["content"] = doc.page_content
+            scored_chunks[key]["metadata"] = doc.metadata
+
+        for key, doc, bm_score in bm_results:
+            scored_chunks[key]["bm25_score"] += bm_score
+            scored_chunks[key]["content"] = doc.page_content
+            scored_chunks[key]["metadata"] = doc.metadata
+
     all_vec_means = [np.mean(v["vector_scores"]) for v in scored_chunks.values() if v["vector_scores"]]
     max_vec = max(all_vec_means) if all_vec_means else 1
     min_vec = min(all_vec_means) if all_vec_means else 0
@@ -304,23 +295,18 @@ def hybrid_retrieve(inputs, exclude_terms=None):
     final_results = []
     for chunk in scored_chunks.values():
         vec_score = np.mean(chunk["vector_scores"]) if chunk["vector_scores"] else 0.0
-        norm_vec = (vec_score - min_vec) / (max_vec - min_vec) if max_vec != min_vec else 1.0
+        norm_vec = 0.5 if max_vec == min_vec else (vec_score - min_vec) / (max_vec - min_vec)
         bm25_score = chunk["bm25_score"] / len(all_queries)
         final_score = alpha * norm_vec + (1 - alpha) * bm25_score
 
         content = chunk["content"].lower()
-        if final_score < 0.05 or len(content.strip()) < 100:
+        if final_score < 0.01 or len(content.strip()) < 40:
             continue
 
         final_results.append({
             "content": chunk["content"],
             "source": chunk["metadata"].get("source", ""),
-            "final_score": float(round(final_score, 4)),
-            "vector_score": float(round(vec_score, 4)),
-            "bm25_score": float(round(bm25_score, 4)),
-            "metadata": chunk["metadata"],
-            "summary": chunk["metadata"].get("summary", ""),
-            "synthetic_queries": chunk["metadata"].get("synthetic_queries", [])
+            "final_score": float(round(final_score, 4))
         })
 
     final_results = sorted(final_results, key=lambda x: x["final_score"], reverse=True)
@@ -477,8 +463,8 @@ def chat_interface(message, history):
         "query": message,
         "all_queries": [message],
         "all_texts": all_chunks,
-        "k_per_query": 3,
-        "alpha": 0.7,
+        "k_per_query": 10,
+        "alpha": 0.5,
         "vectorstore": vectorstore,
         "bm25_retriever": bm25_retriever,
     }
@@ -497,7 +483,6 @@ def chat_interface(message, history):
 
     # After streaming completes, update KB in background thread
     if full_response:
-        import threading
         update_thread = threading.Thread(
             target=update_knowledge_base,
             args=(message, full_response),
@@ -549,9 +534,9 @@ demo = gr.ChatInterface(
     title="💬 Ask Krishna's AI Assistant",
     description="💡 Ask anything about Krishna Vamsi Dhulipalla",
     examples=[
-        "What are Krishna's research interests?",
-        "What are Krishna's skills?",
-        "What did he study at Virginia Tech?"
+        "Give me an overview of Krishna Vamsi Dhulipalla’s work experience across different roles?",
+        "What programming languages and tools does Krishna use for data science?",
+        "Can this chatbot tell me what Krishna's chatbot architecture looks like and how it works?"
     ],
 )
 
