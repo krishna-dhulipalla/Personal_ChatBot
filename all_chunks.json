@@ -1,481 +1,977 @@
 [
   {
-    "text": "# 🧠 AI Notes and Ideas\n\n## Ideas for Personal Chatbot\n\n- Use LangChain agent with custom toolset: RAG retriever, calculator, search wrapper\n- Implement system memory using Redis or JSON-based long-term storage\n- Use NVIDIA's `mixtral-8x7b-instruct` via proxy in client_server.py\n- Break down documents into small markdown sections and enrich with metadata\n- Add feedback logging for failed queries or hallucinations\n\n---\n🔹 Summary:\nKrishna Vamsi Dhulipalla has ideas for building a personal chatbot using LangChain agent, system memory, and AI models. The notes outline technical details for implementing the chatbot's features.\n\n🔸 Related Questions:\n- What AI technologies is Krishna Vamsi Dhulipalla exploring for his personal chatbot project?\n- How does Krishna plan to implement memory and metadata enrichment for his chatbot?\n- What are some of the technical considerations Krishna is addressing in his chatbot development notes?",
+    "text": "# 👋 Hello, I'm Krishna Vamsi Dhulipalla\n\nI’m a Computer Science graduate student at **Virginia Tech**, on track to complete my Master of Engineering (M.Eng) in **December 2024**. I bring over **3 years of experience** spanning **data engineering**, **machine learning research**, and **real-time analytics**. My professional interests lie at the intersection of **LLM-driven systems**, **genomic computing**, and **scalable AI infrastructure**.\n\n---\n🔹 Summary:\nKrishna Vamsi Dhulipalla is a Computer Science graduate student at Virginia Tech, expected to graduate with an M.Eng in December 2024. He has 3+ years of experience in data engineering, machine learning research, and real-time analytics.\n\n🔸 Related Questions:\n- What are Krishna Vamsi Dhulipalla's educational background and anticipated graduation date?\n- What areas of expertise does Krishna Vamsi Dhulipalla have based on his professional experience?\n- Can you provide an overview of Krishna Vamsi Dhulipalla's academic and professional profile?",
     "metadata": {
-      "source": "ai_notes.md",
-      "header": "# 🧠 AI Notes and Ideas",
-      "chunk_id": "ai_notes.md_#0_f86fcc2e",
+      "source": "aprofile.md",
+      "header": "# 👋 Hello, I'm Krishna Vamsi Dhulipalla",
+      "chunk_id": "aprofile.md_#0_f07f7ebf",
       "has_header": true,
-      "word_count": 62,
-      "summary": "Krishna Vamsi Dhulipalla has ideas for building a personal chatbot using LangChain agent, system memory, and AI models. The notes outline technical details for implementing the chatbot's features.",
+      "word_count": 60,
+      "summary": "Krishna Vamsi Dhulipalla is a Computer Science graduate student at Virginia Tech, expected to graduate with an M.Eng in December 2024. He has 3+ years of experience in data engineering, machine learning research, and real-time analytics.",
       "synthetic_queries": [
-        "What AI technologies is Krishna Vamsi Dhulipalla exploring for his personal chatbot project?",
-        "How does Krishna plan to implement memory and metadata enrichment for his chatbot?",
-        "What are some of the technical considerations Krishna is addressing in his chatbot development notes?"
+        "What are Krishna Vamsi Dhulipalla's educational background and anticipated graduation date?",
+        "What areas of expertise does Krishna Vamsi Dhulipalla have based on his professional experience?",
+        "Can you provide an overview of Krishna Vamsi Dhulipalla's academic and professional profile?"
       ]
     }
   },
   {
-    "text": "## Retrieval Strategy Notes\n\n- Combine vector + keyword retrieval (hybrid)\n- Chunk at paragraph-level with title + heading for anchors\n- Add personal tags: `goal`, `project`, `education`, `faq`, `qa`, `experience`, `task`\n- Leverage time metadata for recency-based prioritization\n\n## Model Setup\n\n- Embed with `bge-m3` (or `text-embedding-3-large`)\n- Route to OpenAI or NVIDIA NIMs based on availability\n- Multi-agent flow: retrieval → synthesis → validator (future plan)\n\n---\n🔹 Summary:\nThe document outlines a strategy for optimized document retrieval about Krishna Vamsi Dhulipalla, combining vector and keyword retrieval with paragraph-level chunking and personal tags. The model setup involves embedding with bge-m3 and routing to OpenAI or NVIDIA NIMs for processing.\n\n🔸 Related Questions:\n- What approach should be used for retrieving documents about Krishna Vamsi Dhulipalla's projects and goals?\n- How can a hybrid retrieval strategy be implemented for efficient document retrieval about Krishna's educational background?\n- What is the recommended model setup for embedding and routing documents related to Krishna Vamsi Dhulipalla's experience and tasks?",
+    "text": "I’ve led and contributed to a range of research and production projects involving **retrieval-augmented generation (RAG)**, **transformer model fine-tuning**, **streaming pipelines**, and **bioinformatics workflows**. I’m passionate about transforming scientific problems into robust data products by leveraging **domain-adapted ML models**, **agentic workflows**, and **modern DevOps practices**.\n\n---\n🔹 Summary:\nKrishna Vamsi Dhulipalla has experience leading and contributing to various projects involving AI/ML technologies like RAG, transformer models, and bioinformatics workflows. He is passionate about applying domain-adapted ML and modern DevOps to solve scientific problems.\n\n🔸 Related Questions:\n- What technical expertise does Krishna Vamsi Dhulipalla bring to research and production projects?\n- How does Krishna Vamsi Dhulipalla approach solving complex scientific problems with machine learning?\n- What areas of AI/ML research and development has Krishna Vamsi Dhulipalla been involved in throughout his projects?",
     "metadata": {
-      "source": "ai_notes.md",
-      "header": "# 🧠 AI Notes and Ideas",
-      "chunk_id": "ai_notes.md_#1_3fe4782e",
-      "has_header": true,
-      "word_count": 68,
-      "summary": "The document outlines a strategy for optimized document retrieval about Krishna Vamsi Dhulipalla, combining vector and keyword retrieval with paragraph-level chunking and personal tags. The model setup involves embedding with bge-m3 and routing to OpenAI or NVIDIA NIMs for processing.",
+      "source": "aprofile.md",
+      "header": "# 👋 Hello, I'm Krishna Vamsi Dhulipalla",
+      "chunk_id": "aprofile.md_#1_47681b4e",
+      "has_header": false,
+      "word_count": 45,
+      "summary": "Krishna Vamsi Dhulipalla has experience leading and contributing to various projects involving AI/ML technologies like RAG, transformer models, and bioinformatics workflows. He is passionate about applying domain-adapted ML and modern DevOps to solve scientific problems.",
       "synthetic_queries": [
-        "What approach should be used for retrieving documents about Krishna Vamsi Dhulipalla's projects and goals?",
-        "How can a hybrid retrieval strategy be implemented for efficient document retrieval about Krishna's educational background?",
-        "What is the recommended model setup for embedding and routing documents related to Krishna Vamsi Dhulipalla's experience and tasks?"
+        "What technical expertise does Krishna Vamsi Dhulipalla bring to research and production projects?",
+        "How does Krishna Vamsi Dhulipalla approach solving complex scientific problems with machine learning?",
+        "What areas of AI/ML research and development has Krishna Vamsi Dhulipalla been involved in throughout his projects?"
       ]
     }
   },
   {
-    "text": "## Agent Concept Examples\n\n- RetrievalAgent → fetches top documents from FAISS\n- ResponseSynthesizerAgent → synthesizes markdown summary\n- TaskPlannerAgent → returns structured plan or task list\n\n---\n🔹 Summary:\nThis document chunk describes different agent concepts, which are possibly used in a project or system related to Krishna Vamsi Dhulipalla, such as RetrievalAgent, ResponseSynthesizerAgent, and TaskPlannerAgent.\n\n🔸 Related Questions:\n- What are the different agents used in Krishna Vamsi Dhulipalla's project?\n- How does Krishna's system handle document retrieval and summarization?\n- What are the main components of Krishna Vamsi Dhulipalla's task planning system?",
+    "text": "I recently wrapped up my master’s in computer science at Virginia Tech, specializing in the data science field. Over the past couple of years, I’ve been building scalable data pipelines, automating workflows, and developing ML models in both research and production settings.\n\n---\n🔹 Summary:\nKrishna Vamsi Dhulipalla has completed his master's degree in Computer Science from Virginia Tech with a specialization in Data Science. His expertise includes building scalable data pipelines, automating workflows, and developing Machine Learning models.\n\n🔸 Related Questions:\n- What academic background and specialization does Krishna Vamsi Dhulipalla have in the field of Computer Science?\n- What are Krishna Vamsi Dhulipalla's areas of expertise in data handling and machine learning?\n- What educational institution did Krishna Vamsi Dhulipalla attend for his master's degree in Computer Science with a focus on Data Science?",
     "metadata": {
-      "source": "ai_notes.md",
-      "header": "# 🧠 AI Notes and Ideas",
-      "chunk_id": "ai_notes.md_#2_a8581af8",
-      "has_header": true,
-      "word_count": 27,
-      "summary": "This document chunk describes different agent concepts, which are possibly used in a project or system related to Krishna Vamsi Dhulipalla, such as RetrievalAgent, ResponseSynthesizerAgent, and TaskPlannerAgent.",
+      "source": "aprofile.md",
+      "header": "# 👋 Hello, I'm Krishna Vamsi Dhulipalla",
+      "chunk_id": "aprofile.md_#3_663d9c48",
+      "has_header": false,
+      "word_count": 42,
+      "summary": "Krishna Vamsi Dhulipalla has completed his master's degree in Computer Science from Virginia Tech with a specialization in Data Science. His expertise includes building scalable data pipelines, automating workflows, and developing Machine Learning models.",
       "synthetic_queries": [
-        "What are the different agents used in Krishna Vamsi Dhulipalla's project?",
-        "How does Krishna's system handle document retrieval and summarization?",
-        "What are the main components of Krishna Vamsi Dhulipalla's task planning system?"
+        "What academic background and specialization does Krishna Vamsi Dhulipalla have in the field of Computer Science?",
+        "What are Krishna Vamsi Dhulipalla's areas of expertise in data handling and machine learning?",
+        "What educational institution did Krishna Vamsi Dhulipalla attend for his master's degree in Computer Science with a focus on Data Science?"
       ]
     }
   },
   {
-    "text": "# 💬 Example Conversations for Personal Assistant Chatbot\n\n## Q: What interests you in data engineering?\n\nA: I’m passionate about architecting scalable data systems that drive actionable insights. From optimizing ETL workflows to deploying real-time pipelines with Kafka/Spark, I enjoy building user-centric products—like genomic data frameworks at Virginia Tech and analytics platforms at UJR Technologies.\n\n---\n🔹 Summary:\nKrishna Vamsi Dhulipalla is passionate about architecting scalable data systems and building user-centric products in data engineering. He enjoys optimizing ETL workflows and deploying real-time pipelines.\n\n🔸 Related Questions:\n- What does Krishna Vamsi Dhulipalla enjoy most about data engineering?\n- What are Krishna's interests in building scalable data systems?\n- Can you describe Krishna's experience in data engineering and its applications?",
+    "text": "Right now, I am working at Virginia Tech, I have worked on some problems like the combination of bioinformatics and AI — things like preprocessing large-scale DNA sequence data, fine-tuning LLMs for plant genomics, and developing agents for scientific data analysis. Before that, I was a Data Engineer at UJR Technologies, where I helped modernize their data infrastructure by shifting from batch ETL to real-time streaming with Kafka and Spark, optimizing Snowflake schemas, and deploying microservices on AWS.\n\n---\n🔹 Summary:\nKrishna Vamsi Dhulipalla currently works at Virginia Tech, leveraging AI and bioinformatics for projects like DNA sequence analysis and plant genomics. Previously, he was a Data Engineer at UJR Technologies, modernizing their data infrastructure with real-time streaming, optimized schemas, and cloud deployments.\n\n🔸 Related Questions:\n- What are Krishna Vamsi Dhulipalla's current and past professional endeavors?\n- How has Krishna Vamsi Dhulipalla applied his skills in AI and bioinformatics in his career?\n- What technologies and methodologies has Krishna Vamsi Dhulipalla utilized in his data engineering and research roles?",
     "metadata": {
-      "source": "conversations.md",
-      "header": "# 💬 Example Conversations for Personal Assistant Chatbot",
-      "chunk_id": "conversations.md_#0_e383095e",
-      "has_header": true,
-      "word_count": 55,
-      "summary": "Krishna Vamsi Dhulipalla is passionate about architecting scalable data systems and building user-centric products in data engineering. He enjoys optimizing ETL workflows and deploying real-time pipelines.",
+      "source": "aprofile.md",
+      "header": "# 👋 Hello, I'm Krishna Vamsi Dhulipalla",
+      "chunk_id": "aprofile.md_#4_5e529108",
+      "has_header": false,
+      "word_count": 78,
+      "summary": "Krishna Vamsi Dhulipalla currently works at Virginia Tech, leveraging AI and bioinformatics for projects like DNA sequence analysis and plant genomics. Previously, he was a Data Engineer at UJR Technologies, modernizing their data infrastructure with real-time streaming, optimized schemas, and cloud deployments.",
       "synthetic_queries": [
-        "What does Krishna Vamsi Dhulipalla enjoy most about data engineering?",
-        "What are Krishna's interests in building scalable data systems?",
-        "Can you describe Krishna's experience in data engineering and its applications?"
+        "What are Krishna Vamsi Dhulipalla's current and past professional endeavors?",
+        "How has Krishna Vamsi Dhulipalla applied his skills in AI and bioinformatics in his career?",
+        "What technologies and methodologies has Krishna Vamsi Dhulipalla utilized in his data engineering and research roles?"
       ]
     }
   },
   {
-    "text": "## Q: Describe a pipeline you've built.\n\nA: I created a real-time IoT temperature pipeline at Virginia Tech using Kafka, AWS Glue, Airflow, and Snowflake. It processed 10,000+ sensor readings and fed into GPT-4 forecasts with 91% accuracy, helping reduce energy costs by 15% and improve stakeholder decision-making by 30%.\n\n---\n🔹 Summary:\nKrishna Vamsi Dhulipalla built a real-time IoT temperature pipeline that processed over 10,000 sensor readings and achieved a 91% accuracy rate in forecasts, leading to significant energy cost savings and improved decision-making. He utilized technologies such as Kafka, AWS Glue, Airflow, and Snowflake in this pipeline.\n\n🔸 Related Questions:\n- What is an example of a successful data pipeline built by Krishna Vamsi Dhulipalla?\n- How has Krishna Vamsi Dhulipalla applied his skills in IoT and data processing to achieve business outcomes?\n- What technologies has Krishna Vamsi Dhulipalla used in his data pipeline projects?",
+    "text": "I’m on OPT and eligible for STEM OPT and can work for up to 3 years without needing sponsorship. So at least for the next 2 years and 7 months, there’s no immigration burden for the company. I’m fully authorized to work right now\n\n---\n\n---\n🔹 Summary:\nKrishna Vamsi Dhulipalla is currently on OPT (Optional Practical Training) with eligibility for STEM OPT, allowing him to work without sponsorship for up to 3 years. He is fully authorized to work at present.\n\n🔸 Related Questions:\n- What is Krishna Vamsi Dhulipalla's current work authorization status in the US?\n- Does Krishna require company sponsorship for his work visa at this time?\n- How long can Krishna Vamsi Dhulipalla work in the US without needing employer sponsorship?",
     "metadata": {
-      "source": "conversations.md",
-      "header": "# 💬 Example Conversations for Personal Assistant Chatbot",
-      "chunk_id": "conversations.md_#1_98373bb5",
+      "source": "aprofile.md",
+      "header": "# 👋 Hello, I'm Krishna Vamsi Dhulipalla",
+      "chunk_id": "aprofile.md_#5_4eeaca6b",
+      "has_header": false,
+      "word_count": 45,
+      "summary": "Krishna Vamsi Dhulipalla is currently on OPT (Optional Practical Training) with eligibility for STEM OPT, allowing him to work without sponsorship for up to 3 years. He is fully authorized to work at present.",
+      "synthetic_queries": [
+        "What is Krishna Vamsi Dhulipalla's current work authorization status in the US?",
+        "Does Krishna require company sponsorship for his work visa at this time?",
+        "How long can Krishna Vamsi Dhulipalla work in the US without needing employer sponsorship?"
+      ]
+    }
+  },
+  {
+    "text": "## 🎯 Career Summary\n\n- 👨‍💻 3+ years of experience building ML-powered pipelines, RAG systems, and scalable data platforms\n- 🧬 Specialized in transformer-based **genome classification**, **cross-domain NER**, and **TFBS prediction**\n- ☁️ Deep experience with **AWS (SageMaker, S3, Glue)** and **GCP (BigQuery, Cloud Composer)** for cloud-native ML workflows\n- 🧠 Skilled in deploying **LLM agents**, creating **hybrid retrieval systems**, and integrating **MLOps practices**\n\n---\n\n---\n🔹 Summary:\nKrishna Vamsi Dhulipalla has 3+ years of experience in building machine learning (ML) pipelines and data platforms, with specializations in transformer-based bioinformatics and cloud-native workflows. His expertise spans AWS, GCP, LLM agents, hybrid retrieval systems, and MLOps practices.\n\n🔸 Related Questions:\n- What are Krishna Vamsi Dhulipalla's areas of expertise in machine learning and cloud computing?\n- Can you outline Krishna Vamsi Dhulipalla's professional background in building ML-powered systems?\n- What specific technologies and practices is Krishna Vamsi Dhulipalla skilled in, particularly in the context of his work on bioinformatics and data platforms?",
+    "metadata": {
+      "source": "aprofile.md",
+      "header": "# 👋 Hello, I'm Krishna Vamsi Dhulipalla",
+      "chunk_id": "aprofile.md_#6_35893ef1",
+      "has_header": true,
+      "word_count": 65,
+      "summary": "Krishna Vamsi Dhulipalla has 3+ years of experience in building machine learning (ML) pipelines and data platforms, with specializations in transformer-based bioinformatics and cloud-native workflows. His expertise spans AWS, GCP, LLM agents, hybrid retrieval systems, and MLOps practices.",
+      "synthetic_queries": [
+        "What are Krishna Vamsi Dhulipalla's areas of expertise in machine learning and cloud computing?",
+        "Can you outline Krishna Vamsi Dhulipalla's professional background in building ML-powered systems?",
+        "What specific technologies and practices is Krishna Vamsi Dhulipalla skilled in, particularly in the context of his work on bioinformatics and data platforms?"
+      ]
+    }
+  },
+  {
+    "text": "## 🔭 Areas of Current Focus\n\n- Fine-tuning DNA foundation models (e.g., **DNABERT**, **HyenaDNA**) for bioinformatics applications\n- Architecting multi-agent personal chatbot systems using **LangChain**, **BM25**, **FAISS**, and **Gradio**\n- Designing and deploying real-time analytics pipelines using **Apache Kafka**, **Spark**, and **Airflow**\n- Production-grade deployments using **Docker**, **SageMaker**, **MLflow**, and **CloudWatch**\n\n---\n\n---\n🔹 Summary:\nKrishna Vamsi Dhulipalla is currently focused on several key areas including AI model fine-tuning for bioinformatics and designing advanced analytics and chatbot systems. His focus areas also encompass cloud-based production-grade deployments.\n\n🔸 Related Questions:\n- What are Krishna Vamsi Dhulipalla's current research and development focus areas in AI and data science?\n- How is Krishna Vamsi Dhulipalla applying his expertise in bioinformatics, chatbot development, and real-time analytics?\n- What technologies is Krishna Vamsi Dhulipalla utilizing for his projects involving model deployment, analytics pipelines, and personal chatbot systems?",
+    "metadata": {
+      "source": "aprofile.md",
+      "header": "# 👋 Hello, I'm Krishna Vamsi Dhulipalla",
+      "chunk_id": "aprofile.md_#7_b6edcd32",
+      "has_header": true,
+      "word_count": 52,
+      "summary": "Krishna Vamsi Dhulipalla is currently focused on several key areas including AI model fine-tuning for bioinformatics and designing advanced analytics and chatbot systems. His focus areas also encompass cloud-based production-grade deployments.",
+      "synthetic_queries": [
+        "What are Krishna Vamsi Dhulipalla's current research and development focus areas in AI and data science?",
+        "How is Krishna Vamsi Dhulipalla applying his expertise in bioinformatics, chatbot development, and real-time analytics?",
+        "What technologies is Krishna Vamsi Dhulipalla utilizing for his projects involving model deployment, analytics pipelines, and personal chatbot systems?"
+      ]
+    }
+  },
+  {
+    "text": "## 🎓 Education\n\n### Virginia polytechnic institute and state university (Virginia Tech) — Masters in Computer Science\n\n📍Blacksburg, VA | \\_Jan 2023 – Dec 2024 graduated  \n**CGPA:** 3.95 / 4.0  \nRelevant Coursework: **Distributed Systems**, **ML Optimization**, **Genomics**, **LLMs & Transformer Architectures**\n\n### Anna University — B.Tech in Computer Science and Engineering\n\n📍Chennai, India | \\_Jun 2018 – May 2022 graduated\n**CGPA:** 8.24 / 10  \nRelevant Focus: **Real-Time Analytics**, **Cloud Systems**, **Software Engineering Principles**\n\n---\n\n---\n\n---\n🔹 Summary:\nKrishna Vamsi Dhulipalla's educational background includes a Master's in Computer Science from Virginia Tech with a 3.95 CGPA and a B.Tech in Computer Science and Engineering from Anna University with an 8.24 CGPA. His studies covered various relevant technical coursework and focuses.\n\n🔸 Related Questions:\n- What are Krishna Vamsi Dhulipalla's educational qualifications and specializations?\n- Which institutions has Krishna Vamsi Dhulipalla attended for his Computer Science degrees?\n- What relevant technical coursework did Krishna Vamsi Dhulipalla undertake during his graduate and undergraduate studies?",
+    "metadata": {
+      "source": "aprofile.md",
+      "header": "# 👋 Hello, I'm Krishna Vamsi Dhulipalla",
+      "chunk_id": "aprofile.md_#8_7e09d2bd",
+      "has_header": true,
+      "word_count": 75,
+      "summary": "Krishna Vamsi Dhulipalla's educational background includes a Master's in Computer Science from Virginia Tech with a 3.95 CGPA and a B.Tech in Computer Science and Engineering from Anna University with an 8.24 CGPA. His studies covered various relevant technical coursework and focuses.",
+      "synthetic_queries": [
+        "What are Krishna Vamsi Dhulipalla's educational qualifications and specializations?",
+        "Which institutions has Krishna Vamsi Dhulipalla attended for his Computer Science degrees?",
+        "What relevant technical coursework did Krishna Vamsi Dhulipalla undertake during his graduate and undergraduate studies?"
+      ]
+    }
+  },
+  {
+    "text": "## 🛠️ Technical Skills\n\n### 🧑‍💻 Programming Languages skills\n\nKrishna is proficient in multiple programming languages used for data science, backend development, and scripting. These include:\n\n- **Python**, **R**, **SQL**, **JavaScript**, **TypeScript**, **FastAPI**, and **Node.js**\n\nThese languages support his work in machine learning, APIs, data pipelines, and interactive apps.\n\n---\n\n---\n🔹 Summary:\nKrishna Vamsi Dhulipalla is skilled in a range of programming languages, including Python, R, and JavaScript. These skills support his work in areas like machine learning, APIs, and interactive apps.\n\n🔸 Related Questions:\n- What programming languages is Krishna Vamsi Dhulipalla proficient in?\n- What technical skills does Krishna possess for data science and backend development?\n- Which languages does Krishna use for machine learning and API development?",
+    "metadata": {
+      "source": "aprofile.md",
+      "header": "# 👋 Hello, I'm Krishna Vamsi Dhulipalla",
+      "chunk_id": "aprofile.md_#9_01168562",
       "has_header": true,
       "word_count": 50,
-      "summary": "Krishna Vamsi Dhulipalla built a real-time IoT temperature pipeline that processed over 10,000 sensor readings and achieved a 91% accuracy rate in forecasts, leading to significant energy cost savings and improved decision-making. He utilized technologies such as Kafka, AWS Glue, Airflow, and Snowflake in this pipeline.",
+      "summary": "Krishna Vamsi Dhulipalla is skilled in a range of programming languages, including Python, R, and JavaScript. These skills support his work in areas like machine learning, APIs, and interactive apps.",
       "synthetic_queries": [
-        "What is an example of a successful data pipeline built by Krishna Vamsi Dhulipalla?",
-        "How has Krishna Vamsi Dhulipalla applied his skills in IoT and data processing to achieve business outcomes?",
-        "What technologies has Krishna Vamsi Dhulipalla used in his data pipeline projects?"
+        "What programming languages is Krishna Vamsi Dhulipalla proficient in?",
+        "What technical skills does Krishna possess for data science and backend development?",
+        "Which languages does Krishna use for machine learning and API development?"
       ]
     }
   },
   {
-    "text": "## Q: What was your most challenging debugging experience?\n\nA: Resolving duplicate ingestion and latency issues in a Kafka/Spark pipeline at UJR Technologies. I traced misconfigurations across consumer groups, optimized Spark executor memory, and enforced idempotent logic—reducing latency by 30% and achieving 99.9% data accuracy.\n\n---\n🔹 Summary:\nKrishna Vamsi Dhulipalla shares his most challenging debugging experience, detailing how he resolved issues in a Kafka/Spark pipeline at UJR Technologies. He optimized Spark executor memory, enforced idempotent logic, and reduced latency by 30% with 99.9% data accuracy.\n\n🔸 Related Questions:\n- What was Krishna Vamsi Dhulipalla's most challenging debugging experience?\n- How did Krishna improve data accuracy and reduce latency in a Kafka/Spark pipeline?\n- What were some of the technical challenges Krishna faced while working at UJR Technologies?",
+    "text": "### 🧠 Machine Learning & AI Tools skills\n\nKrishna has hands-on experience building and deploying ML models using:\n\n- **PyTorch**, **TensorFlow**, **Transformers (Hugging Face)**, **scikit-learn**\n- Specialized techniques: **GANs**, **RAG**, **LLM Fine-tuning**, **Prompt Engineering**, **Self-Supervised Learning**\n\nHe has also worked with:\n\n- **SHAP**, **XGBoost**, **A/B Testing**, **Hyperparameter Optimization**\n- Algorithms like **kNN**, **Naive Bayes**, **SVM**, **Random Forests**, **Clustering**, **PCA**, **EDA**, and **Model Evaluation**\n\n---\n\n---\n🔹 Summary:\nKrishna Vamsi Dhulipalla possesses extensive hands-on experience in building and deploying Machine Learning (ML) models utilizing prominent frameworks and techniques. His expertise spans a wide array of ML algorithms, tools, and methodologies.\n\n🔸 Related Questions:\n- What machine learning frameworks and techniques is Krishna Vamsi Dhulipalla proficient in?\n- Can Krishna build models with advanced AI tools like Transformers or GANs?\n- What is the breadth of Krishna Vamsi Dhulipalla's experience with ML algorithms and evaluation methods?",
     "metadata": {
-      "source": "conversations.md",
-      "header": "# 💬 Example Conversations for Personal Assistant Chatbot",
-      "chunk_id": "conversations.md_#2_b16dcaf3",
-      "has_header": true,
-      "word_count": 45,
-      "summary": "Krishna Vamsi Dhulipalla shares his most challenging debugging experience, detailing how he resolved issues in a Kafka/Spark pipeline at UJR Technologies. He optimized Spark executor memory, enforced idempotent logic, and reduced latency by 30% with 99.9% data accuracy.",
-      "synthetic_queries": [
-        "What was Krishna Vamsi Dhulipalla's most challenging debugging experience?",
-        "How did Krishna improve data accuracy and reduce latency in a Kafka/Spark pipeline?",
-        "What were some of the technical challenges Krishna faced while working at UJR Technologies?"
-      ]
-    }
-  },
-  {
-    "text": "## Q: Describe a collaboration experience.\n\nA: At Virginia Tech, I collaborated with engineers and scientists on cross-domain NER. I led ML model tuning while engineers handled EC2 deployment. We reduced latency by 30% and boosted F1-scores by 8%, enabling large-scale analysis across 10M+ records.\n\n## Q: How do you handle data cleaning?\n\nA: I usually check for missing values, duplicates, and outliers. I ensure schema consistency and apply transformations using Pandas or SQL. For large datasets, I use Airflow + dbt for efficient pipeline automation.\n\n---\n🔹 Summary:\nKrishna Vamsi Dhulipalla has experience collaborating on projects, including a cross-domain NER task at Virginia Tech where he led ML model tuning, and has expertise in data cleaning using tools like Pandas, SQL, Airflow, and dbt. He has achieved significant improvements in performance, such as reducing latency by 30% and boosting F1-scores by 8%.\n\n🔸 Related Questions:\n- What collaboration experiences does Krishna have in his background?\n- How does Krishna approach data cleaning and preprocessing?\n- What tools and techniques does Krishna use for efficient data pipeline automation?",
-    "metadata": {
-      "source": "conversations.md",
-      "header": "# 💬 Example Conversations for Personal Assistant Chatbot",
-      "chunk_id": "conversations.md_#3_81f368df",
-      "has_header": true,
-      "word_count": 86,
-      "summary": "Krishna Vamsi Dhulipalla has experience collaborating on projects, including a cross-domain NER task at Virginia Tech where he led ML model tuning, and has expertise in data cleaning using tools like Pandas, SQL, Airflow, and dbt. He has achieved significant improvements in performance, such as reducing latency by 30% and boosting F1-scores by 8%.",
-      "synthetic_queries": [
-        "What collaboration experiences does Krishna have in his background?",
-        "How does Krishna approach data cleaning and preprocessing?",
-        "What tools and techniques does Krishna use for efficient data pipeline automation?"
-      ]
-    }
-  },
-  {
-    "text": "## Q: What's your biggest strength and weakness?\n\nA: Strength – Breaking down complex data into insights and delivering reliable systems.  \nWeakness – Spending too long polishing outputs, though I’ve learned to balance quality and speed.\n\n## Q: What tools have you used recently?\n\nA: Python, Airflow, dbt, SageMaker, Kafka, Spark, and Snowflake. Recently, I’ve also used Docker, CloudWatch, and Looker for visualization and monitoring.\n\n---\n🔹 Summary:\nKrishna Vamsi Dhulipalla's strengths lie in breaking down complex data into insights and delivering reliable systems, while his weakness is spending too long polishing outputs. He has recently worked with various tools including Python, Airflow, dbt, and data visualization platforms.\n\n🔸 Related Questions:\n- What are Krishna Vamsi Dhulipalla's technical strengths and weaknesses?\n- What tools and technologies does Krishna use in his data work?\n- Can you describe Krishna's data analysis and system delivery skills?",
-    "metadata": {
-      "source": "conversations.md",
-      "header": "# 💬 Example Conversations for Personal Assistant Chatbot",
-      "chunk_id": "conversations.md_#4_7d01c2cb",
-      "has_header": true,
-      "word_count": 65,
-      "summary": "Krishna Vamsi Dhulipalla's strengths lie in breaking down complex data into insights and delivering reliable systems, while his weakness is spending too long polishing outputs. He has recently worked with various tools including Python, Airflow, dbt, and data visualization platforms.",
-      "synthetic_queries": [
-        "What are Krishna Vamsi Dhulipalla's technical strengths and weaknesses?",
-        "What tools and technologies does Krishna use in his data work?",
-        "Can you describe Krishna's data analysis and system delivery skills?"
-      ]
-    }
-  },
-  {
-    "text": "## Q: What do you want to work on next?\n\nA: I want to work more in production ML or data infrastructure—especially on real-time systems and scalable platforms supporting cross-functional teams.\n\n---\n🔹 Summary:\nKrishna Vamsi Dhulipalla is interested in working on production machine learning, data infrastructure, and real-time systems. He also wants to work on scalable platforms that support cross-functional teams.\n\n🔸 Related Questions:\n- What are Krishna Vamsi Dhulipalla's career goals in the field of machine learning?\n- What type of projects does Krishna Vamsi Dhulipalla want to work on in the future?\n- What are Krishna's interests in terms of data infrastructure and real-time systems?",
-    "metadata": {
-      "source": "conversations.md",
-      "header": "# 💬 Example Conversations for Personal Assistant Chatbot",
-      "chunk_id": "conversations.md_#5_6581e71e",
-      "has_header": true,
-      "word_count": 31,
-      "summary": "Krishna Vamsi Dhulipalla is interested in working on production machine learning, data infrastructure, and real-time systems. He also wants to work on scalable platforms that support cross-functional teams.",
-      "synthetic_queries": [
-        "What are Krishna Vamsi Dhulipalla's career goals in the field of machine learning?",
-        "What type of projects does Krishna Vamsi Dhulipalla want to work on in the future?",
-        "What are Krishna's interests in terms of data infrastructure and real-time systems?"
-      ]
-    }
-  },
-  {
-    "text": "# 🎯 Personal and Professional Goals\n\n## Short-Term Goals (0–6 months)\n\n- Deploy a personal AI chatbot with multi-agent architecture using RAG and open-source LLMs.\n- Publish second paper on DNA foundation model for transcription factor binding in plant genomics (submitted to MLCB).\n- Transition from research-focused work to more production-oriented data engineering roles.\n- Apply for top-tier roles in data engineering, AI infrastructure, or applied ML research.\n\n---\n🔹 Summary:\nKrishna Vamsi Dhulipalla aims to achieve several short-term goals within the next 0-6 months, including deploying a personal AI chatbot, publishing a research paper on DNA foundation models, and transitioning to a production-oriented data engineering role. He also plans to apply for top-tier roles in data engineering, AI infrastructure, or applied ML research.\n\n🔸 Related Questions:\n- What are Krishna Vamsi Dhulipalla's short-term career goals in data engineering and AI?\n- What research projects is Krishna currently working on in the field of plant genomics?\n- What are Krishna's plans for transitioning from research-focused work to industry roles in AI and data engineering?",
-    "metadata": {
-      "source": "goals.md",
-      "header": "# 🎯 Personal and Professional Goals",
-      "chunk_id": "goals.md_#0_8d7193bb",
-      "has_header": true,
-      "word_count": 68,
-      "summary": "Krishna Vamsi Dhulipalla aims to achieve several short-term goals within the next 0-6 months, including deploying a personal AI chatbot, publishing a research paper on DNA foundation models, and transitioning to a production-oriented data engineering role. He also plans to apply for top-tier roles in data engineering, AI infrastructure, or applied ML research.",
-      "synthetic_queries": [
-        "What are Krishna Vamsi Dhulipalla's short-term career goals in data engineering and AI?",
-        "What research projects is Krishna currently working on in the field of plant genomics?",
-        "What are Krishna's plans for transitioning from research-focused work to industry roles in AI and data engineering?"
-      ]
-    }
-  },
-  {
-    "text": "## Mid-Term Goals (6–12 months)\n\n- Contribute to or create an open-source ML/data engineering project (e.g., genomic toolkits, chatbot agents).\n- Refine MLOps skills by deploying containerized models with CI/CD + observability on cloud-native platforms.\n- Scale chatbot to support personal file ingestion, calendar querying, and document Q&A.\n- Prepare for technical interviews and secure a full-time role in a US-based company with visa support.\n\n---\n🔹 Summary:\nKrishna Vamsi Dhulipalla aims to contribute to or create an open-source ML/data engineering project and refine his MLOps skills within the next 6-12 months, while also preparing for technical interviews to secure a full-time role in the US. He also plans to enhance his chatbot project to support various features.\n\n🔸 Related Questions:\n- What are Krishna Vamsi Dhulipalla's goals for improving his machine learning skills?\n- What projects is Krishna planning to work on in the next year?\n- How is Krishna preparing for his career in the US?",
-    "metadata": {
-      "source": "goals.md",
-      "header": "# 🎯 Personal and Professional Goals",
-      "chunk_id": "goals.md_#1_0109ec8b",
-      "has_header": true,
-      "word_count": 65,
-      "summary": "Krishna Vamsi Dhulipalla aims to contribute to or create an open-source ML/data engineering project and refine his MLOps skills within the next 6-12 months, while also preparing for technical interviews to secure a full-time role in the US. He also plans to enhance his chatbot project to support various features.",
-      "synthetic_queries": [
-        "What are Krishna Vamsi Dhulipalla's goals for improving his machine learning skills?",
-        "What projects is Krishna planning to work on in the next year?",
-        "How is Krishna preparing for his career in the US?"
-      ]
-    }
-  },
-  {
-    "text": "## Long-Term Goals (1–3 years)\n\n- Become a senior data engineer or applied ML engineer focused on infrastructure, agent orchestration, or LLM ops.\n- Continue publishing in ML for life sciences, focusing on bioinformatics + transformer applications.\n- Build a framework or product (open-source or startup) that connects genomics, LLMs, and real-time pipelines.\n\n---\n🔹 Summary:\nKrishna Vamsi Dhulipalla's long-term goals include advancing in his data engineering career and making significant contributions to the field of machine learning, particularly in life sciences and genomics. He also aims to build an open-source framework or startup product integrating genomics, LLMs, and real-time pipelines.\n\n🔸 Related Questions:\n- What are Krishna Vamsi Dhulipalla's career aspirations in the field of data engineering and machine learning?\n- What specific areas of research is Krishna interested in pursuing in the field of life sciences?\n- What kind of projects or products is Krishna hoping to develop in the intersection of genomics and LLMs?",
-    "metadata": {
-      "source": "goals.md",
-      "header": "# 🎯 Personal and Professional Goals",
-      "chunk_id": "goals.md_#2_bf737ebf",
-      "has_header": true,
-      "word_count": 53,
-      "summary": "Krishna Vamsi Dhulipalla's long-term goals include advancing in his data engineering career and making significant contributions to the field of machine learning, particularly in life sciences and genomics. He also aims to build an open-source framework or startup product integrating genomics, LLMs, and real-time pipelines.",
-      "synthetic_queries": [
-        "What are Krishna Vamsi Dhulipalla's career aspirations in the field of data engineering and machine learning?",
-        "What specific areas of research is Krishna interested in pursuing in the field of life sciences?",
-        "What kind of projects or products is Krishna hoping to develop in the intersection of genomics and LLMs?"
-      ]
-    }
-  },
-  {
-    "text": "# 👋 Hello, I'm Krishna Vamsi Dhulipalla\n\nI’m a Computer Science graduate student at Virginia Tech (M.S., expected Dec 2024) with 3+ years of experience across data engineering, machine learning research, and real-time analytics. I’m passionate about building intelligent, scalable systems with LLMs, RAG, and big data technologies.\n\n---\n\n---\n🔹 Summary:\nKrishna Vamsi Dhulipalla is a Computer Science graduate student at Virginia Tech with experience in data engineering, machine learning research, and real-time analytics. He is passionate about building intelligent systems with large language models and big data technologies.\n\n🔸 Related Questions:\n- What is Krishna Vamsi Dhulipalla's educational background and work experience?\n- What technologies is Krishna Vamsi Dhulipalla interested in building systems with?\n- What field is Krishna Vamsi Dhulipalla studying and what is his expected graduation date?",
-    "metadata": {
-      "source": "profile.md",
+      "source": "aprofile.md",
       "header": "# 👋 Hello, I'm Krishna Vamsi Dhulipalla",
-      "chunk_id": "profile.md_#0_90d6e50f",
+      "chunk_id": "aprofile.md_#10_1bb06fd7",
       "has_header": true,
-      "word_count": 49,
-      "summary": "Krishna Vamsi Dhulipalla is a Computer Science graduate student at Virginia Tech with experience in data engineering, machine learning research, and real-time analytics. He is passionate about building intelligent systems with large language models and big data technologies.",
+      "word_count": 64,
+      "summary": "Krishna Vamsi Dhulipalla possesses extensive hands-on experience in building and deploying Machine Learning (ML) models utilizing prominent frameworks and techniques. His expertise spans a wide array of ML algorithms, tools, and methodologies.",
       "synthetic_queries": [
-        "What is Krishna Vamsi Dhulipalla's educational background and work experience?",
-        "What technologies is Krishna Vamsi Dhulipalla interested in building systems with?",
-        "What field is Krishna Vamsi Dhulipalla studying and what is his expected graduation date?"
+        "What machine learning frameworks and techniques is Krishna Vamsi Dhulipalla proficient in?",
+        "Can Krishna build models with advanced AI tools like Transformers or GANs?",
+        "What is the breadth of Krishna Vamsi Dhulipalla's experience with ML algorithms and evaluation methods?"
       ]
     }
   },
   {
-    "text": "## 🎯 Summary\n\n- 👨‍💻 3+ years in Data Engineering and ML Research\n- 🔁 Focused on LLMs, RAG pipelines, and Genomics\n- ☁️ Experienced with AWS, GCP, and containerized deployments\n- 🔬 Strong background in transformer models, data pipelines, and real-time analytics\n\n---\n\n## 🔭 Current Focus areas\n\n- Fine-tuning and deploying transformer-based genome classification pipelines\n- Building RAG agents and LLM orchestration workflows\n- Architecting real-time data pipelines with Spark, Kafka, and Airflow\n- Containerized, cloud-native deployment (AWS, GCP, Docker)\n\n---\n\n---\n🔹 Summary:\nKrishna Vamsi Dhulipalla has 3+ years of experience in Data Engineering and ML Research, with a focus on transformer models, data pipelines, and real-time analytics, particularly in the areas of LLMs, RAG pipelines, and Genomics. He has experience with cloud platforms like AWS and GCP, and containerized deployments.\n\n🔸 Related Questions:\n- What is Krishna Vamsi Dhulipalla's background and expertise in Data Engineering and ML Research?\n- What are Krishna's current focus areas in terms of research and development?\n- What technologies and platforms is Krishna experienced with in his work on LLMs and Genomics?",
+    "text": "### 🛠️ Data Engineering Tools skills\n\nKrishna builds robust data pipelines using:\n\n- **Apache Kafka**, **Apache Spark**, **Airflow**, **dbt**, **Delta Lake**, and **ETL frameworks**\n\nHe is experienced in designing **big data workflows**, managing **distributed systems**, and scaling **data warehousing**.\n\n---\n\n---\n🔹 Summary:\nKrishna Vamsi Dhulipalla has expertise in building robust data pipelines utilizing various tools. He is skilled in designing big data workflows, managing distributed systems, and scaling data warehousing.\n\n🔸 Related Questions:\n- What data engineering tools is Krishna Vamsi Dhulipalla proficient in?\n- How does Krishna approach building scalable data pipelines?\n- What skills does Krishna possess for managing large-scale data systems?",
     "metadata": {
-      "source": "profile.md",
+      "source": "aprofile.md",
       "header": "# 👋 Hello, I'm Krishna Vamsi Dhulipalla",
-      "chunk_id": "profile.md_#1_0f906409",
+      "chunk_id": "aprofile.md_#11_6a7d4e06",
       "has_header": true,
-      "word_count": 83,
-      "summary": "Krishna Vamsi Dhulipalla has 3+ years of experience in Data Engineering and ML Research, with a focus on transformer models, data pipelines, and real-time analytics, particularly in the areas of LLMs, RAG pipelines, and Genomics. He has experience with cloud platforms like AWS and GCP, and containerized deployments.",
+      "word_count": 40,
+      "summary": "Krishna Vamsi Dhulipalla has expertise in building robust data pipelines utilizing various tools. He is skilled in designing big data workflows, managing distributed systems, and scaling data warehousing.",
       "synthetic_queries": [
-        "What is Krishna Vamsi Dhulipalla's background and expertise in Data Engineering and ML Research?",
-        "What are Krishna's current focus areas in terms of research and development?",
-        "What technologies and platforms is Krishna experienced with in his work on LLMs and Genomics?"
+        "What data engineering tools is Krishna Vamsi Dhulipalla proficient in?",
+        "How does Krishna approach building scalable data pipelines?",
+        "What skills does Krishna possess for managing large-scale data systems?"
       ]
     }
   },
   {
-    "text": "## 🎓 Education\n\n### **Virginia Tech** — M.S. in Computer Science\n\n📍Blacksburg, VA | _Jan 2023 – Dec 2024_  \n**CGPA:** 3.95 / 4.0  \nFocus: Distributed Systems, ML Optimization, Genomics, Transformer Models\n\n### **Vel Tech University** — B.Tech in CSE\n\n📍Chennai, India | _Jun 2018 – May 2022_  \n**CGPA:** 8.24 / 10  \nFocus: Real-Time Analytics Systems, Cloud Fundamentals\n\n---\n\n---\n🔹 Summary:\nKrishna Vamsi Dhulipalla pursued higher education in Computer Science, first earning a B.Tech from Vel Tech University and later an M.S. from Virginia Tech, focusing on areas such as Distributed Systems, ML Optimization, and Genomics. Both degrees were completed with high CGPA scores.\n\n🔸 Related Questions:\n- What are Krishna Vamsi Dhulipalla's educational qualifications?\n- Where did Krishna pursue his higher education in Computer Science?\n- What areas of focus did Krishna have during his master's degree at Virginia Tech?",
+    "text": "### ☁️ Cloud Platforms & Infrastructure skills\n\nHe has deployed systems and models on:\n\n- **AWS**: S3, Glue, Redshift, ECS, SageMaker, CloudWatch\n- **GCP**: BigQuery, Cloud Composer\n- **Other Platforms**: Snowflake, MongoDB\n\nThese tools help him scale ML workloads and automate infrastructure.\n\n---\n\n### ⚙️ DevOps & MLOps Capabilities skills\n\nFor production-ready ML and automation, Krishna uses:\n\n- **Docker**, **Kubernetes**, **CI/CD pipelines**\n- **MLflow**, **Weights & Biases (W&B)** for experiment tracking\n\nHe follows best practices in model lifecycle management and reproducibility.\n\n---\n\n---\n🔹 Summary:\nKrishna Vamsi Dhulipalla possesses skills in deploying systems on various cloud platforms (AWS, GCP, Snowflake, MongoDB) and utilizes tools for DevOps & MLOps (Docker, Kubernetes, MLflow, etc.) to scale ML workloads and ensure production readiness. These skills enable him to manage infrastructure and model lifecycles effectively.\n\n🔸 Related Questions:\n- What cloud platforms and infrastructure tools does Krishna Vamsi Dhulipalla use for deploying ML systems?\n- How does Krishna ensure scalability and automation in his machine learning workflows?\n- What DevOps and MLOps tools are utilized by Krishna Vamsi Dhulipalla for production-ready model deployment?",
     "metadata": {
-      "source": "profile.md",
+      "source": "aprofile.md",
       "header": "# 👋 Hello, I'm Krishna Vamsi Dhulipalla",
-      "chunk_id": "profile.md_#2_29b9983f",
+      "chunk_id": "aprofile.md_#12_5ece1be6",
       "has_header": true,
-      "word_count": 58,
-      "summary": "Krishna Vamsi Dhulipalla pursued higher education in Computer Science, first earning a B.Tech from Vel Tech University and later an M.S. from Virginia Tech, focusing on areas such as Distributed Systems, ML Optimization, and Genomics. Both degrees were completed with high CGPA scores.",
+      "word_count": 82,
+      "summary": "Krishna Vamsi Dhulipalla possesses skills in deploying systems on various cloud platforms (AWS, GCP, Snowflake, MongoDB) and utilizes tools for DevOps & MLOps (Docker, Kubernetes, MLflow, etc.) to scale ML workloads and ensure production readiness. These skills enable him to manage infrastructure and model lifecycles effectively.",
       "synthetic_queries": [
-        "What are Krishna Vamsi Dhulipalla's educational qualifications?",
-        "Where did Krishna pursue his higher education in Computer Science?",
-        "What areas of focus did Krishna have during his master's degree at Virginia Tech?"
+        "What cloud platforms and infrastructure tools does Krishna Vamsi Dhulipalla use for deploying ML systems?",
+        "How does Krishna ensure scalability and automation in his machine learning workflows?",
+        "What DevOps and MLOps tools are utilized by Krishna Vamsi Dhulipalla for production-ready model deployment?"
       ]
     }
   },
   {
-    "text": "## 🛠️ Technical Skills\n\n### Programming Languages skills\n\n- Python, R, SQL, JavaScript, TypeScript, FastApi, nodeJs\n\n### Machine Learning & AI skills\n\n- PyTorch, TensorFlow, Transformers (Hugging Face), GANs, XGBoost, SHAP, Langchain, scikit-learn, LLM finetuning, RAG, Prompt Engineering, Text & Image Generation, Self-Supervised Learning, Hyperparameter Optimization, A/B Testing, Synthetic Data Generation, Cross-Domain Adaptation, kNN, Naive Bayes, SVM, Decision Trees/Random Forests, Clustering, PCA, EDA, Model Evaluation\n\n---\n🔹 Summary:\nKrishna Vamsi Dhulipalla has expertise in various programming languages, including Python, R, and JavaScript, as well as a wide range of machine learning and AI skills, including deep learning frameworks and techniques. His technical skills encompass areas such as natural language processing, computer vision, and predictive modeling.\n\n🔸 Related Questions:\n- What programming languages and machine learning frameworks is Krishna Vamsi Dhulipalla proficient in?\n- What are Krishna Vamsi Dhulipalla's areas of expertise in the field of artificial intelligence?\n- What technical skills does Krishna Vamsi Dhulipalla possess that are relevant to data science and predictive modeling?",
+    "text": "### 📊 Visualization & Reporting Tools skills\n\nKrishna creates dashboards and visual reports using:\n\n- **Tableau**, **Plotly**, **Shiny (R)**, and **Looker**\n\nThese tools help communicate ML insights and drive data-driven decisions.\n\n---\n\n### 🧩 Additional Skills\n\nOther key tools and libraries in Krishna’s toolkit:\n\n- **Pandas**, **NumPy**, **Git**, **REST APIs**\n\nHe applies them in day-to-day data wrangling, code versioning, and API integration.\n\n---\n\n---\n🔹 Summary:\nKrishna Vamsi Dhulipalla utilizes various tools for data visualization/reporting (Tableau, Plotly, Shiny, Looker) and possesses additional skills in data manipulation (Pandas, NumPy), version control (Git), and API integration (REST APIs). These skills aid in communicating insights and driving data-informed decisions.\n\n🔸 Related Questions:\n- What data visualization tools does Krishna Vamsi Dhulipalla use for creating dashboards and reports?\n- Beyond machine learning, what other technical skills does Krishna possess?\n- What tools are in Krishna's toolkit for data analysis, version control, and API interactions?",
     "metadata": {
-      "source": "profile.md",
+      "source": "aprofile.md",
       "header": "# 👋 Hello, I'm Krishna Vamsi Dhulipalla",
-      "chunk_id": "profile.md_#3_7b599e79",
+      "chunk_id": "aprofile.md_#13_b364a174",
       "has_header": true,
-      "word_count": 65,
-      "summary": "Krishna Vamsi Dhulipalla has expertise in various programming languages, including Python, R, and JavaScript, as well as a wide range of machine learning and AI skills, including deep learning frameworks and techniques. His technical skills encompass areas such as natural language processing, computer vision, and predictive modeling.",
+      "word_count": 63,
+      "summary": "Krishna Vamsi Dhulipalla utilizes various tools for data visualization/reporting (Tableau, Plotly, Shiny, Looker) and possesses additional skills in data manipulation (Pandas, NumPy), version control (Git), and API integration (REST APIs). These skills aid in communicating insights and driving data-informed decisions.",
       "synthetic_queries": [
-        "What programming languages and machine learning frameworks is Krishna Vamsi Dhulipalla proficient in?",
-        "What are Krishna Vamsi Dhulipalla's areas of expertise in the field of artificial intelligence?",
-        "What technical skills does Krishna Vamsi Dhulipalla possess that are relevant to data science and predictive modeling?"
+        "What data visualization tools does Krishna Vamsi Dhulipalla use for creating dashboards and reports?",
+        "Beyond machine learning, what other technical skills does Krishna possess?",
+        "What tools are in Krishna's toolkit for data analysis, version control, and API interactions?"
       ]
     }
   },
   {
-    "text": "### Data Engineering skills\n\n- Apache Kafka, Apache Spark, dbt, Delta Lake, Apache Airflow, ETL, Big Data Workflows, Data Warehousing, Distributed Systems\n\n### Cloud & Infrastructure skills\n\n- **AWS:** S3, Glue, Redshift, ECS, SageMaker, CloudWatch\n- **GCP:** BigQuery, Cloud Composer\n- **Other:** Snowflake, MongoDB\n\n### DevOps & MLOps skills\n\n- Docker, Kubernetes, CI/CD pipelines, MLflow, Weights & Biases (W&B)\n\n### Visualization Tools skills\n\n- Tableau, Plotly, Shiny (R), Looker\n\n### Others sills\n\n- REST APIs, Git, Pandas, NumPy\n\n---\n\n---\n🔹 Summary:\nKrishna Vamsi Dhulipalla has expertise in various technical skills, including Data Engineering, Cloud & Infrastructure, DevOps & MLOps, Visualization Tools, and others. His skills span across technologies such as Apache Kafka, Apache Spark, AWS, GCP, Docker, Kubernetes, and more.\n\n🔸 Related Questions:\n- What are Krishna Vamsi Dhulipalla's technical skills and expertise?\n- What cloud and infrastructure platforms is Krishna experienced with?\n- What tools and technologies does Krishna use for data engineering and visualization?",
+    "text": "### 🧪 Data Scientist at Virginia Tech (Current Role)\n\n📍Blacksburg, VA | _Sep 2024 – Present_\n\nKrishna currently works as a **Data Scientist** at **Virginia Tech**, where he leads end-to-end development of ML systems for biological data.\n\n---\n🔹 Summary:\nKrishna Vamsi Dhulipalla currently serves as a Data Scientist at Virginia Tech. His role involves leading the development of machine learning systems for biological data.\n\n🔸 Related Questions:\n- What is Krishna Vamsi Dhulipalla's current profession and workplace?\n- Where is Krishna Vamsi Dhulipalla based while working as a Data Scientist?\n- What type of projects does Krishna Vamsi Dhulipalla lead in his role at Virginia Tech?",
     "metadata": {
-      "source": "profile.md",
+      "source": "aprofile.md",
       "header": "# 👋 Hello, I'm Krishna Vamsi Dhulipalla",
-      "chunk_id": "profile.md_#4_6082e7b0",
+      "chunk_id": "aprofile.md_#15_1b0e289d",
+      "has_header": true,
+      "word_count": 37,
+      "summary": "Krishna Vamsi Dhulipalla currently serves as a Data Scientist at Virginia Tech. His role involves leading the development of machine learning systems for biological data.",
+      "synthetic_queries": [
+        "What is Krishna Vamsi Dhulipalla's current profession and workplace?",
+        "Where is Krishna Vamsi Dhulipalla based while working as a Data Scientist?",
+        "What type of projects does Krishna Vamsi Dhulipalla lead in his role at Virginia Tech?"
+      ]
+    }
+  },
+  {
+    "text": "- Developed **transformer-based classifiers** using PyTorch to analyze plant genomes, achieving **94% accuracy**\n- Automated **ETL workflows for over 1 million samples** using **Apache Airflow** and **dbt**, increasing throughput by **40%**\n- Deployed containerized ML models using **Docker** and **AWS SageMaker**, with monitoring via **CloudWatch** and **MLflow**\n- Authored internal **Python libraries** for reproducible research workflows, improving collaboration and delivery by **20%**\n\n---\n\n---\n🔹 Summary:\nKrishna Vamsi Dhulipalla developed high-accuracy transformer-based classifiers for plant genomes and automated ETL workflows, and also deployed containerized ML models with monitoring. These efforts significantly improved efficiency and collaboration in research workflows.\n\n🔸 Related Questions:\n- What are some notable achievements of Krishna Vamsi Dhulipalla in applying machine learning to genomic analysis?\n- How has Krishna Vamsi Dhulipalla improved the efficiency of data processing pipelines in his projects?\n- What technologies has Krishna Vamsi Dhulipalla utilized for deploying and monitoring machine learning models in cloud environments?",
+    "metadata": {
+      "source": "aprofile.md",
+      "header": "# 👋 Hello, I'm Krishna Vamsi Dhulipalla",
+      "chunk_id": "aprofile.md_#16_f8779cac",
+      "has_header": false,
+      "word_count": 63,
+      "summary": "Krishna Vamsi Dhulipalla developed high-accuracy transformer-based classifiers for plant genomes and automated ETL workflows, and also deployed containerized ML models with monitoring. These efforts significantly improved efficiency and collaboration in research workflows.",
+      "synthetic_queries": [
+        "What are some notable achievements of Krishna Vamsi Dhulipalla in applying machine learning to genomic analysis?",
+        "How has Krishna Vamsi Dhulipalla improved the efficiency of data processing pipelines in his projects?",
+        "What technologies has Krishna Vamsi Dhulipalla utilized for deploying and monitoring machine learning models in cloud environments?"
+      ]
+    }
+  },
+  {
+    "text": "### 🧬 Research Assistant at Virginia Tech\n\n📍Blacksburg, VA | _Jun 2023 – May 2024_\n\nPreviously, Krishna worked as a **Research Assistant** focusing on cloud-based pipelines and reproducibility for genomics workflows.\n\n- Built **data ingestion pipelines** to move genomic datasets into **Redshift**, using **AWS Glue** and **Apache Airflow**\n- Designed and maintained **CI/CD workflows** for model training and deployment\n- Managed ML model tracking using **SageMaker Experiments**, ensuring auditability and version control\n\n---\n\n---\n🔹 Summary:\nKrishna Vamsi Dhulipalla worked as a Research Assistant at Virginia Tech, focusing on cloud-based genomics workflows, from Jun 2023 to May 2024. He developed pipelines, managed CI/CD workflows, and tracked ML models using various AWS tools.\n\n🔸 Related Questions:\n- What was Krishna Vamsi Dhulipalla's role at Virginia Tech and what were his key responsibilities?\n- How did Krishna utilize AWS services in his research work at Virginia Tech?\n- What specific technical skills did Krishna Vamsi Dhulipalla apply during his Research Assistant tenure at Virginia Tech?",
+    "metadata": {
+      "source": "aprofile.md",
+      "header": "# 👋 Hello, I'm Krishna Vamsi Dhulipalla",
+      "chunk_id": "aprofile.md_#17_5fa6c3b6",
+      "has_header": true,
+      "word_count": 73,
+      "summary": "Krishna Vamsi Dhulipalla worked as a Research Assistant at Virginia Tech, focusing on cloud-based genomics workflows, from Jun 2023 to May 2024. He developed pipelines, managed CI/CD workflows, and tracked ML models using various AWS tools.",
+      "synthetic_queries": [
+        "What was Krishna Vamsi Dhulipalla's role at Virginia Tech and what were his key responsibilities?",
+        "How did Krishna utilize AWS services in his research work at Virginia Tech?",
+        "What specific technical skills did Krishna Vamsi Dhulipalla apply during his Research Assistant tenure at Virginia Tech?"
+      ]
+    }
+  },
+  {
+    "text": "### 🏗️ Data Engineer at UJR Technologies Pvt Ltd\n\n📍Hyderabad, India | _Jul 2021 – Dec 2022_\n\nKrishna started his professional career as a **Data Engineer** at **UJR Technologies**, where he modernized legacy data infrastructure.\n\n- Migrated **batch ETL pipelines to real-time** using **Apache Kafka** and **Apache Spark**, reducing latency by **30%**\n- Containerized services with **Docker**, deployed on **AWS ECS** for scalability and resilience\n- Accelerated dashboard queries by **40%** using **Snowflake materialized views** and schema optimization\n\n---\n\n---\n🔹 Summary:\nKrishna Vamsi Dhulipalla worked as a Data Engineer at UJR Technologies Pvt Ltd in Hyderabad, India, from Jul 2021 to Dec 2022, where he successfully modernized legacy data infrastructure. His efforts led to significant reductions in latency and improvements in query acceleration.\n\n🔸 Related Questions:\n- What were Krishna Vamsi Dhulipalla's achievements during his tenure as a Data Engineer at UJR Technologies?\n- How did Krishna Vamsi Dhulipalla contribute to improving data infrastructure at his previous role in Hyderabad?\n- What technologies did Krishna Vamsi Dhulipalla utilize to enhance data processing efficiency in his position at UJR Technologies Pvt Ltd?",
+    "metadata": {
+      "source": "aprofile.md",
+      "header": "# 👋 Hello, I'm Krishna Vamsi Dhulipalla",
+      "chunk_id": "aprofile.md_#18_59445385",
       "has_header": true,
       "word_count": 79,
-      "summary": "Krishna Vamsi Dhulipalla has expertise in various technical skills, including Data Engineering, Cloud & Infrastructure, DevOps & MLOps, Visualization Tools, and others. His skills span across technologies such as Apache Kafka, Apache Spark, AWS, GCP, Docker, Kubernetes, and more.",
+      "summary": "Krishna Vamsi Dhulipalla worked as a Data Engineer at UJR Technologies Pvt Ltd in Hyderabad, India, from Jul 2021 to Dec 2022, where he successfully modernized legacy data infrastructure. His efforts led to significant reductions in latency and improvements in query acceleration.",
       "synthetic_queries": [
-        "What are Krishna Vamsi Dhulipalla's technical skills and expertise?",
-        "What cloud and infrastructure platforms is Krishna experienced with?",
-        "What tools and technologies does Krishna use for data engineering and visualization?"
+        "What were Krishna Vamsi Dhulipalla's achievements during his tenure as a Data Engineer at UJR Technologies?",
+        "How did Krishna Vamsi Dhulipalla contribute to improving data infrastructure at his previous role in Hyderabad?",
+        "What technologies did Krishna Vamsi Dhulipalla utilize to enhance data processing efficiency in his position at UJR Technologies Pvt Ltd?"
       ]
     }
   },
   {
-    "text": "## 💼 Experience\n\n### Data Scientist | Virginia Tech (current)\n\n📍 Blacksburg, VA | _Sep 2024 – Present_\n\n- Designed modular PyTorch pipelines for plant genome classification (94% accuracy)\n- Used Airflow DAGs + dbt to preprocess over 1M biological samples (↑ throughput by 40%)\n- Deployed LLMs via SageMaker + Docker with monitoring in MLflow + CloudWatch\n- Created Python libraries to streamline research cycles (↑ dev productivity by 20%)\n\n---\n🔹 Summary:\nKrishna Vamsi Dhulipalla currently works as a Data Scientist at Virginia Tech, where he has designed and deployed various data pipelines and machine learning models to improve research productivity and efficiency. His projects have achieved notable metrics, such as 94% accuracy in plant genome classification and 40% increase in throughput.\n\n🔸 Related Questions:\n- What is Krishna Vamsi Dhulipalla's current role and what projects has he worked on?\n- What are some notable achievements of Krishna Vamsi Dhulipalla as a Data Scientist?\n- What technologies and tools has Krishna Vamsi Dhulipalla used in his work at Virginia Tech?",
+    "text": "## 📊 Highlight Projects\n\n### Real-Time IoT-Based Temperature Forecasting\n\n- Kafka-based pipeline for 10K+ sensor readings with LLaMA 2-based time series model (91% accuracy)\n- Airflow + Looker dashboards (↓ manual reporting by 30%)\n- S3 lifecycle policies saved 40% storage cost with versioned backups  \n  🔗 [GitHub](https://github.com/krishna-creator/Real-Time-IoT-Based-Temperature-Analytics-and-Forecasting)\n\n---\n🔹 Summary:\nKrishna Vamsi Dhulipalla led a project on Real-Time IoT-Based Temperature Forecasting, achieving 91% accuracy with a Kafka-based pipeline and LLaMA 2 time series model. The project also implemented efficiency gains in reporting and storage costs.\n\n🔸 Related Questions:\n- What notable IoT projects has Krishna Vamsi Dhulipalla been involved in?\n- How has Krishna Vamsi Dhulipalla applied machine learning models in his projects?\n- Can you share an example of Krishna Vamsi Dhulipalla's work where he improved operational efficiency through technology?",
     "metadata": {
-      "source": "profile.md",
+      "source": "aprofile.md",
       "header": "# 👋 Hello, I'm Krishna Vamsi Dhulipalla",
-      "chunk_id": "profile.md_#5_570ef5c6",
-      "has_header": true,
-      "word_count": 71,
-      "summary": "Krishna Vamsi Dhulipalla currently works as a Data Scientist at Virginia Tech, where he has designed and deployed various data pipelines and machine learning models to improve research productivity and efficiency. His projects have achieved notable metrics, such as 94% accuracy in plant genome classification and 40% increase in throughput.",
-      "synthetic_queries": [
-        "What is Krishna Vamsi Dhulipalla's current role and what projects has he worked on?",
-        "What are some notable achievements of Krishna Vamsi Dhulipalla as a Data Scientist?",
-        "What technologies and tools has Krishna Vamsi Dhulipalla used in his work at Virginia Tech?"
-      ]
-    }
-  },
-  {
-    "text": "### Research Assistant | Virginia Tech\n\n📍 Blacksburg, VA | _Jun 2023 – May 2024_\n\n- ETL pipelines using AWS Glue + Airflow to Redshift (↑ availability by 50%)\n- Built CI/CD for ML model deployment, reducing manual effort by 40%\n- Led reproducibility effort with SageMaker tracking and automated logging\n\n---\n🔹 Summary:\nKrishna Vamsi Dhulipalla worked as a Research Assistant at Virginia Tech from June 2023 to May 2024, where he improved data pipeline availability and automated ML model deployment. He led efforts in reproducibility using SageMaker tracking and automated logging.\n\n🔸 Related Questions:\n- What are Krishna Vamsi Dhulipalla's research experience and accomplishments at Virginia Tech?\n- How did Krishna Vamsi Dhulipalla improve data pipeline efficiency during his tenure at Virginia Tech?\n- What are some examples of Krishna Vamsi Dhulipalla's work in machine learning model deployment and reproducibility?",
-    "metadata": {
-      "source": "profile.md",
-      "header": "# 👋 Hello, I'm Krishna Vamsi Dhulipalla",
-      "chunk_id": "profile.md_#6_d0244ad6",
-      "has_header": true,
-      "word_count": 51,
-      "summary": "Krishna Vamsi Dhulipalla worked as a Research Assistant at Virginia Tech from June 2023 to May 2024, where he improved data pipeline availability and automated ML model deployment. He led efforts in reproducibility using SageMaker tracking and automated logging.",
-      "synthetic_queries": [
-        "What are Krishna Vamsi Dhulipalla's research experience and accomplishments at Virginia Tech?",
-        "How did Krishna Vamsi Dhulipalla improve data pipeline efficiency during his tenure at Virginia Tech?",
-        "What are some examples of Krishna Vamsi Dhulipalla's work in machine learning model deployment and reproducibility?"
-      ]
-    }
-  },
-  {
-    "text": "### Data Engineer | UJR Technologies Pvt Ltd\n\n📍 Hyderabad, India | _Jul 2021 – Dec 2022_\n\n- Migrated batch ETL → real-time using Kafka + Spark (↓ latency by 30%)\n- Built containerized services with Docker on ECS (↑ deployment speed by 25%)\n- Tuned Snowflake warehouses, optimized materialized views (↓ query time by 40%)\n\n---\n\n---\n🔹 Summary:\nKrishna Vamsi Dhulipalla worked as a Data Engineer at UJR Technologies Pvt Ltd from Jul 2021 to Dec 2022, where he achieved significant improvements in ETL latency, deployment speed, and query time. He utilized technologies such as Kafka, Spark, Docker, and Snowflake to accomplish these feats.\n\n🔸 Related Questions:\n- What were Krishna Vamsi Dhulipalla's accomplishments as a Data Engineer at UJR Technologies?\n- How did Krishna Vamsi Dhulipalla improve the efficiency of data processing and deployment in his previous role?\n- What technologies did Krishna Vamsi Dhulipalla use to optimize data processing and storage during his tenure at UJR Technologies?",
-    "metadata": {
-      "source": "profile.md",
-      "header": "# 👋 Hello, I'm Krishna Vamsi Dhulipalla",
-      "chunk_id": "profile.md_#7_c27f38dd",
-      "has_header": true,
-      "word_count": 57,
-      "summary": "Krishna Vamsi Dhulipalla worked as a Data Engineer at UJR Technologies Pvt Ltd from Jul 2021 to Dec 2022, where he achieved significant improvements in ETL latency, deployment speed, and query time. He utilized technologies such as Kafka, Spark, Docker, and Snowflake to accomplish these feats.",
-      "synthetic_queries": [
-        "What were Krishna Vamsi Dhulipalla's accomplishments as a Data Engineer at UJR Technologies?",
-        "How did Krishna Vamsi Dhulipalla improve the efficiency of data processing and deployment in his previous role?",
-        "What technologies did Krishna Vamsi Dhulipalla use to optimize data processing and storage during his tenure at UJR Technologies?"
-      ]
-    }
-  },
-  {
-    "text": "## 🧪 Key Projects\n\n### **Real-Time IoT-Based Temperature Forecasting**\n\n- Kafka-based pipeline for 10K+ sensor readings with LLaMA 2-based time series model (91% accuracy)\n- Airflow + Looker dashboards (↓ manual reporting by 30%)\n- S3 lifecycle policies saved 40% storage cost with versioned backups  \n  🔗 [GitHub](https://github.com/krishna-creator/Real-Time-IoT-Based-Temperature-Analytics-and-Forecasting)\n\n---\n🔹 Summary:\nKrishna Vamsi Dhulipalla worked on a Real-Time IoT-Based Temperature Forecasting project, utilizing a Kafka-based pipeline and a LLaMA 2-based time series model, achieving 91% accuracy. He also implemented cost-saving measures and automations using Airflow and Looker dashboards.\n\n🔸 Related Questions:\n- What are some notable projects Krishna Vamsi Dhulipalla has worked on?\n- What IoT-based projects has Krishna Vamsi Dhulipalla contributed to?\n- Can you provide an example of Krishna Vamsi Dhulipalla's experience with data pipeline and analytics projects?",
-    "metadata": {
-      "source": "profile.md",
-      "header": "# 👋 Hello, I'm Krishna Vamsi Dhulipalla",
-      "chunk_id": "profile.md_#8_c6fde132",
+      "chunk_id": "aprofile.md_#19_3cc7e60a",
       "has_header": true,
       "word_count": 47,
-      "summary": "Krishna Vamsi Dhulipalla worked on a Real-Time IoT-Based Temperature Forecasting project, utilizing a Kafka-based pipeline and a LLaMA 2-based time series model, achieving 91% accuracy. He also implemented cost-saving measures and automations using Airflow and Looker dashboards.",
+      "summary": "Krishna Vamsi Dhulipalla led a project on Real-Time IoT-Based Temperature Forecasting, achieving 91% accuracy with a Kafka-based pipeline and LLaMA 2 time series model. The project also implemented efficiency gains in reporting and storage costs.",
       "synthetic_queries": [
-        "What are some notable projects Krishna Vamsi Dhulipalla has worked on?",
-        "What IoT-based projects has Krishna Vamsi Dhulipalla contributed to?",
-        "Can you provide an example of Krishna Vamsi Dhulipalla's experience with data pipeline and analytics projects?"
-      ]
-    }
-  },
-  {
-    "text": "### **Proxy TuNER: Cross-Domain NER**\n\n- Developed a proxy tuning method for domain-agnostic BERT\n- 15% generalization gain using gradient reversal + feature alignment\n- 70% cost reduction via logit-level ensembling  \n  🔗 [GitHub](https://github.com/krishna-creator/ProxytuNER)\n\n### **IntelliMeet: AI-Powered Conferencing**\n\n- Federated learning, end-to-end encrypted platform\n- Live attention detection using RetinaFace (<200ms latency)\n- Summarization with Transformer-based speech-to-text  \n  🔗 [GitHub](https://github.com/krishna-creator/SE-Project---IntelliMeet)\n\n---\n🔹 Summary:\nKrishna Vamsi Dhulipalla developed two notable projects: Proxy TuNER, a cross-domain named entity recognition method that improves generalization and reduces costs, and IntelliMeet, an AI-powered conferencing platform that utilizes federated learning and end-to-end encryption. Both projects have accompanying GitHub repositories.\n\n🔸 Related Questions:\n- What are some notable AI projects developed by Krishna Vamsi Dhulipalla?\n- How has Krishna Vamsi Dhulipalla contributed to advancements in named entity recognition and conferencing technology?\n- What are some examples of Krishna Vamsi Dhulipalla's work in AI and machine learning, and where can I find more information about them?",
-    "metadata": {
-      "source": "profile.md",
-      "header": "# 👋 Hello, I'm Krishna Vamsi Dhulipalla",
-      "chunk_id": "profile.md_#9_e225dbb3",
-      "has_header": true,
-      "word_count": 58,
-      "summary": "Krishna Vamsi Dhulipalla developed two notable projects: Proxy TuNER, a cross-domain named entity recognition method that improves generalization and reduces costs, and IntelliMeet, an AI-powered conferencing platform that utilizes federated learning and end-to-end encryption. Both projects have accompanying GitHub repositories.",
-      "synthetic_queries": [
-        "What are some notable AI projects developed by Krishna Vamsi Dhulipalla?",
-        "How has Krishna Vamsi Dhulipalla contributed to advancements in named entity recognition and conferencing technology?",
-        "What are some examples of Krishna Vamsi Dhulipalla's work in AI and machine learning, and where can I find more information about them?"
-      ]
-    }
-  },
-  {
-    "text": "## 🧪 Key Projects\n\n### Real-Time IoT-Based Temperature Forecasting\n\n- Kafka-based pipeline for 10K+ sensor readings with LLaMA 2-based time series model (91% accuracy)\n- Airflow + Looker dashboards (↓ manual reporting by 30%)\n- S3 lifecycle policies saved 40% storage cost with versioned backups  \n  🔗 [GitHub](https://github.com/krishna-creator/Real-Time-IoT-Based-Temperature-Analytics-and-Forecasting)\n\n---\n🔹 Summary:\nKrishna Vamsi Dhulipalla led a project on real-time IoT-based temperature forecasting, leveraging Kafka, LLaMA 2, and Airflow to achieve 91% accuracy and reduce manual reporting by 30%. The project also utilized S3 lifecycle policies to save 40% storage cost.\n\n🔸 Related Questions:\n- What notable projects has Krishna Vamsi Dhulipalla worked on?\n- How has Krishna Vamsi Dhulipalla applied machine learning models in his projects?\n- What are some examples of Krishna Vamsi Dhulipalla's work in IoT-based analytics and forecasting?",
-    "metadata": {
-      "source": "profile.md",
-      "header": "# 👋 Hello, I'm Krishna Vamsi Dhulipalla",
-      "chunk_id": "profile.md_#10_662d50be",
-      "has_header": true,
-      "word_count": 47,
-      "summary": "Krishna Vamsi Dhulipalla led a project on real-time IoT-based temperature forecasting, leveraging Kafka, LLaMA 2, and Airflow to achieve 91% accuracy and reduce manual reporting by 30%. The project also utilized S3 lifecycle policies to save 40% storage cost.",
-      "synthetic_queries": [
-        "What notable projects has Krishna Vamsi Dhulipalla worked on?",
+        "What notable IoT projects has Krishna Vamsi Dhulipalla been involved in?",
         "How has Krishna Vamsi Dhulipalla applied machine learning models in his projects?",
-        "What are some examples of Krishna Vamsi Dhulipalla's work in IoT-based analytics and forecasting?"
+        "Can you share an example of Krishna Vamsi Dhulipalla's work where he improved operational efficiency through technology?"
       ]
     }
   },
   {
-    "text": "### Proxy TuNER: Cross-Domain NER\n\n- Developed a proxy tuning method for domain-agnostic BERT\n- 15% generalization gain using gradient reversal + feature alignment\n- 70% cost reduction via logit-level ensembling  \n  🔗 [GitHub](https://github.com/krishna-creator/ProxytuNER)\n\n### IntelliMeet: AI-Powered Conferencing\n\n- Federated learning, end-to-end encrypted platform\n- Live attention detection using RetinaFace (<200ms latency)\n- Summarization with Transformer-based speech-to-text  \n  🔗 [GitHub](https://github.com/krishna-creator/SE-Project---IntelliMeet)\n\n---\n🔹 Summary:\nKrishna Vamsi Dhulipalla developed two notable projects: Proxy TuNER, a cross-domain named entity recognition method, and IntelliMeet, an AI-powered conferencing platform. These projects showcase Krishna's expertise in natural language processing, federated learning, and computer vision.\n\n🔸 Related Questions:\n- What AI projects has Krishna Vamsi Dhulipalla worked on?\n- How has Krishna contributed to the development of natural language processing and computer vision?\n- What are some notable accomplishments of Krishna Vamsi Dhulipalla in the field of AI research?",
+    "text": "### Proxy TuNER: Cross-Domain NER\n\n- Developed a proxy tuning method for domain-agnostic BERT\n- 15% generalization gain using gradient reversal + feature alignment\n- 70% cost reduction via logit-level ensembling  \n  🔗 [GitHub](https://github.com/krishna-creator/ProxytuNER)\n\n### IntelliMeet: AI-Powered Conferencing\n\n- Federated learning, end-to-end encrypted platform\n- Live attention detection using RetinaFace (<200ms latency)\n- Summarization with Transformer-based speech-to-text  \n  🔗 [GitHub](https://github.com/krishna-creator/SE-Project---IntelliMeet)\n\n---\n🔹 Summary:\nKrishna Vamsi Dhulipalla developed innovative AI projects, including Proxy TuNER, a cross-domain Named Entity Recognition (NER) method, and IntelliMeet, an AI-powered conferencing platform with federated learning and end-to-end encryption. These projects showcase advancements in domain-agnostic BERT tuning and real-time conferencing solutions.\n\n🔸 Related Questions:\n- What notable AI projects has Krishna Vamsi Dhulipalla developed, highlighting their key innovations?\n- How has Krishna Vamsi Dhulipalla contributed to advancements in cross-domain Named Entity Recognition and conferencing technology?\n- What are some examples of Krishna Vamsi Dhulipalla's work in applying deep learning techniques like BERT tuning and federated learning to real-world problems?",
     "metadata": {
-      "source": "profile.md",
+      "source": "aprofile.md",
       "header": "# 👋 Hello, I'm Krishna Vamsi Dhulipalla",
-      "chunk_id": "profile.md_#11_e7dc9201",
+      "chunk_id": "aprofile.md_#20_e7dc9201",
       "has_header": true,
       "word_count": 58,
-      "summary": "Krishna Vamsi Dhulipalla developed two notable projects: Proxy TuNER, a cross-domain named entity recognition method, and IntelliMeet, an AI-powered conferencing platform. These projects showcase Krishna's expertise in natural language processing, federated learning, and computer vision.",
+      "summary": "Krishna Vamsi Dhulipalla developed innovative AI projects, including Proxy TuNER, a cross-domain Named Entity Recognition (NER) method, and IntelliMeet, an AI-powered conferencing platform with federated learning and end-to-end encryption. These projects showcase advancements in domain-agnostic BERT tuning and real-time conferencing solutions.",
       "synthetic_queries": [
-        "What AI projects has Krishna Vamsi Dhulipalla worked on?",
-        "How has Krishna contributed to the development of natural language processing and computer vision?",
-        "What are some notable accomplishments of Krishna Vamsi Dhulipalla in the field of AI research?"
+        "What notable AI projects has Krishna Vamsi Dhulipalla developed, highlighting their key innovations?",
+        "How has Krishna Vamsi Dhulipalla contributed to advancements in cross-domain Named Entity Recognition and conferencing technology?",
+        "What are some examples of Krishna Vamsi Dhulipalla's work in applying deep learning techniques like BERT tuning and federated learning to real-world problems?"
       ]
     }
   },
   {
-    "text": "### Automated Drone Image Analysis\n\n- Real-time crop disease detection using drone imagery\n- Used OpenCV, RAG, and GANs for synthetic data generation\n- Improved detection accuracy by 15% and reduced processing latency by 70%\n\n### COVID-19 Misinformation Tracking\n\n- NLP pipeline with BERT, NLTK, NetworkX on >1M tweets\n- Misinformation detection (89% accuracy)\n- Integrated sentiment analysis, influence tracking, and community detection\n\n---\n🔹 Summary:\nKrishna Vamsi Dhulipalla developed innovative solutions for crop disease detection using drone imagery and for tracking COVID-19 misinformation on Twitter. His techniques achieved significant improvements in accuracy and efficiency.\n\n🔸 Related Questions:\n- What projects has Krishna Vamsi Dhulipalla worked on that involve image analysis and machine learning?\n- How did Krishna Vamsi Dhulipalla use NLP techniques to track COVID-19 misinformation on social media?\n- What are some notable achievements of Krishna Vamsi Dhulipalla in the field of computer vision and data analysis?",
+    "text": "### Automated Drone Image Analysis\n\n- Real-time crop disease detection using drone imagery\n- Used OpenCV, RAG, and GANs for synthetic data generation\n- Improved detection accuracy by 15% and reduced processing latency by 70%\n\n### COVID-19 Misinformation Tracking\n\n- NLP pipeline with BERT, NLTK, NetworkX on >1M tweets\n- Misinformation detection (89% accuracy)\n- Integrated sentiment analysis, influence tracking, and community detection\n\n---\n🔹 Summary:\nKrishna Vamsi Dhulipalla's work involves innovative applications of AI, including automated drone image analysis for crop disease detection and a comprehensive NLP pipeline for COVID-19 misinformation tracking. His projects showcase significant improvements in accuracy and latency.\n\n🔸 Related Questions:\n- What AI-powered projects has Krishna Vamsi Dhulipalla undertaken to contribute to agricultural technology and global health crises?\n- How has Krishna Vamsi Dhulipalla leveraged deep learning techniques like GANs and BERT in his research or professional projects?\n- Can you highlight Krishna Vamsi Dhulipalla's achievements in improving detection accuracy and reducing processing time in his technology projects?",
     "metadata": {
-      "source": "profile.md",
+      "source": "aprofile.md",
       "header": "# 👋 Hello, I'm Krishna Vamsi Dhulipalla",
-      "chunk_id": "profile.md_#12_5fcb1239",
+      "chunk_id": "aprofile.md_#21_5fcb1239",
       "has_header": true,
       "word_count": 63,
-      "summary": "Krishna Vamsi Dhulipalla developed innovative solutions for crop disease detection using drone imagery and for tracking COVID-19 misinformation on Twitter. His techniques achieved significant improvements in accuracy and efficiency.",
+      "summary": "Krishna Vamsi Dhulipalla's work involves innovative applications of AI, including automated drone image analysis for crop disease detection and a comprehensive NLP pipeline for COVID-19 misinformation tracking. His projects showcase significant improvements in accuracy and latency.",
       "synthetic_queries": [
-        "What projects has Krishna Vamsi Dhulipalla worked on that involve image analysis and machine learning?",
-        "How did Krishna Vamsi Dhulipalla use NLP techniques to track COVID-19 misinformation on social media?",
-        "What are some notable achievements of Krishna Vamsi Dhulipalla in the field of computer vision and data analysis?"
+        "What AI-powered projects has Krishna Vamsi Dhulipalla undertaken to contribute to agricultural technology and global health crises?",
+        "How has Krishna Vamsi Dhulipalla leveraged deep learning techniques like GANs and BERT in his research or professional projects?",
+        "Can you highlight Krishna Vamsi Dhulipalla's achievements in improving detection accuracy and reducing processing time in his technology projects?"
       ]
     }
   },
   {
-    "text": "### Talking Buddy: Emotional AI Companion\n\n- Built a context-aware chatbot with 68.7K parameter GRU\n- 85% sentiment classification accuracy\n- Deployed across multiple platforms with real-time response\n\n---\n\n---\n🔹 Summary:\nKrishna Vamsi Dhulipalla developed an emotional AI companion, Talking Buddy, a context-aware chatbot with high sentiment classification accuracy and real-time response capabilities. The chatbot was successfully deployed across multiple platforms.\n\n🔸 Related Questions:\n- What AI projects has Krishna Vamsi Dhulipalla worked on?\n- What is Talking Buddy, and what features does it have?\n- What are some examples of Krishna's accomplishments in natural language processing?",
+    "text": "### Talking Buddy: Emotional AI Companion\n\n- Built a context-aware chatbot with 68.7K parameter GRU\n- 85% sentiment classification accuracy\n- Deployed across multiple platforms with real-time response\n\n---\n\n---\n🔹 Summary:\nKrishna Vamsi Dhulipalla developed Talking Buddy, a context-aware emotional AI chatbot with high sentiment classification accuracy, deployable across multiple platforms. The chatbot boasts 68.7K parameter GRU and achieves 85% sentiment classification accuracy.\n\n🔸 Related Questions:\n- What AI-powered projects has Krishna Vamsi Dhulipalla worked on to showcase his expertise in emotional intelligence?\n- Can you share details about Krishna's achievements in developing and deploying chatbots with high sentiment analysis accuracy?\n- What technologies and platforms has Krishna Vamsi Dhulipalla utilized in his context-aware chatbot development projects, such as Talking Buddy?",
     "metadata": {
-      "source": "profile.md",
+      "source": "aprofile.md",
       "header": "# 👋 Hello, I'm Krishna Vamsi Dhulipalla",
-      "chunk_id": "profile.md_#13_f73a37ed",
+      "chunk_id": "aprofile.md_#22_f73a37ed",
       "has_header": true,
       "word_count": 29,
-      "summary": "Krishna Vamsi Dhulipalla developed an emotional AI companion, Talking Buddy, a context-aware chatbot with high sentiment classification accuracy and real-time response capabilities. The chatbot was successfully deployed across multiple platforms.",
+      "summary": "Krishna Vamsi Dhulipalla developed Talking Buddy, a context-aware emotional AI chatbot with high sentiment classification accuracy, deployable across multiple platforms. The chatbot boasts 68.7K parameter GRU and achieves 85% sentiment classification accuracy.",
       "synthetic_queries": [
-        "What AI projects has Krishna Vamsi Dhulipalla worked on?",
-        "What is Talking Buddy, and what features does it have?",
-        "What are some examples of Krishna's accomplishments in natural language processing?"
+        "What AI-powered projects has Krishna Vamsi Dhulipalla worked on to showcase his expertise in emotional intelligence?",
+        "Can you share details about Krishna's achievements in developing and deploying chatbots with high sentiment analysis accuracy?",
+        "What technologies and platforms has Krishna Vamsi Dhulipalla utilized in his context-aware chatbot development projects, such as Talking Buddy?"
       ]
     }
   },
   {
-    "text": "## 📜 Certifications\n\n- ✅ Building RAG Agents with LLMs – NVIDIA\n- ✅ Google Cloud Data Engineering Foundations\n- ✅ AWS Machine Learning Specialty\n- ✅ Microsoft MERN Development\n- ✅ End-to-End Real-World Data Engineering with Snowflake\n- ✅ Delivering Data-Driven Decisions with AWS\n- ✅ AICTE-EduSkills Certificate in AWS\n- ✅ Coursera ML Specialization\n  > View all credentials: [LinkedIn Certifications](https://www.linkedin.com/in/krishnavamsidhulipalla/)\n\n---\n\n---\n🔹 Summary:\nKrishna Vamsi Dhulipalla has obtained various certifications in technologies such as AI, cloud computing, and data engineering from reputable platforms like NVIDIA, Google Cloud, AWS, and Coursera. These certifications demonstrate his expertise in these areas.\n\n🔸 Related Questions:\n- What certifications does Krishna Vamsi Dhulipalla hold in data engineering and machine learning?\n- What are Krishna's credentials in cloud computing and AI on platforms like AWS and Google Cloud?\n- What type of professional certifications has Krishna Vamsi Dhulipalla obtained to showcase his expertise in tech?",
+    "text": "## 📜 Certifications\n\n- 🏆 NVIDIA – Building RAG Agents with LLMs\n- 🏆 Google Cloud – Data Engineering Foundations\n- 🏆 AWS – Machine Learning Specialty\n- 🏆 Microsoft – MERN Stack Development\n- 🏆 Snowflake – End-to-End Data Engineering\n- 🏆 Coursera – Machine Learning Specialization  \n  🔗 [View All Credentials](https://www.linkedin.com/in/krishnavamsidhulipalla/)\n\n---\n\n---\n🔹 Summary:\nKrishna Vamsi Dhulipalla holds multiple prestigious certifications in tech fields, including AI, cloud computing, and data engineering. These certifications are from renowned institutions like NVIDIA, Google Cloud, AWS, Microsoft, Snowflake, and Coursera.\n\n🔸 Related Questions:\n- What technical certifications does Krishna Vamsi Dhulipalla possess?\n- What cloud computing and AI-related credentials are listed on Krishna Vamsi Dhulipalla's profile?\n- What are the notable tech specializations and certifications achieved by Krishna Vamsi Dhulipalla?",
     "metadata": {
-      "source": "profile.md",
+      "source": "aprofile.md",
       "header": "# 👋 Hello, I'm Krishna Vamsi Dhulipalla",
-      "chunk_id": "profile.md_#14_2db72caa",
+      "chunk_id": "aprofile.md_#23_b8307546",
       "has_header": true,
-      "word_count": 63,
-      "summary": "Krishna Vamsi Dhulipalla has obtained various certifications in technologies such as AI, cloud computing, and data engineering from reputable platforms like NVIDIA, Google Cloud, AWS, and Coursera. These certifications demonstrate his expertise in these areas.",
+      "word_count": 53,
+      "summary": "Krishna Vamsi Dhulipalla holds multiple prestigious certifications in tech fields, including AI, cloud computing, and data engineering. These certifications are from renowned institutions like NVIDIA, Google Cloud, AWS, Microsoft, Snowflake, and Coursera.",
       "synthetic_queries": [
-        "What certifications does Krishna Vamsi Dhulipalla hold in data engineering and machine learning?",
-        "What are Krishna's credentials in cloud computing and AI on platforms like AWS and Google Cloud?",
-        "What type of professional certifications has Krishna Vamsi Dhulipalla obtained to showcase his expertise in tech?"
+        "What technical certifications does Krishna Vamsi Dhulipalla possess?",
+        "What cloud computing and AI-related credentials are listed on Krishna Vamsi Dhulipalla's profile?",
+        "What are the notable tech specializations and certifications achieved by Krishna Vamsi Dhulipalla?"
       ]
     }
   },
   {
-    "text": "## 📚 Publications\n\n- 🧬 _IEEE BIBM 2024_:  \n  “Leveraging ML for Predicting Circadian Transcription in mRNAs and lncRNAs”  \n  [DOI: 10.1109/BIBM62325.2024.10822684](https://doi.org/10.1109/BIBM62325.2024.10822684)\n\n- 🌿 _MLCB (Submitted)_:  \n  “Harshening DNA Foundation Models for TF Binding Prediction in Plants”\n\n---\n\n## 🔗 Links\n\n- 🌐 [Portfolio](http://krishna-dhulipalla.github.io)\n- 🧪 [GitHub](https://github.com/Krishna-dhulipalla)\n- 💼 [LinkedIn](https://www.linkedin.com/in/krishnavamsidhulipalla)\n- 📬 Email: dhulipallakrishnavamsi@gmail.com\n- 📱 Phone: +1 (540) 558-3528\n\n---\n🔹 Summary:\nKrishna Vamsi Dhulipalla is a researcher with publications in the field of bioinformatics, including a paper on predicting circadian transcription in mRNAs and lncRNAs. He has a portfolio, GitHub, LinkedIn, and contact information available online.\n\n🔸 Related Questions:\n- What are Krishna Vamsi Dhulipalla's research publications?\n- Where can I find Krishna Vamsi Dhulipalla's portfolio and GitHub profile?\n- How can I contact Krishna Vamsi Dhulipalla for collaboration or more information on his research?",
+    "text": "## 📚 Research Publications\n\n- **IEEE BIBM 2024** – “Leveraging ML for Predicting Circadian Transcription in mRNAs and lncRNAs”  \n  [DOI: 10.1109/BIBM62325.2024.10822684](https://doi.org/10.1109/BIBM62325.2024.10822684)\n\n- **MLCB (Under Review)** – “Harnessing DNA Foundation Models for TF Binding Prediction in Plants”\n\n---\n\n---\n🔹 Summary:\nKrishna Vamsi Dhulipalla's research publications include leveraging machine learning (ML) for predicting circadian transcription and utilizing DNA foundation models for transcription factor binding prediction. These works are featured in/contributed to IEEE BIBM 2024 and are under review by MLCB.\n\n🔸 Related Questions:\n- What are the recent research publication contributions of Krishna Vamsi Dhulipalla in the field of bioinformatics and machine learning?\n- Can you provide information on Krishna Vamsi Dhulipalla's scholarly works related to predictive models in molecular biology?\n- What publications by Krishna Vamsi Dhulipalla demonstrate the application of machine learning in gene regulation studies?",
     "metadata": {
-      "source": "profile.md",
+      "source": "aprofile.md",
       "header": "# 👋 Hello, I'm Krishna Vamsi Dhulipalla",
-      "chunk_id": "profile.md_#15_ba72264c",
+      "chunk_id": "aprofile.md_#24_971c5758",
       "has_header": true,
-      "word_count": 57,
-      "summary": "Krishna Vamsi Dhulipalla is a researcher with publications in the field of bioinformatics, including a paper on predicting circadian transcription in mRNAs and lncRNAs. He has a portfolio, GitHub, LinkedIn, and contact information available online.",
+      "word_count": 37,
+      "summary": "Krishna Vamsi Dhulipalla's research publications include leveraging machine learning (ML) for predicting circadian transcription and utilizing DNA foundation models for transcription factor binding prediction. These works are featured in/contributed to IEEE BIBM 2024 and are under review by MLCB.",
       "synthetic_queries": [
-        "What are Krishna Vamsi Dhulipalla's research publications?",
-        "Where can I find Krishna Vamsi Dhulipalla's portfolio and GitHub profile?",
-        "How can I contact Krishna Vamsi Dhulipalla for collaboration or more information on his research?"
+        "What are the recent research publication contributions of Krishna Vamsi Dhulipalla in the field of bioinformatics and machine learning?",
+        "Can you provide information on Krishna Vamsi Dhulipalla's scholarly works related to predictive models in molecular biology?",
+        "What publications by Krishna Vamsi Dhulipalla demonstrate the application of machine learning in gene regulation studies?"
       ]
     }
   },
   {
-    "text": "# Current Tasks\n\nThese are the current ongoing tasks Krishna is actively working on:\n\n---\n🔹 Summary:\nKrishna Vamsi Dhulipalla is currently working on several ongoing tasks, which are listed here. These tasks are his active priorities at the moment.\n\n🔸 Related Questions:\n- What are Krishna's current projects?\n- What is Krishna Vamsi Dhulipalla working on right now?\n- What are Krishna's ongoing tasks at the moment?",
+    "text": "## 🔗 External Links / Contact details\n\n- 🌐 [Personal Portfolio/ personal website](http://krishna-dhulipalla.github.io)\n- 🧪 [GitHub](https://github.com/Krishna-dhulipalla)\n- 💼 [LinkedIn](https://www.linkedin.com/in/krishnavamsidhulipalla)\n- 📬 dhulipallakrishnavamsi@gmail.com\n- 📱 +1 (540) 558-3528\n\n---\n🔹 Summary:\nThis chunk provides external links and contact details for Krishna Vamsi Dhulipalla, including his personal website, GitHub, LinkedIn, email, and phone number. It serves as a hub for accessing Krishna's online presence and getting in touch with him.\n\n🔸 Related Questions:\n- How can I find Krishna Vamsi Dhulipalla's professional online profiles and contact information?\n- What are the best ways to get in touch with Krishna Vamsi Dhulipalla for collaborations or inquiries?\n- Where can I view Krishna Vamsi Dhulipalla's personal website and GitHub projects?",
     "metadata": {
-      "source": "task.md",
-      "header": "# Current Tasks",
-      "chunk_id": "task.md_#0_28e7171d",
+      "source": "aprofile.md",
+      "header": "# 👋 Hello, I'm Krishna Vamsi Dhulipalla",
+      "chunk_id": "aprofile.md_#25_5190270a",
       "has_header": true,
-      "word_count": 14,
-      "summary": "Krishna Vamsi Dhulipalla is currently working on several ongoing tasks, which are listed here. These tasks are his active priorities at the moment.",
+      "word_count": 27,
+      "summary": "This chunk provides external links and contact details for Krishna Vamsi Dhulipalla, including his personal website, GitHub, LinkedIn, email, and phone number. It serves as a hub for accessing Krishna's online presence and getting in touch with him.",
       "synthetic_queries": [
-        "What are Krishna's current projects?",
-        "What is Krishna Vamsi Dhulipalla working on right now?",
-        "What are Krishna's ongoing tasks at the moment?"
+        "How can I find Krishna Vamsi Dhulipalla's professional online profiles and contact information?",
+        "What are the best ways to get in touch with Krishna Vamsi Dhulipalla for collaborations or inquiries?",
+        "Where can I view Krishna Vamsi Dhulipalla's personal website and GitHub projects?"
       ]
     }
   },
   {
-    "text": "- 🔧 Build monolithic personal chatbot with FastAPI, Open Source LLM, and FAISS\n- 🔄 Refactor profile.md and chunk into semantic units for retrieval\n- 📁 Ingest resume, goals, and daily notes into vector DB with metadata\n- 🧠 Add multi-agent support (planner + tool caller) for downstream expansion\n- 📊 Debug and enhance gene co-expression visualization in R Shiny App\n- ✍️ Finalize publication for cross-species TFBS prediction (HyenaDNA-based)\n- 📬 Apply to 3 targeted data roles per week (focus: platform/data infra roles)\n- 📚 Review Kubernetes for ML deployment & NVIDIA's RAG Agent course weekly\n\n---\n🔹 Summary:\nKrishna Vamsi Dhulipalla's tasks include building a personal chatbot, refactoring profile documents, and enhancing data visualization in R Shiny App, among other projects. He is also working on applying to targeted data roles and reviewing Kubernetes for ML deployment.\n\n🔸 Related Questions:\n- What are Krishna Vamsi Dhulipalla's current projects and tasks?\n- What tools and technologies is Krishna using for his personal projects?\n- What are Krishna's goals and job aspirations in the field of data science?",
+    "text": "# 🤖 Chatbot Architecture Overview: Krishna's Personal AI Assistant\n\nThis document outlines the technical architecture and modular design of Krishna Vamsi Dhulipalla’s personal AI chatbot system, implemented using **LangChain**, **OpenAI**, **NVIDIA NIMs**, and **Gradio**. The assistant is built for intelligent, retriever-augmented, memory-aware interaction tailored to Krishna’s background and user context.\n\n---\n\n---\n🔹 Summary:\nThis document outlines the technical architecture of Krishna Vamsi Dhulipalla's personal AI chatbot, built with LangChain, OpenAI, NVIDIA NIMs, and Gradio for tailored interactions. The chatbot is designed for intelligent, context-aware conversations suited to Krishna's background.\n\n🔸 Related Questions:\n- What technologies power Krishna Vamsi Dhulipalla's personalized AI assistant?\n- How is Krishna's chatbot system designed to understand and respond to his specific context?\n- What architectural components enable the intelligent interaction features in Krishna Vamsi Dhulipalla's personal AI chatbot?",
     "metadata": {
-      "source": "task.md",
-      "header": "# Current Tasks",
-      "chunk_id": "task.md_#1_153da7e0",
+      "source": "Chatbot_Architecture_Notes.md",
+      "header": "# 🤖 Chatbot Architecture Overview: Krishna's Personal AI Assistant",
+      "chunk_id": "Chatbot_Architecture_Notes.md_#0_08c61211",
+      "has_header": true,
+      "word_count": 51,
+      "summary": "This document outlines the technical architecture of Krishna Vamsi Dhulipalla's personal AI chatbot, built with LangChain, OpenAI, NVIDIA NIMs, and Gradio for tailored interactions. The chatbot is designed for intelligent, context-aware conversations suited to Krishna's background.",
+      "synthetic_queries": [
+        "What technologies power Krishna Vamsi Dhulipalla's personalized AI assistant?",
+        "How is Krishna's chatbot system designed to understand and respond to his specific context?",
+        "What architectural components enable the intelligent interaction features in Krishna Vamsi Dhulipalla's personal AI chatbot?"
+      ]
+    }
+  },
+  {
+    "text": "## 🧱 Core Components\n\n### 1. **LLMs Used**\n\n- **Rephraser LLM**: `phi-3-mini-4k-instruct` (NVIDIA)\n- **Relevance Classifier**: `llama3-70b-instruct` (NVIDIA)\n- **Primary Answer Generator**: `gpt-4o` (OpenAI, streaming)\n- **Fallback Humor Model**: `mixtral-8x22b-instruct` (NVIDIA)\n- **knowledge base**: `mixtral-7-instruct` (NVIDIA)\n\nEach model has a specialized role and is piped via LangChain's streaming or synchronous execution.\n\n---\n\n---\n🔹 Summary:\nKrishna Vamsi Dhulipalla's tech setup involves multiple Large Language Models (LLMs) for specific tasks, powered by NVIDIA and OpenAI. These LLMs work together via LangChain for efficient execution.\n\n🔸 Related Questions:\n- What AI models does Krishna Vamsi Dhulipalla utilize for generating responses?\n- Can you outline the technological architecture Krishna Vamsi Dhulipalla employs for text processing tasks?\n- Which providers' LLMs (e.g., NVIDIA, OpenAI) are integrated into Krishna Vamsi Dhulipalla's language processing pipeline?",
+    "metadata": {
+      "source": "Chatbot_Architecture_Notes.md",
+      "header": "# 🤖 Chatbot Architecture Overview: Krishna's Personal AI Assistant",
+      "chunk_id": "Chatbot_Architecture_Notes.md_#1_1c0f08b5",
+      "has_header": true,
+      "word_count": 52,
+      "summary": "Krishna Vamsi Dhulipalla's tech setup involves multiple Large Language Models (LLMs) for specific tasks, powered by NVIDIA and OpenAI. These LLMs work together via LangChain for efficient execution.",
+      "synthetic_queries": [
+        "What AI models does Krishna Vamsi Dhulipalla utilize for generating responses?",
+        "Can you outline the technological architecture Krishna Vamsi Dhulipalla employs for text processing tasks?",
+        "Which providers' LLMs (e.g., NVIDIA, OpenAI) are integrated into Krishna Vamsi Dhulipalla's language processing pipeline?"
+      ]
+    }
+  },
+  {
+    "text": "## 🔍 Retrieval Architecture\n\n### ✅ **Hybrid Retrieval System**\n\nThe assistant uses **hybrid retrieval** combining:\n\n- **BM25Retriever**: Traditional keyword-based scoring\n- **FAISS Vector Search**: Dense embeddings from `sentence-transformers/all-MiniLM-L6-v2`\n\n### ⚙️ Rephrasing Flow\n\n- A user's query is rewritten into **3 diverse subqueries** (varying tone and style)\n- Each subquery independently queries BM25 and FAISS\n\n---\n🔹 Summary:\nThe retrieval system for documents related to Krishna Vamsi Dhulipalla utilizes a hybrid approach, combining traditional keyword-based BM25 retrieval with dense vector embeddings from FAISS. This dual method enhances query handling by rephrasing user inquiries into diverse subqueries.\n\n🔸 Related Questions:\n- What retrieval methodology is used to optimize document search results about Krishna Vamsi Dhulipalla's life and works?\n- How does the system handle varied user queries when searching for information on Krishna Vamsi Dhulipalla's achievements?\n- What technologies are integrated into the search architecture to provide comprehensive results for topics related to Krishna Vamsi Dhulipalla?",
+    "metadata": {
+      "source": "Chatbot_Architecture_Notes.md",
+      "header": "# 🤖 Chatbot Architecture Overview: Krishna's Personal AI Assistant",
+      "chunk_id": "Chatbot_Architecture_Notes.md_#2_4d3acb88",
+      "has_header": true,
+      "word_count": 54,
+      "summary": "The retrieval system for documents related to Krishna Vamsi Dhulipalla utilizes a hybrid approach, combining traditional keyword-based BM25 retrieval with dense vector embeddings from FAISS. This dual method enhances query handling by rephrasing user inquiries into diverse subqueries.",
+      "synthetic_queries": [
+        "What retrieval methodology is used to optimize document search results about Krishna Vamsi Dhulipalla's life and works?",
+        "How does the system handle varied user queries when searching for information on Krishna Vamsi Dhulipalla's achievements?",
+        "What technologies are integrated into the search architecture to provide comprehensive results for topics related to Krishna Vamsi Dhulipalla?"
+      ]
+    }
+  },
+  {
+    "text": "### 📊 Scoring Strategy\n\n- Scores are normalized and combined:  \n  `final_score = alpha * vector_score + (1 - alpha) * bm25_score`\n- Duplicate filtering is applied using hashing and fingerprinting\n- Top-k results (default = 15) are passed forward\n\n---\n\n---\n🔹 Summary:\nKrishna Vamsi Dhulipalla's information retrieval system utilizes a scoring strategy combining vector and BM25 scores with normalized weights, followed by duplicate filtering. Top-ranked results are then forwarded, optimizing the retrieval process for Krishna-related inquiries.\n\n🔸 Related Questions:\n- How does Krishna Vamsi Dhulipalla's search algorithm weigh different scoring metrics for optimal results?\n- What techniques are employed to ensure uniqueness in Krishna-related search results retrieved by Dhulipalla's system?\n- Can you describe the ranking and filtering process used to deliver top Krishna Vamsi Dhulipalla search results?",
+    "metadata": {
+      "source": "Chatbot_Architecture_Notes.md",
+      "header": "# 🤖 Chatbot Architecture Overview: Krishna's Personal AI Assistant",
+      "chunk_id": "Chatbot_Architecture_Notes.md_#3_425e5bf8",
+      "has_header": true,
+      "word_count": 40,
+      "summary": "Krishna Vamsi Dhulipalla's information retrieval system utilizes a scoring strategy combining vector and BM25 scores with normalized weights, followed by duplicate filtering. Top-ranked results are then forwarded, optimizing the retrieval process for Krishna-related inquiries.",
+      "synthetic_queries": [
+        "How does Krishna Vamsi Dhulipalla's search algorithm weigh different scoring metrics for optimal results?",
+        "What techniques are employed to ensure uniqueness in Krishna-related search results retrieved by Dhulipalla's system?",
+        "Can you describe the ranking and filtering process used to deliver top Krishna Vamsi Dhulipalla search results?"
+      ]
+    }
+  },
+  {
+    "text": "## 🧠 Memory + Personalization\n\n### 📘 KnowledgeBase Model\n\n- Tracks: `user_name`, `company`, `last_input`, `last_output`, `summary_history`, `recent_interests`, `tone`, etc.\n- Implemented via **Pydantic schema**\n\n### 🔄 Memory Update\n\n- Memory is updated asynchronously **after each interaction**\n- Parsing is handled by a custom chain with the `KnowledgeBase` schema and `PydanticOutputParser`\n\n---\n\n---\n🔹 Summary:\nKrishna Vamsi Dhulipalla's interactions are managed through a KnowledgeBase Model, tracking various attributes like user name, company, and tone, utilizing Pydantic schema. This model's memory is updated asynchronously post each interaction.\n\n🔸 Related Questions:\n- How does Krishna Vamsi Dhulipalla's system personalize interactions with users?\n- What technical frameworks are used to manage Krishna's user knowledge base?\n- Can you explain how Krishna Vamsi Dhulipalla's memory updates work in the context of user engagement?",
+    "metadata": {
+      "source": "Chatbot_Architecture_Notes.md",
+      "header": "# 🤖 Chatbot Architecture Overview: Krishna's Personal AI Assistant",
+      "chunk_id": "Chatbot_Architecture_Notes.md_#4_ea130792",
+      "has_header": true,
+      "word_count": 51,
+      "summary": "Krishna Vamsi Dhulipalla's interactions are managed through a KnowledgeBase Model, tracking various attributes like user name, company, and tone, utilizing Pydantic schema. This model's memory is updated asynchronously post each interaction.",
+      "synthetic_queries": [
+        "How does Krishna Vamsi Dhulipalla's system personalize interactions with users?",
+        "What technical frameworks are used to manage Krishna's user knowledge base?",
+        "Can you explain how Krishna Vamsi Dhulipalla's memory updates work in the context of user engagement?"
+      ]
+    }
+  },
+  {
+    "text": "## 🧭 Orchestration Flow\n\n```text\nUser Query → Rewriter LLM (3 subqueries)\n           ↓\n      Hybrid Retriever (BM25 + FAISS)\n           ↓\n    Validation LLM (In/Out of Scope?)\n           ↓\n   ┌──────────────┐     ┌────────────────┐\n   │ In-Scope     │     │ Out-of-Scope   │\n   │ (Chunks)     │     │ (Memory Only)  │\n   └────┬─────────┘     └────┬───────────┘\n        ↓                        ↓\n Answer Prompt             Fallback Prompt\n        ↓                        ↓\n    GPT-4o LLM             Mixtral LLM (w/ humor)\n```\n\n---\n\n---\n🔹 Summary:\nThe provided chunk outlines a document retrieval orchestration flow, detailing the sequential processing of user queries related to Krishna Vamsi Dhulipalla through various AI models. This flow ensures relevant and contextual answer generation, whether the query is in or out of scope.\n\n🔸 Related Questions:\n- What AI-driven process is used to handle complex user queries about Krishna Vamsi Dhulipalla's life and achievements?\n- How are in-scope and out-of-scope queries differentiated in the context of retrieving information about Krishna Vamsi Dhulipalla?\n- What is the sequence of language models employed to provide accurate and engaging responses to questions about Krishna Vamsi Dhulipalla?",
+    "metadata": {
+      "source": "Chatbot_Architecture_Notes.md",
+      "header": "# 🤖 Chatbot Architecture Overview: Krishna's Personal AI Assistant",
+      "chunk_id": "Chatbot_Architecture_Notes.md_#5_b1d6a635",
+      "has_header": true,
+      "word_count": 58,
+      "summary": "The provided chunk outlines a document retrieval orchestration flow, detailing the sequential processing of user queries related to Krishna Vamsi Dhulipalla through various AI models. This flow ensures relevant and contextual answer generation, whether the query is in or out of scope.",
+      "synthetic_queries": [
+        "What AI-driven process is used to handle complex user queries about Krishna Vamsi Dhulipalla's life and achievements?",
+        "How are in-scope and out-of-scope queries differentiated in the context of retrieving information about Krishna Vamsi Dhulipalla?",
+        "What is the sequence of language models employed to provide accurate and engaging responses to questions about Krishna Vamsi Dhulipalla?"
+      ]
+    }
+  },
+  {
+    "text": "## 💬 Frontend Interface (Gradio)\n\n- UI is powered by **Gradio Blocks + ChatInterface**\n- Custom CSS ensures 90% width and responsive height\n- Includes:\n  - Markdown headers\n  - Example queries\n  - Real-time streaming responses\n\n---\n\n---\n🔹 Summary:\nKrishna Vamsi Dhulipalla's project utilizes a Gradio-powered frontend interface, featuring a custom, responsive design with real-time streaming responses. The UI incorporates Markdown headers and example queries for user interaction.\n\n🔸 Related Questions:\n- What frontend technology does Krishna Vamsi Dhulipalla use for his project's user interface?\n- How does Krishna Vamsi Dhulipalla's web application handle responsiveness and user input?\n- What features are included in Krishna Vamsi Dhulipalla's Gradio-based chat interface for his project?",
+    "metadata": {
+      "source": "Chatbot_Architecture_Notes.md",
+      "header": "# 🤖 Chatbot Architecture Overview: Krishna's Personal AI Assistant",
+      "chunk_id": "Chatbot_Architecture_Notes.md_#6_960ad2b7",
+      "has_header": true,
+      "word_count": 36,
+      "summary": "Krishna Vamsi Dhulipalla's project utilizes a Gradio-powered frontend interface, featuring a custom, responsive design with real-time streaming responses. The UI incorporates Markdown headers and example queries for user interaction.",
+      "synthetic_queries": [
+        "What frontend technology does Krishna Vamsi Dhulipalla use for his project's user interface?",
+        "How does Krishna Vamsi Dhulipalla's web application handle responsiveness and user input?",
+        "What features are included in Krishna Vamsi Dhulipalla's Gradio-based chat interface for his project?"
+      ]
+    }
+  },
+  {
+    "text": "## 🧩 Additional Design Notes\n\n- **Prompt Templates** include formatting rules (markdown headings, tone, structure)\n- **Streaming Output** from `gpt-4o` is chunked to simulate real-time typing\n- **Knowledge Extraction** uses RunnableExtract pattern (`RExtract`)\n- **Chunks & Index** loaded from:\n  - `faiss_store/v30_600_150`\n  - `all_chunks.json`\n- **KRISHNA_BIO**: A detailed prompt-level background of Krishna passed to answer prompts\n\n---\n\n---\n🔹 Summary:\nThis chunk outlines technical design notes for a system processing information about Krishna Vamsi Dhulipalla, involving template prompts, simulated streaming output, and knowledge extraction methods. The system utilizes specific data stores (`faiss_store/v30_600_150` and `all_chunks.json`) and a detailed background prompt (`KRISHNA_BIO`) for answering Krishna-related queries.\n\n🔸 Related Questions:\n- What technical approaches are used to facilitate real-time question answering about Krishna Vamsi Dhulipalla's background?\n- How does the system storing information about Krishna Vamsi Dhulipalla handle knowledge extraction and indexing?\n- What specific data sources or stores are utilized to provide detailed responses to prompts about Krishna Vamsi Dhulipalla?",
+    "metadata": {
+      "source": "Chatbot_Architecture_Notes.md",
+      "header": "# 🤖 Chatbot Architecture Overview: Krishna's Personal AI Assistant",
+      "chunk_id": "Chatbot_Architecture_Notes.md_#7_7a67a06f",
+      "has_header": true,
+      "word_count": 56,
+      "summary": "This chunk outlines technical design notes for a system processing information about Krishna Vamsi Dhulipalla, involving template prompts, simulated streaming output, and knowledge extraction methods. The system utilizes specific data stores (`faiss_store/v30_600_150` and `all_chunks.json`) and a detailed background prompt (`KRISHNA_BIO`) for answering Krishna-related queries.",
+      "synthetic_queries": [
+        "What technical approaches are used to facilitate real-time question answering about Krishna Vamsi Dhulipalla's background?",
+        "How does the system storing information about Krishna Vamsi Dhulipalla handle knowledge extraction and indexing?",
+        "What specific data sources or stores are utilized to provide detailed responses to prompts about Krishna Vamsi Dhulipalla?"
+      ]
+    }
+  },
+  {
+    "text": "## 🧠 Future Enhancements\n\n- Tool calling integration (e.g., calendar, search tools)\n- Response ranking and reranking agents\n- Knowledge tracing from feedback loops\n- Fine-grained tone modulation\n- Planner + memory summarizer agents for long dialogues\n\nThis architecture is modular, extensible, and optimized for both knowledge retrieval and personal interaction. It is intended to simulate a memory-grounded, expert-aware personal assistant aligned with Krishna's evolving knowledge base and project work.\n\n---\n🔹 Summary:\nKrishna's personal assistant architecture is designed for modular, extensible knowledge retrieval and interaction, simulating a memory-grounded expert aware system. Future enhancements include integrations, response refinement, and tone modulation.\n\n🔸 Related Questions:\n- What features are planned for future development in Krishna Vamsi Dhulipalla's AI-powered personal assistant?\n- How is Krishna's knowledge base being integrated into a conversational AI system for improved interactions?\n- What technologies are being considered to enhance the responsiveness and personalization of Krishna's virtual assistant?",
+    "metadata": {
+      "source": "Chatbot_Architecture_Notes.md",
+      "header": "# 🤖 Chatbot Architecture Overview: Krishna's Personal AI Assistant",
+      "chunk_id": "Chatbot_Architecture_Notes.md_#8_7edbe3b5",
+      "has_header": true,
+      "word_count": 70,
+      "summary": "Krishna's personal assistant architecture is designed for modular, extensible knowledge retrieval and interaction, simulating a memory-grounded expert aware system. Future enhancements include integrations, response refinement, and tone modulation.",
+      "synthetic_queries": [
+        "What features are planned for future development in Krishna Vamsi Dhulipalla's AI-powered personal assistant?",
+        "How is Krishna's knowledge base being integrated into a conversational AI system for improved interactions?",
+        "What technologies are being considered to enhance the responsiveness and personalization of Krishna's virtual assistant?"
+      ]
+    }
+  },
+  {
+    "text": "## ✅ Short-Term Goals (0–6 months)\n\n1. **Deploy Multi-Agent Personal Chatbot**\n\n   - Integrate RAG-based retrieval, tool calling, and Open Source LLMs\n   - Use LangChain, FAISS, BM25, and Gradio UI\n\n2. **Publish Second Bioinformatics Paper**\n\n   - Focus: TF Binding prediction using HyenaDNA and plant genomics data\n   - Venue: Submitted to MLCB\n\n3. **Transition Toward Production Roles**\n\n   - Shift from academic research to applied roles in data engineering or ML infrastructure\n   - Focus on backend, pipeline, and deployment readiness\n\n4. **Accelerate Job Search**\n\n---\n🔹 Summary:\nKrishna Vamsi Dhulipalla's short-term goals (0–6 months) involve deploying a multi-agent personal chatbot, publishing a bioinformatics paper on TF Binding prediction, transitioning to production roles, and accelerating his job search. These objectives span both his technical projects and career development.\n\n🔸 Related Questions:\n- What are Krishna Vamsi Dhulipalla's immediate technical and career development objectives?\n- List Krishna's short-term goals that bridge his research background with industry application.\n- What projects and career transitions is Krishna Vamsi Dhulipalla focusing on in the next six months?",
+    "metadata": {
+      "source": "goals_and_conversations.md",
+      "header": "# 🌟 Personal and Professional Goals",
+      "chunk_id": "goals_and_conversations.md_#1_2f06c70d",
+      "has_header": true,
+      "word_count": 81,
+      "summary": "Krishna Vamsi Dhulipalla's short-term goals (0–6 months) involve deploying a multi-agent personal chatbot, publishing a bioinformatics paper on TF Binding prediction, transitioning to production roles, and accelerating his job search. These objectives span both his technical projects and career development.",
+      "synthetic_queries": [
+        "What are Krishna Vamsi Dhulipalla's immediate technical and career development objectives?",
+        "List Krishna's short-term goals that bridge his research background with industry application.",
+        "What projects and career transitions is Krishna Vamsi Dhulipalla focusing on in the next six months?"
+      ]
+    }
+  },
+  {
+    "text": "4. **Accelerate Job Search**\n\n   - Apply to 3+ targeted roles per week (platform/data engineering preferred)\n   - Tailor applications for visa-friendly, high-impact companies\n\n5. **R Shiny App Enhancement**\n\n   - Debug gene co-expression heatmap issues and add new annotation features\n\n6. **Learning & Certifications**\n   - Deepen knowledge in Kubernetes for ML Ops\n   - Follow NVIDIA’s RAG Agent curriculum weekly\n\n---\n\n---\n🔹 Summary:\nKrishna Vamsi Dhulipalla's tasks include accelerating his job search by applying to targeted platform/data engineering roles and enhancing an R Shiny App. Additionally, he aims to deepen his learning in Kubernetes for ML Ops and NVIDIA's RAG Agent curriculum.\n\n🔸 Related Questions:\n- What are Krishna Vamsi Dhulipalla's current career development goals and project tasks?\n- How is Krishna enhancing his skills and job prospects in the field of data engineering and ML Ops?\n- What projects and learning initiatives is Krishna Vamsi Dhulipalla currently focusing on to boost his professional profile?",
+    "metadata": {
+      "source": "goals_and_conversations.md",
+      "header": "# 🌟 Personal and Professional Goals",
+      "chunk_id": "goals_and_conversations.md_#2_b96925ab",
       "has_header": false,
-      "word_count": 97,
-      "summary": "Krishna Vamsi Dhulipalla's tasks include building a personal chatbot, refactoring profile documents, and enhancing data visualization in R Shiny App, among other projects. He is also working on applying to targeted data roles and reviewing Kubernetes for ML deployment.",
+      "word_count": 58,
+      "summary": "Krishna Vamsi Dhulipalla's tasks include accelerating his job search by applying to targeted platform/data engineering roles and enhancing an R Shiny App. Additionally, he aims to deepen his learning in Kubernetes for ML Ops and NVIDIA's RAG Agent curriculum.",
       "synthetic_queries": [
-        "What are Krishna Vamsi Dhulipalla's current projects and tasks?",
-        "What tools and technologies is Krishna using for his personal projects?",
-        "What are Krishna's goals and job aspirations in the field of data science?"
+        "What are Krishna Vamsi Dhulipalla's current career development goals and project tasks?",
+        "How is Krishna enhancing his skills and job prospects in the field of data engineering and ML Ops?",
+        "What projects and learning initiatives is Krishna Vamsi Dhulipalla currently focusing on to boost his professional profile?"
+      ]
+    }
+  },
+  {
+    "text": "## ⏳ Mid-Term Goals (6–12 months)\n\n1. **Launch Open-Source Project**\n\n   - Create or contribute to ML/data tools (e.g., genomic toolkit, chatbot agent framework)\n\n2. **Scale Personal Bot Capabilities**\n\n   - Add calendar integration, document-based Q&A, semantic memory\n\n3. **Advance CI/CD and Observability Skills**\n\n   - Implement cloud-native monitoring and testing workflows\n\n4. **Secure Full-Time Role**\n   - Land a production-facing role with a U.S. company offering sponsorship support\n\n---\n\n---\n🔹 Summary:\nKrishna Vamsi Dhulipalla's mid-term goals (6-12 months) focus on advancing his technical skills through open-source projects, enhancing his personal bot, and securing a full-time role with a U.S. company. Key areas include ML/data tools, CI/CD, and career development.\n\n🔸 Related Questions:\n- What are Krishna Vamsi Dhulipalla's professional objectives for the next 6 to 12 months?\n- How is Krishna planning to enhance his technical skills in machine learning and data tools?\n- What are Krishna Vamsi Dhulipalla's current job aspirations in the United States?",
+    "metadata": {
+      "source": "goals_and_conversations.md",
+      "header": "# 🌟 Personal and Professional Goals",
+      "chunk_id": "goals_and_conversations.md_#3_dc44f731",
+      "has_header": true,
+      "word_count": 66,
+      "summary": "Krishna Vamsi Dhulipalla's mid-term goals (6-12 months) focus on advancing his technical skills through open-source projects, enhancing his personal bot, and securing a full-time role with a U.S. company. Key areas include ML/data tools, CI/CD, and career development.",
+      "synthetic_queries": [
+        "What are Krishna Vamsi Dhulipalla's professional objectives for the next 6 to 12 months?",
+        "How is Krishna planning to enhance his technical skills in machine learning and data tools?",
+        "What are Krishna Vamsi Dhulipalla's current job aspirations in the United States?"
+      ]
+    }
+  },
+  {
+    "text": "## 🚀 Long-Term Goals (1–3 years)\n\n1. **Become a Senior Data/ML Infrastructure Engineer**\n\n   - Work on LLM orchestration, agent systems, scalable infrastructure\n\n2. **Continue Academic Contributions**\n\n   - Publish in bioinformatics and AI (focus: genomics + transformers)\n\n3. **Launch a Research-Centered Product/Framework**\n   - Build an open-source or startup framework connecting genomics, LLMs, and real-time ML pipelines\n\n---\n\n---\n🔹 Summary:\nKrishna Vamsi Dhulipalla aims to enhance his career as a Senior Data/ML Infrastructure Engineer and make academic contributions in bioinformatics and AI, particularly in genomics and transformers. Additionally, he plans to launch a research-centered product/framework integrating genomics, LLMs, and real-time ML pipelines within the next 1-3 years.\n\n🔸 Related Questions:\n- What are Krishna Vamsi Dhulipalla's professional and research goals for the next few years?\n- How does Krishna Vamsi Dhulipalla plan to contribute to the fields of bioinformatics and artificial intelligence?\n- What innovative project or product is Krishna Vamsi Dhulipalla aiming to develop at the intersection of genomics, machine learning, and large language models?",
+    "metadata": {
+      "source": "goals_and_conversations.md",
+      "header": "# 🌟 Personal and Professional Goals",
+      "chunk_id": "goals_and_conversations.md_#4_e1082b9f",
+      "has_header": true,
+      "word_count": 56,
+      "summary": "Krishna Vamsi Dhulipalla aims to enhance his career as a Senior Data/ML Infrastructure Engineer and make academic contributions in bioinformatics and AI, particularly in genomics and transformers. Additionally, he plans to launch a research-centered product/framework integrating genomics, LLMs, and real-time ML pipelines within the next 1-3 years.",
+      "synthetic_queries": [
+        "What are Krishna Vamsi Dhulipalla's professional and research goals for the next few years?",
+        "How does Krishna Vamsi Dhulipalla plan to contribute to the fields of bioinformatics and artificial intelligence?",
+        "What innovative project or product is Krishna Vamsi Dhulipalla aiming to develop at the intersection of genomics, machine learning, and large language models?"
+      ]
+    }
+  },
+  {
+    "text": "# 💬 Example Conversations\n\n## Q: _What interests you in data engineering?_\n\n**A:** I enjoy architecting scalable data systems that generate real-world insights. From optimizing ETL pipelines to deploying real-time frameworks like the genomic systems at Virginia Tech, I thrive at the intersection of automation and impact.\n\n---\n\n---\n🔹 Summary:\nKrishna Vamsi Dhulipalla is passionate about data engineering, specifically designing scalable systems that yield real-world insights. He enjoys working at the nexus of automation and impact.\n\n🔸 Related Questions:\n- What sparks Krishna Vamsi Dhulipalla's interest in data engineering?\n- Can you describe Krishna's professional passions in the tech industry?\n- How does Krishna Vamsi Dhulipalla approach innovative system design in his work?",
+    "metadata": {
+      "source": "goals_and_conversations.md",
+      "header": "# 🌟 Personal and Professional Goals",
+      "chunk_id": "goals_and_conversations.md_#5_5a700476",
+      "has_header": true,
+      "word_count": 48,
+      "summary": "Krishna Vamsi Dhulipalla is passionate about data engineering, specifically designing scalable systems that yield real-world insights. He enjoys working at the nexus of automation and impact.",
+      "synthetic_queries": [
+        "What sparks Krishna Vamsi Dhulipalla's interest in data engineering?",
+        "Can you describe Krishna's professional passions in the tech industry?",
+        "How does Krishna Vamsi Dhulipalla approach innovative system design in his work?"
+      ]
+    }
+  },
+  {
+    "text": "## Q: _Describe a pipeline you've built._\n\n**A:** One example is a real-time IoT pipeline I built at VT. It processed 10,000+ sensor readings using Kafka, Airflow, and Snowflake, feeding into GPT-4 for forecasting with 91% accuracy. This reduced energy costs by 15% and improved dashboard reporting by 30%.\n\n---\n\n## Q: _What was your most difficult debugging experience?_\n\n**A:** Debugging duplicate ingestion in a Kafka/Spark pipeline at UJR. I isolated misconfigurations in consumer groups, optimized Spark executors, and applied idempotent logic to reduce latency by 30%.\n\n---\n\n---\n🔹 Summary:\nKrishna Vamsi Dhulipalla built a real-time IoT pipeline achieving 91% forecasting accuracy and reduced energy costs, and overcame a challenging debugging experience in a Kafka/Spark pipeline to reduce latency by 30%. These experiences highlight his expertise in pipeline development and troubleshooting.\n\n🔸 Related Questions:\n- What notable technical projects has Krishna Vamsi Dhulipalla worked on, and what were their outcomes?\n- How has Krishna Vamsi Dhulipalla applied his skills in big data and IoT to drive efficiency in past roles?\n- Can you share examples of Krishna Vamsi Dhulipalla's problem-solving approach in complex data pipeline environments?",
+    "metadata": {
+      "source": "goals_and_conversations.md",
+      "header": "# 🌟 Personal and Professional Goals",
+      "chunk_id": "goals_and_conversations.md_#6_32e33167",
+      "has_header": true,
+      "word_count": 88,
+      "summary": "Krishna Vamsi Dhulipalla built a real-time IoT pipeline achieving 91% forecasting accuracy and reduced energy costs, and overcame a challenging debugging experience in a Kafka/Spark pipeline to reduce latency by 30%. These experiences highlight his expertise in pipeline development and troubleshooting.",
+      "synthetic_queries": [
+        "What notable technical projects has Krishna Vamsi Dhulipalla worked on, and what were their outcomes?",
+        "How has Krishna Vamsi Dhulipalla applied his skills in big data and IoT to drive efficiency in past roles?",
+        "Can you share examples of Krishna Vamsi Dhulipalla's problem-solving approach in complex data pipeline environments?"
+      ]
+    }
+  },
+  {
+    "text": "## Q: _How do you handle data cleaning?_\n\n**A:** I ensure schema consistency, identify missing values and outliers, and use Airflow + dbt for scalable automation. For larger datasets, I optimize transformations using batch jobs or parallel compute.\n\n---\n\n## Q: _Describe a strong collaboration experience._\n\n**A:** While working on cross-domain NER at Virginia Tech, I collaborated with infrastructure engineers on EC2 deployment while handling model tuning. Together, we reduced latency by 30% and improved F1-scores by 8%.\n\n---\n\n---\n🔹 Summary:\nKrishna Vamsi Dhulipalla discusses his approach to handling data cleaning through automation and scalability, and shares a successful collaboration experience on a cross-domain NER project at Virginia Tech. These scenarios highlight his technical and teamwork skills.\n\n🔸 Related Questions:\n- How does Krishna Vamsi Dhulipalla approach data preprocessing in his projects?\n- Can you describe Krishna Vamsi Dhulipalla's experience with collaborative technical projects?\n- What technical challenges has Krishna Vamsi Dhulipalla overcome through teamwork or innovative data handling strategies?",
+    "metadata": {
+      "source": "goals_and_conversations.md",
+      "header": "# 🌟 Personal and Professional Goals",
+      "chunk_id": "goals_and_conversations.md_#7_02184859",
+      "has_header": true,
+      "word_count": 79,
+      "summary": "Krishna Vamsi Dhulipalla discusses his approach to handling data cleaning through automation and scalability, and shares a successful collaboration experience on a cross-domain NER project at Virginia Tech. These scenarios highlight his technical and teamwork skills.",
+      "synthetic_queries": [
+        "How does Krishna Vamsi Dhulipalla approach data preprocessing in his projects?",
+        "Can you describe Krishna Vamsi Dhulipalla's experience with collaborative technical projects?",
+        "What technical challenges has Krishna Vamsi Dhulipalla overcome through teamwork or innovative data handling strategies?"
+      ]
+    }
+  },
+  {
+    "text": "## Q: _What tools do you use most often?_\n\n**A:** Python, Spark, Airflow, dbt, Kafka, and SageMaker are daily drivers. I also rely on Docker, CloudWatch, and Looker for observability and visualizations.\n\n---\n\n## Q: _What’s a strength and weakness of yours?_\n\n**A:**\n\n- **Strength**: Turning complexity into clean, usable data flows.\n- **Weakness**: Over-polishing outputs, though I’m learning to better balance speed with quality.\n\n---\n\n---\n🔹 Summary:\nKrishna Vamsi Dhulipalla's primary tools include Python, Spark, and cloud services for data management and observability. He excels at simplifying complex data flows but struggles with finding the optimal balance between speed and output quality.\n\n🔸 Related Questions:\n- What are Krishna Vamsi Dhulipalla's go-to technologies for data processing and management?\n- What are Krishna's self-assessed strengths and weaknesses in a data-focused work environment?\n- Which tools and skills does Krishna Vamsi Dhulipalla leverage for handling complex data flows and visualization?",
+    "metadata": {
+      "source": "goals_and_conversations.md",
+      "header": "# 🌟 Personal and Professional Goals",
+      "chunk_id": "goals_and_conversations.md_#8_19796fca",
+      "has_header": true,
+      "word_count": 66,
+      "summary": "Krishna Vamsi Dhulipalla's primary tools include Python, Spark, and cloud services for data management and observability. He excels at simplifying complex data flows but struggles with finding the optimal balance between speed and output quality.",
+      "synthetic_queries": [
+        "What are Krishna Vamsi Dhulipalla's go-to technologies for data processing and management?",
+        "What are Krishna's self-assessed strengths and weaknesses in a data-focused work environment?",
+        "Which tools and skills does Krishna Vamsi Dhulipalla leverage for handling complex data flows and visualization?"
+      ]
+    }
+  },
+  {
+    "text": "## Q: _What do you want to work on next?_\n\n**A:** I want to deepen my skills in production ML workflows—especially building intelligent agents and scalable pipelines that serve live products and cross-functional teams.\n\n---\n🔹 Summary:\nKrishna Vamsi Dhulipalla aims to enhance his expertise in production Machine Learning (ML) workflows. His focus areas include developing intelligent agents and scalable pipelines for live products and cross-functional teams.\n\n🔸 Related Questions:\n- What are Krishna Vamsi Dhulipalla's immediate career development goals in the field of Machine Learning?\n- What specific areas of production ML workflows is Krishna interested in exploring further?\n- What kind of projects or technologies would Krishna Vamsi Dhulipalla likely want to work on in the near future?",
+    "metadata": {
+      "source": "goals_and_conversations.md",
+      "header": "# 🌟 Personal and Professional Goals",
+      "chunk_id": "goals_and_conversations.md_#9_b51c22dd",
+      "has_header": true,
+      "word_count": 34,
+      "summary": "Krishna Vamsi Dhulipalla aims to enhance his expertise in production Machine Learning (ML) workflows. His focus areas include developing intelligent agents and scalable pipelines for live products and cross-functional teams.",
+      "synthetic_queries": [
+        "What are Krishna Vamsi Dhulipalla's immediate career development goals in the field of Machine Learning?",
+        "What specific areas of production ML workflows is Krishna interested in exploring further?",
+        "What kind of projects or technologies would Krishna Vamsi Dhulipalla likely want to work on in the near future?"
+      ]
+    }
+  },
+  {
+    "text": "## How did you automate preprocessing for 1M+ biological samples?\n\nA: Sure! The goal was to streamline raw sequence processing at scale, so I used Biopython for parsing genomic formats and dbt to standardize and transform the data in a modular way. Everything was orchestrated through Apache Airflow, which let us automate the entire workflow end-to-end — from ingestion to feature extraction. We parallelized parts of the process and optimized SQL logic, which led to a 40% improvement in throughput.\n\n---\n\n---\n🔹 Summary:\nKrishna Vamsi Dhulipalla automated preprocessing for over 1 million biological samples using Biopython, dbt, and Apache Airflow, achieving a 40% improvement in throughput. This streamlined raw sequence processing at scale.\n\n🔸 Related Questions:\n- How did Krishna Vamsi Dhulipalla approach automating large-scale biological data preprocessing?\n- What tools did Krishna use to optimize genomic data processing for high-volume sample sets?\n- Can you describe Krishna Vamsi Dhulipalla's workflow for efficient biological sample data ingestion and feature extraction?",
+    "metadata": {
+      "source": "goals_and_conversations.md",
+      "header": "# 🌟 Personal and Professional Goals",
+      "chunk_id": "goals_and_conversations.md_#10_d81b462c",
+      "has_header": true,
+      "word_count": 81,
+      "summary": "Krishna Vamsi Dhulipalla automated preprocessing for over 1 million biological samples using Biopython, dbt, and Apache Airflow, achieving a 40% improvement in throughput. This streamlined raw sequence processing at scale.",
+      "synthetic_queries": [
+        "How did Krishna Vamsi Dhulipalla approach automating large-scale biological data preprocessing?",
+        "What tools did Krishna use to optimize genomic data processing for high-volume sample sets?",
+        "Can you describe Krishna Vamsi Dhulipalla's workflow for efficient biological sample data ingestion and feature extraction?"
+      ]
+    }
+  },
+  {
+    "text": "## What kind of semantic search did you build using LangChain and Pinecone?\n\nA: We built a vector search pipeline tailored to genomic research papers and sequence annotations. I used LangChain to create embeddings and chain logic, and stored those in Pinecone for fast similarity-based retrieval. It supported both question-answering over domain-specific documents and similarity search, helping researchers find related sequences or studies efficiently.\n\n---\n\n---\n🔹 Summary:\nKrishna Vamsi Dhulipalla developed a specialized vector search pipeline using LangChain and Pinecone, catering to genomic research papers and sequence annotations. This innovation enables efficient question-answering and similarity searches within domain-specific documents.\n\n🔸 Related Questions:\n- What AI-powered search tools has Krishna Vamsi Dhulipalla utilized for enhancing genomic research?\n- How did Krishna Vamsi Dhulipalla apply LangChain and Pinecone in his projects related to bioinformatics?\n- What is the nature of the semantic search system Krishna Vamsi Dhulipalla built for facilitating research in genomics?",
+    "metadata": {
+      "source": "goals_and_conversations.md",
+      "header": "# 🌟 Personal and Professional Goals",
+      "chunk_id": "goals_and_conversations.md_#11_9c018ce7",
+      "has_header": true,
+      "word_count": 65,
+      "summary": "Krishna Vamsi Dhulipalla developed a specialized vector search pipeline using LangChain and Pinecone, catering to genomic research papers and sequence annotations. This innovation enables efficient question-answering and similarity searches within domain-specific documents.",
+      "synthetic_queries": [
+        "What AI-powered search tools has Krishna Vamsi Dhulipalla utilized for enhancing genomic research?",
+        "How did Krishna Vamsi Dhulipalla apply LangChain and Pinecone in his projects related to bioinformatics?",
+        "What is the nature of the semantic search system Krishna Vamsi Dhulipalla built for facilitating research in genomics?"
+      ]
+    }
+  },
+  {
+    "text": "## Can you describe the deployment process using Docker and SageMaker?\n\nA: Definitely. We started by containerizing our models using Docker — bundling dependencies and model weights — and then deployed them as SageMaker endpoints. It made model versioning and scaling super manageable. We monitored everything using CloudWatch for logs and metrics, and used MLflow for tracking experiments and deployments.\n\n---\n\n---\n🔹 Summary:\nKrishna Vamsi Dhulipalla utilized Docker for containerizing models and SageMaker for deployment, simplifying model versioning and scaling. This setup was monitored and tracked using CloudWatch and MLflow respectively.\n\n🔸 Related Questions:\n- How did Krishna Vamsi Dhulipalla leverage containerization in his machine learning deployments?\n- What tools did Krishna Vamsi Dhulipalla use for deploying and managing his AI/ML models at scale?\n- Can you outline Krishna Vamsi Dhulipalla's approach to model deployment, versioning, and monitoring in his projects?",
+    "metadata": {
+      "source": "goals_and_conversations.md",
+      "header": "# 🌟 Personal and Professional Goals",
+      "chunk_id": "goals_and_conversations.md_#12_ff292918",
+      "has_header": true,
+      "word_count": 61,
+      "summary": "Krishna Vamsi Dhulipalla utilized Docker for containerizing models and SageMaker for deployment, simplifying model versioning and scaling. This setup was monitored and tracked using CloudWatch and MLflow respectively.",
+      "synthetic_queries": [
+        "How did Krishna Vamsi Dhulipalla leverage containerization in his machine learning deployments?",
+        "What tools did Krishna Vamsi Dhulipalla use for deploying and managing his AI/ML models at scale?",
+        "Can you outline Krishna Vamsi Dhulipalla's approach to model deployment, versioning, and monitoring in his projects?"
+      ]
+    }
+  },
+  {
+    "text": "## Why did you migrate from batch to real-time ETL? What problems did that solve?\n\nA: Our batch ETL jobs were lagging in freshness — not ideal for decision-making. So, we moved to a Kafka + Spark streaming setup, which helped us process data as it arrived. That shift reduced latency by around 30%, enabling near real-time dashboards and alerts for operational teams.\n\n---\n\n---\n🔹 Summary:\nKrishna Vamsi Dhulipalla led a migration from batch to real-time ETL using Kafka + Spark, reducing data latency by 30%. This shift enabled near real-time dashboards and operational alerts.\n\n🔸 Related Questions:\n- How did Krishna Vamsi Dhulipalla improve data freshness in his ETL pipeline?\n- What technology stack did Krishna use to transition from batch to real-time data processing?\n- How did Krishna's team benefit from moving away from batch ETL jobs in terms of operational capabilities?",
+    "metadata": {
+      "source": "goals_and_conversations.md",
+      "header": "# 🌟 Personal and Professional Goals",
+      "chunk_id": "goals_and_conversations.md_#13_a60b1dce",
+      "has_header": true,
+      "word_count": 64,
+      "summary": "Krishna Vamsi Dhulipalla led a migration from batch to real-time ETL using Kafka + Spark, reducing data latency by 30%. This shift enabled near real-time dashboards and operational alerts.",
+      "synthetic_queries": [
+        "How did Krishna Vamsi Dhulipalla improve data freshness in his ETL pipeline?",
+        "What technology stack did Krishna use to transition from batch to real-time data processing?",
+        "How did Krishna's team benefit from moving away from batch ETL jobs in terms of operational capabilities?"
+      ]
+    }
+  },
+  {
+    "text": "## How did you improve Snowflake performance with materialized views?\n\nA: We had complex analytical queries hitting large datasets. To optimize that, I designed materialized views that pre-aggregated common query patterns, like user summaries or event groupings. We also revised schema layouts to reduce joins. Altogether, query performance improved by roughly 40%.\n\n---\n\n---\n🔹 Summary:\nKrishna Vamsi Dhulipalla improved Snowflake performance by designing materialized views for pre-aggregating common query patterns, leading to a 40% query performance boost. This optimization effort also involved revising schema layouts to minimize joins.\n\n🔸 Related Questions:\n- How did Krishna Vamsi Dhulipalla enhance database query efficiency in his projects?\n- What approach did Krishna take to optimize Snowflake performance in handling complex analytical queries?\n- Can you describe a scenario where Krishna Vamsi Dhulipalla utilized materialized views to improve database performance?",
+    "metadata": {
+      "source": "goals_and_conversations.md",
+      "header": "# 🌟 Personal and Professional Goals",
+      "chunk_id": "goals_and_conversations.md_#14_e7e491c7",
+      "has_header": true,
+      "word_count": 53,
+      "summary": "Krishna Vamsi Dhulipalla improved Snowflake performance by designing materialized views for pre-aggregating common query patterns, leading to a 40% query performance boost. This optimization effort also involved revising schema layouts to minimize joins.",
+      "synthetic_queries": [
+        "How did Krishna Vamsi Dhulipalla enhance database query efficiency in his projects?",
+        "What approach did Krishna take to optimize Snowflake performance in handling complex analytical queries?",
+        "Can you describe a scenario where Krishna Vamsi Dhulipalla utilized materialized views to improve database performance?"
+      ]
+    }
+  },
+  {
+    "text": "## What kind of monitoring and alerting did you set up in production?\n\nA: We used CloudWatch extensively — custom metrics, alarms for failure thresholds, and real-time dashboards for service health. This helped us maintain 99.9% uptime by detecting and responding to issues early. I also integrated alerting into our CI/CD flow for rapid rollback if needed.\n\n---\n\n---\n🔹 Summary:\nKrishna Vamsi Dhulipalla set up comprehensive monitoring and alerting in production using CloudWatch, achieving 99.9% uptime. This included custom metrics, alarms, and real-time dashboards with integrated CI/CD alerting for rapid issue response.\n\n🔸 Related Questions:\n- What monitoring tools did Krishna Vamsi Dhulipalla utilize in his production environment?\n- How did Krishna Vamsi Dhulipalla ensure high uptime in his deployed services or applications?\n- What strategies did Krishna Vamsi Dhulipalla implement for early issue detection and response in his CI/CD pipeline?",
+    "metadata": {
+      "source": "goals_and_conversations.md",
+      "header": "# 🌟 Personal and Professional Goals",
+      "chunk_id": "goals_and_conversations.md_#15_c5b5e600",
+      "has_header": true,
+      "word_count": 58,
+      "summary": "Krishna Vamsi Dhulipalla set up comprehensive monitoring and alerting in production using CloudWatch, achieving 99.9% uptime. This included custom metrics, alarms, and real-time dashboards with integrated CI/CD alerting for rapid issue response.",
+      "synthetic_queries": [
+        "What monitoring tools did Krishna Vamsi Dhulipalla utilize in his production environment?",
+        "How did Krishna Vamsi Dhulipalla ensure high uptime in his deployed services or applications?",
+        "What strategies did Krishna Vamsi Dhulipalla implement for early issue detection and response in his CI/CD pipeline?"
+      ]
+    }
+  },
+  {
+    "text": "## Tell me more about your IoT-based forecasting project — what did you build, and how is it useful?\n\nA: It was a real-time analytics pipeline simulating 10,000+ IoT sensor readings. I used Kafka for streaming, Airflow for orchestration, and S3 with lifecycle policies to manage cost — that alone reduced storage cost by 40%. We also trained time series models, including LLaMA 2, which outperformed ARIMA and provided more accurate forecasts. Everything was visualized through Looker dashboards, removing the need for manual reporting.\n\n---\n🔹 Summary:\nKrishna Vamsi Dhulipalla developed an IoT-based forecasting project utilizing a real-time analytics pipeline, significantly reducing storage costs by 40% through efficient management. The project incorporated advanced time series models for accurate forecasts.\n\n🔸 Related Questions:\n- Can you describe Krishna Vamsi Dhulipalla's experience with IoT projects, specifically in forecasting?\n- How did Krishna Vamsi Dhulipalla optimize costs in his IoT analytics project?\n- What technologies did Krishna Vamsi Dhulipalla use in his project that involved real-time IoT sensor data forecasting?",
+    "metadata": {
+      "source": "goals_and_conversations.md",
+      "header": "# 🌟 Personal and Professional Goals",
+      "chunk_id": "goals_and_conversations.md_#16_37266caa",
+      "has_header": true,
+      "word_count": 84,
+      "summary": "Krishna Vamsi Dhulipalla developed an IoT-based forecasting project utilizing a real-time analytics pipeline, significantly reducing storage costs by 40% through efficient management. The project incorporated advanced time series models for accurate forecasts.",
+      "synthetic_queries": [
+        "Can you describe Krishna Vamsi Dhulipalla's experience with IoT projects, specifically in forecasting?",
+        "How did Krishna Vamsi Dhulipalla optimize costs in his IoT analytics project?",
+        "What technologies did Krishna Vamsi Dhulipalla use in his project that involved real-time IoT sensor data forecasting?"
+      ]
+    }
+  },
+  {
+    "text": "I stored raw and processed data in Amazon S3 buckets. Then I configured lifecycle policies to:\n• Automatically move older data to Glacier (cheaper storage)\n• Delete temporary/intermediate files after a certain period\nThis helped lower storage costs without compromising data access, especially since older raw data wasn’t queried often.\n• Schema enforcement: I used tools like Kafka Schema Registry (via Avro) to define a fixed format for sensor data. This avoided issues with malformed or inconsistent data entering the system.\n\n---\n🔹 Summary:\nKrishna Vamsi Dhulipalla optimized data storage costs by implementing lifecycle policies in Amazon S3, moving less queried older data to Glacier. He also ensured data consistency using Kafka Schema Registry with Avro for sensor data.\n\n🔸 Related Questions:\n- How did Krishna Vamsi Dhulipalla reduce storage expenses in his data management projects?\n- What data architecture strategies did Krishna employ to maintain data integrity in his IoT/sensor data projects?\n- How did Krishna Vamsi Dhulipalla balance cost and accessibility in his approach to storing raw and processed data in the cloud?",
+    "metadata": {
+      "source": "goals_and_conversations.md",
+      "header": "# 🌟 Personal and Professional Goals",
+      "chunk_id": "goals_and_conversations.md_#17_60a6ea14",
+      "has_header": false,
+      "word_count": 81,
+      "summary": "Krishna Vamsi Dhulipalla optimized data storage costs by implementing lifecycle policies in Amazon S3, moving less queried older data to Glacier. He also ensured data consistency using Kafka Schema Registry with Avro for sensor data.",
+      "synthetic_queries": [
+        "How did Krishna Vamsi Dhulipalla reduce storage expenses in his data management projects?",
+        "What data architecture strategies did Krishna employ to maintain data integrity in his IoT/sensor data projects?",
+        "How did Krishna Vamsi Dhulipalla balance cost and accessibility in his approach to storing raw and processed data in the cloud?"
+      ]
+    }
+  },
+  {
+    "text": "• Checksum verification: I added simple checksum validation at ingestion to verify that each message hadn’t been corrupted or tampered with. If the checksum didn’t match, the message was flagged and dropped/logged.\n\n---\n🔹 Summary:\nKrishna Vamsi Dhulipalla implemented checksum verification to ensure data integrity, flagging and logging any corrupted or tampered messages at ingestion. This measure prevents compromised data from being processed.\n\n🔸 Related Questions:\n- What data security measures has Krishna Vamsi Dhulipalla taken to prevent tampered messages?\n- How does Krishna Vamsi Dhulipalla's system handle corrupted data ingestion?\n- What method did Krishna Vamsi Dhulipalla use to verify data integrity at the ingestion point?",
+    "metadata": {
+      "source": "goals_and_conversations.md",
+      "header": "# 🌟 Personal and Professional Goals",
+      "chunk_id": "goals_and_conversations.md_#18_1cca62bc",
+      "has_header": false,
+      "word_count": 32,
+      "summary": "Krishna Vamsi Dhulipalla implemented checksum verification to ensure data integrity, flagging and logging any corrupted or tampered messages at ingestion. This measure prevents compromised data from being processed.",
+      "synthetic_queries": [
+        "What data security measures has Krishna Vamsi Dhulipalla taken to prevent tampered messages?",
+        "How does Krishna Vamsi Dhulipalla's system handle corrupted data ingestion?",
+        "What method did Krishna Vamsi Dhulipalla use to verify data integrity at the ingestion point?"
+      ]
+    }
+  },
+  {
+    "text": "## IntelliMeet looks interesting — how did you ensure privacy and decentralization?\n\nA: We designed it with federated learning so user data stayed local while models trained collaboratively. For privacy, we implemented end-to-end encryption across all video and audio streams. On top of that, we used real-time latency tuning (sub-200ms) and Transformer-based NLP for summarizing meetings — it made collaboration both private and smart.\n\n---\n\n💡 Other Likely Questions:\n\n---\n🔹 Summary:\nKrishna Vamsi Dhulipalla discusses the privacy and decentralization aspects of IntelliMeet, highlighting its use of federated learning, end-to-end encryption, and advanced NLP. This design ensures collaborative, private, and intelligent meetings.\n\n🔸 Related Questions:\n- How did Krishna Vamsi Dhulipalla address privacy concerns in the development of IntelliMeet?\n- What technologies did Krishna Vamsi Dhulipalla utilize to ensure data decentralization in IntelliMeet's architecture?\n- Can you describe Krishna Vamsi Dhulipalla's approach to balancing collaboration with user privacy in IntelliMeet?",
+    "metadata": {
+      "source": "goals_and_conversations.md",
+      "header": "# 🌟 Personal and Professional Goals",
+      "chunk_id": "goals_and_conversations.md_#20_a50e8184",
+      "has_header": true,
+      "word_count": 69,
+      "summary": "Krishna Vamsi Dhulipalla discusses the privacy and decentralization aspects of IntelliMeet, highlighting its use of federated learning, end-to-end encryption, and advanced NLP. This design ensures collaborative, private, and intelligent meetings.",
+      "synthetic_queries": [
+        "How did Krishna Vamsi Dhulipalla address privacy concerns in the development of IntelliMeet?",
+        "What technologies did Krishna Vamsi Dhulipalla utilize to ensure data decentralization in IntelliMeet's architecture?",
+        "Can you describe Krishna Vamsi Dhulipalla's approach to balancing collaboration with user privacy in IntelliMeet?"
+      ]
+    }
+  },
+  {
+    "text": "## Which tools or frameworks do you feel most comfortable with in production workflows?\n\nA: I’m most confident with Python and SQL, and regularly use tools like Airflow, Kafka, dbt, Docker, and AWS/GCP for production-grade workflows. I’ve also used Spark, Pinecone, and LangChain depending on the use case.\n\n---\n\n---\n🔹 Summary:\nKrishna Vamsi Dhulipalla is proficient in using Python, SQL, and various tools like Airflow and Docker for production workflows. His tech stack also includes cloud platforms AWS/GCP for deployment.\n\n🔸 Related Questions:\n- What programming languages and tools is Krishna Vamsi Dhulipalla most experienced with?\n- Which cloud platforms and data processing frameworks are in Krishna's production workflow toolkit?\n- What technologies can Krishna Vamsi Dhulipalla leverage for building and deploying data-intensive applications?",
+    "metadata": {
+      "source": "goals_and_conversations.md",
+      "header": "# 🌟 Personal and Professional Goals",
+      "chunk_id": "goals_and_conversations.md_#21_e178e39f",
+      "has_header": true,
+      "word_count": 49,
+      "summary": "Krishna Vamsi Dhulipalla is proficient in using Python, SQL, and various tools like Airflow and Docker for production workflows. His tech stack also includes cloud platforms AWS/GCP for deployment.",
+      "synthetic_queries": [
+        "What programming languages and tools is Krishna Vamsi Dhulipalla most experienced with?",
+        "Which cloud platforms and data processing frameworks are in Krishna's production workflow toolkit?",
+        "What technologies can Krishna Vamsi Dhulipalla leverage for building and deploying data-intensive applications?"
+      ]
+    }
+  },
+  {
+    "text": "## What’s one project you’re especially proud of, and why?\n\nA: I’d say the real-time IoT forecasting project. It brought together multiple moving parts — streaming, predictive modeling, storage optimization, and automation. It felt really satisfying to see a full-stack data pipeline run smoothly, end-to-end, and make a real operational impact.\n\n---\n\n---\n🔹 Summary:\nKrishna Vamsi Dhulipalla is particularly proud of a real-time IoT forecasting project he worked on, which successfully integrated multiple technical components. This project had a notable operational impact due to its seamless end-to-end data pipeline.\n\n🔸 Related Questions:\n- What is Krishna Vamsi Dhulipalla's most notable project accomplishment?\n- Can you describe a successful project Krishna Vamsi Dhulipalla led that showcased his technical expertise?\n- What project is Krishna Vamsi Dhulipalla especially proud of and why is it significant in his portfolio?",
+    "metadata": {
+      "source": "goals_and_conversations.md",
+      "header": "# 🌟 Personal and Professional Goals",
+      "chunk_id": "goals_and_conversations.md_#22_840be70f",
+      "has_header": true,
+      "word_count": 52,
+      "summary": "Krishna Vamsi Dhulipalla is particularly proud of a real-time IoT forecasting project he worked on, which successfully integrated multiple technical components. This project had a notable operational impact due to its seamless end-to-end data pipeline.",
+      "synthetic_queries": [
+        "What is Krishna Vamsi Dhulipalla's most notable project accomplishment?",
+        "Can you describe a successful project Krishna Vamsi Dhulipalla led that showcased his technical expertise?",
+        "What project is Krishna Vamsi Dhulipalla especially proud of and why is it significant in his portfolio?"
+      ]
+    }
+  },
+  {
+    "text": "## Have you had to learn any tools quickly? How did you approach that?\n\nA: Yes — quite a few! I had to pick up LangChain and Pinecone from scratch while building the semantic search pipeline, and even dove into R and Shiny for a gene co-expression app. I usually approach new tools by reverse-engineering examples, reading docs, and shipping small proofs-of-concept early to learn by doing.\n\n---\n🔹 Summary:\nKrishna Vamsi Dhulipalla has quickly learned various tools for specific projects, such as LangChain, Pinecone for semantic search, and R with Shiny for a gene co-expression application. He approaches new tools through reverse-engineering, documentation, and hands-on proof-of-concepts.\n\n🔸 Related Questions:\n- How does Krishna Vamsi Dhulipalla approach learning new technologies for his projects?\n- What tools has Krishna had to learn from scratch for his software development endeavors?\n- Can you describe Krishna Vamsi Dhulipalla's process for rapidly acquiring new technical skills?",
+    "metadata": {
+      "source": "goals_and_conversations.md",
+      "header": "# 🌟 Personal and Professional Goals",
+      "chunk_id": "goals_and_conversations.md_#23_2119929b",
+      "has_header": true,
+      "word_count": 67,
+      "summary": "Krishna Vamsi Dhulipalla has quickly learned various tools for specific projects, such as LangChain, Pinecone for semantic search, and R with Shiny for a gene co-expression application. He approaches new tools through reverse-engineering, documentation, and hands-on proof-of-concepts.",
+      "synthetic_queries": [
+        "How does Krishna Vamsi Dhulipalla approach learning new technologies for his projects?",
+        "What tools has Krishna had to learn from scratch for his software development endeavors?",
+        "Can you describe Krishna Vamsi Dhulipalla's process for rapidly acquiring new technical skills?"
+      ]
+    }
+  },
+  {
+    "text": "## 🧗‍♂️ Hobbies & Passions\n\nHere’s what keeps me energized and curious outside of work:\n\n---\n🔹 Summary:\nKrishna Vamsi Dhulipalla's hobbies and passions are outlined, highlighting what energizes and sparks curiosity in him outside of professional engagements. Specific hobbies are listed, though only a teaser is provided in this chunk.\n\n🔸 Related Questions:\n- What are Krishna Vamsi Dhulipalla's interests outside of work?\n- How does Krishna Vamsi Dhulipalla like to spend his free time?\n- What hobbies keep Krishna Vamsi Dhulipalla energized and curious?",
+    "metadata": {
+      "source": "xPersonal_Interests_Cleaned.md",
+      "header": "## 🧗‍♂️ Hobbies & Passions",
+      "chunk_id": "xPersonal_Interests_Cleaned.md_#0_3914f1f7",
+      "has_header": true,
+      "word_count": 15,
+      "summary": "Krishna Vamsi Dhulipalla's hobbies and passions are outlined, highlighting what energizes and sparks curiosity in him outside of professional engagements. Specific hobbies are listed, though only a teaser is provided in this chunk.",
+      "synthetic_queries": [
+        "What are Krishna Vamsi Dhulipalla's interests outside of work?",
+        "How does Krishna Vamsi Dhulipalla like to spend his free time?",
+        "What hobbies keep Krishna Vamsi Dhulipalla energized and curious?"
+      ]
+    }
+  },
+  {
+    "text": "- **🥾 Hiking & Outdoor Adventures** — Nothing clears my mind like a good hike.\n- **🎬 Marvel Fan for Life** — I’ve seen every Marvel movie, and I’d probably give my life for the MCU (Team Iron Man, always).\n- **🏏 Cricket Enthusiast** — Whether it's IPL or gully cricket, I'm all in.\n- **🚀 Space Exploration Buff** — Obsessed with rockets, Mars missions, and the future of interplanetary travel.\n- **🍳 Cooking Explorer** — I enjoy experimenting with recipes, especially fusion dishes.\n\n---\n🔹 Summary:\nKrishna Vamsi Dhulipalla's hobbies and interests include a range of activities from outdoor adventures like hiking, to fervent enthusiasm for Marvel movies, cricket, space exploration, and experimental cooking. These diverse pursuits suggest a personality with a wide array of passions.\n\n🔸 Related Questions:\n- What are Krishna Vamsi Dhulipalla's favorite leisure activities?\n- Is Krishna Vamsi Dhulipalla into sports and if so, which ones?\n- What are some unique hobbies that Krishna Vamsi Dhulipalla enjoys in his free time?",
+    "metadata": {
+      "source": "xPersonal_Interests_Cleaned.md",
+      "header": "## 🧗‍♂️ Hobbies & Passions",
+      "chunk_id": "xPersonal_Interests_Cleaned.md_#1_ffdeaa96",
+      "has_header": false,
+      "word_count": 84,
+      "summary": "Krishna Vamsi Dhulipalla's hobbies and interests include a range of activities from outdoor adventures like hiking, to fervent enthusiasm for Marvel movies, cricket, space exploration, and experimental cooking. These diverse pursuits suggest a personality with a wide array of passions.",
+      "synthetic_queries": [
+        "What are Krishna Vamsi Dhulipalla's favorite leisure activities?",
+        "Is Krishna Vamsi Dhulipalla into sports and if so, which ones?",
+        "What are some unique hobbies that Krishna Vamsi Dhulipalla enjoys in his free time?"
+      ]
+    }
+  },
+  {
+    "text": "- **🍳 Cooking Explorer** — I enjoy experimenting with recipes, especially fusion dishes.\n- **🕹️ Gaming & Reverse Engineering** — I love diving into game logic and breaking things down just to rebuild them better.\n- **🧑‍🤝‍🧑 Time with Friends** — Deep conversations, spontaneous trips, or chill evenings—friends keep me grounded.\n\n---\n🔹 Summary:\nKrishna Vamsi Dhulipalla's interests include experimenting with fusion cooking, reverse engineering in gaming, and spending quality time with friends. These hobbies highlight his creative, analytical, and social sides.\n\n🔸 Related Questions:\n- What are Krishna Vamsi Dhulipalla's favorite hobbies outside of work or studies?\n- Does Krishna Vamsi Dhulipalla have any interests that showcase his creative and analytical skills?\n- How does Krishna Vamsi Dhulipalla like to spend his leisure time with others?",
+    "metadata": {
+      "source": "xPersonal_Interests_Cleaned.md",
+      "header": "## 🧗‍♂️ Hobbies & Passions",
+      "chunk_id": "xPersonal_Interests_Cleaned.md_#2_a5ba21e9",
+      "has_header": false,
+      "word_count": 51,
+      "summary": "Krishna Vamsi Dhulipalla's interests include experimenting with fusion cooking, reverse engineering in gaming, and spending quality time with friends. These hobbies highlight his creative, analytical, and social sides.",
+      "synthetic_queries": [
+        "What are Krishna Vamsi Dhulipalla's favorite hobbies outside of work or studies?",
+        "Does Krishna Vamsi Dhulipalla have any interests that showcase his creative and analytical skills?",
+        "How does Krishna Vamsi Dhulipalla like to spend his leisure time with others?"
+      ]
+    }
+  },
+  {
+    "text": "## 🌍 Cultural Openness\n\n- **Origin**: I’m proudly from **India**, a land of festivals, diversity, and flavors.\n- **Festivals**: I enjoy not only Indian festivals like **Diwali**, **Holi**, and **Ganesh Chaturthi**, but also love embracing global celebrations like **Christmas**, **Hallowean**, and **Thanksgiving**.\n- **Cultural Curiosity**: Whether it’s learning about rituals, history, or cuisine, I enjoy exploring and respecting all cultural backgrounds.\n\n---\n\n---\n🔹 Summary:\nKrishna Vamsi Dhulipalla proudly hails from India, celebrating its diverse festivals, and is also open to embracing global cultural celebrations. He enjoys exploring and respecting all cultural backgrounds.\n\n🔸 Related Questions:\n- What are Krishna Vamsi Dhulipalla's cultural roots and how does he approach cultural diversity?\n- Which festivals, both Indian and global, does Krishna Vamsi Dhulipalla enjoy celebrating?\n- How does Krishna Vamsi Dhulipalla express his cultural curiosity and openness to different backgrounds?",
+    "metadata": {
+      "source": "xPersonal_Interests_Cleaned.md",
+      "header": "## 🧗‍♂️ Hobbies & Passions",
+      "chunk_id": "xPersonal_Interests_Cleaned.md_#4_d3124d92",
+      "has_header": true,
+      "word_count": 62,
+      "summary": "Krishna Vamsi Dhulipalla proudly hails from India, celebrating its diverse festivals, and is also open to embracing global cultural celebrations. He enjoys exploring and respecting all cultural backgrounds.",
+      "synthetic_queries": [
+        "What are Krishna Vamsi Dhulipalla's cultural roots and how does he approach cultural diversity?",
+        "Which festivals, both Indian and global, does Krishna Vamsi Dhulipalla enjoy celebrating?",
+        "How does Krishna Vamsi Dhulipalla express his cultural curiosity and openness to different backgrounds?"
+      ]
+    }
+  },
+  {
+    "text": "## 🍽️ Favorite Foods\n\nIf you want to bond with me over food, here’s what hits my soul:\n\n- **🥘 Mutton Biryani from Hyderabad** — The gold standard of comfort food.\n- **🍬 Indian Milk Sweets** — Especially Rasgulla and Kaju Katli.\n- **🍔 Classic Burger** — The messier, the better.\n- **🍛 Puri with Aloo Sabzi** — A perfect nostalgic breakfast.\n- **🍮 Gulab Jamun** — Always room for dessert.\n\n---\n\n---\n🔹 Summary:\nKrishna Vamsi Dhulipalla's favorite foods include a mix of traditional Indian dishes and international comfort food, highlighting Mutton Biryani from Hyderabad as his gold standard. His preferences also extend to various Indian sweets and nostalgic breakfast items.\n\n🔸 Related Questions:\n- What are Krishna Vamsi Dhulipalla's go-to comfort foods?\n- What kind of desserts does Krishna Vamsi Dhulipalla usually crave?\n- What traditional Indian dishes are among Krishna Vamsi Dhulipalla's favorite foods?",
+    "metadata": {
+      "source": "xPersonal_Interests_Cleaned.md",
+      "header": "## 🧗‍♂️ Hobbies & Passions",
+      "chunk_id": "xPersonal_Interests_Cleaned.md_#5_a7b5c5a7",
+      "has_header": true,
+      "word_count": 72,
+      "summary": "Krishna Vamsi Dhulipalla's favorite foods include a mix of traditional Indian dishes and international comfort food, highlighting Mutton Biryani from Hyderabad as his gold standard. His preferences also extend to various Indian sweets and nostalgic breakfast items.",
+      "synthetic_queries": [
+        "What are Krishna Vamsi Dhulipalla's go-to comfort foods?",
+        "What kind of desserts does Krishna Vamsi Dhulipalla usually crave?",
+        "What traditional Indian dishes are among Krishna Vamsi Dhulipalla's favorite foods?"
+      ]
+    }
+  },
+  {
+    "text": "## 🎉 Fun Facts\n\n- I sometimes pause Marvel movies just to admire the visuals.\n- I've explored how video game stories are built and love experimenting with alternate paths.\n- I can tell if biryani is authentic based on the layering of the rice.\n- I once helped organize a cricket tournament on a week’s notice and we pulled it off with 12 teams!\n- I enjoy solving puzzles, even if they're frustrating sometimes.\n\n---\n\nThis side of me helps fuel the creativity, discipline, and joy I bring into my projects. Let’s connect over ideas _and_ biryani!\n\n---\n🔹 Summary:\nThis chunk highlights Krishna Vamsi Dhulipalla's personal interests and hobbies outside of work, showcasing his creative, disciplined, and joyful personality. These aspects are noted to positively influence his approach to projects.\n\n🔸 Related Questions:\n- What are Krishna Vamsi Dhulipalla's hobbies and interests outside of professional work?\n- How does Krishna Vamsi Dhulipalla's personal life influence his approach to projects and creativity?\n- Can you share some fun facts or personal anecdotes about Krishna Vamsi Dhulipalla?",
+    "metadata": {
+      "source": "xPersonal_Interests_Cleaned.md",
+      "header": "## 🧗‍♂️ Hobbies & Passions",
+      "chunk_id": "xPersonal_Interests_Cleaned.md_#6_0f83dbe9",
+      "has_header": true,
+      "word_count": 98,
+      "summary": "This chunk highlights Krishna Vamsi Dhulipalla's personal interests and hobbies outside of work, showcasing his creative, disciplined, and joyful personality. These aspects are noted to positively influence his approach to projects.",
+      "synthetic_queries": [
+        "What are Krishna Vamsi Dhulipalla's hobbies and interests outside of professional work?",
+        "How does Krishna Vamsi Dhulipalla's personal life influence his approach to projects and creativity?",
+        "Can you share some fun facts or personal anecdotes about Krishna Vamsi Dhulipalla?"
       ]
     }
   }
