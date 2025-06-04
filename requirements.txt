@@ -1,6 +1,6 @@
 fastapi
 uvicorn
-gradio==5.31.0
+gradio==5.6.0
 rich
 numpy
 python-dotenv
@@ -15,3 +15,4 @@ faiss-cpu
 transformers
 scikit-learn
 rank-bm25
+pydantic==2.10.6
