@@ -34,7 +34,7 @@ if not api_key:
     raise RuntimeError("🚨 NVIDIA_API_KEY not found in environment! Please add it in Hugging Face Secrets.")
 
 # Constants
-FAISS_PATH = "faiss_store/v30_600_150"
+FAISS_PATH = "faiss_store/v61_600_150"
 CHUNKS_PATH = "all_chunks.json"
 
 if not Path(FAISS_PATH).exists():
