@@ -19,7 +19,7 @@ from langchain_core.output_parsers import StrOutputParser
 from langchain_core.prompts import ChatPromptTemplate
 from langchain.schema.runnable.passthrough import RunnableAssign
 from langchain_huggingface import HuggingFaceEmbeddings
-from langchain.vectorstores import FAISS
+from langchain_community.vectorstores import FAISS
 from langchain_community.retrievers import BM25Retriever
 from langchain_openai import ChatOpenAI
 from langchain.output_parsers import PydanticOutputParser
@@ -105,7 +105,7 @@ knowledge_base = KnowledgeBase()
 # repharser_llm = ChatNVIDIA(model="mistralai/mistral-7b-instruct-v0.3") | StrOutputParser()
 repharser_llm = ChatNVIDIA(model="microsoft/phi-3-mini-4k-instruct") | StrOutputParser()
 instruct_llm = ChatNVIDIA(model="mistralai/mixtral-8x22b-instruct-v0.1") | StrOutputParser()
-relevance_llm = ChatNVIDIA(model="meta/llama3-70b-instruct") | StrOutputParser()
+relevance_llm = ChatNVIDIA(model="nvidia/llama-3.1-nemotron-70b-instruct") | StrOutputParser()
 answer_llm = ChatOpenAI(
     model="gpt-4o",              
     temperature=0.3,             
@@ -116,16 +116,17 @@ answer_llm = ChatOpenAI(
 
 # Prompts
 repharser_prompt = ChatPromptTemplate.from_template(
-    "You are a smart retrieval assistant. Rewrite the user's question into 2 different variants optimized for hybrid retrieval systems (BM25 + dense vectors).\n\n"
-    "Your rewrites should:\n"
-    "- Vary tone and phrasing\n"
-    "- Expand or clarify intent if implicit\n"
-    "- Include helpful keywords, synonyms, or topic-specific terms if possible\n"
-    "- Be semantically close but diverse enough to match different chunks in the knowledge base\n\n"
+    "You are a smart retrieval assistant helping a search engine understand user intent more precisely.\n\n"
+    "Given a user question, generate **1 diverse rewrite** that is semantically equivalent but phrased differently. \n"
+    "The rewrite should be optimized for **retrieval from a hybrid system** using BM25 (keyword match) and dense vector embeddings.\n\n"
+    "Guidelines:\n"
+    "- Expand abbreviations or implied intent when useful\n"
+    "- Add relevant technical terms, tools, frameworks, or synonyms (e.g., 'LLM', 'pipeline', 'project')\n"
+    "- Rephrase using different sentence structure or tone\n"
+    "- Use field-specific vocabulary (e.g., data science, ML, software, research) if it fits the query\n"
+    "- Prioritize clarity and retrievability over stylistic variation\n\n"
     "Original Question:\n{query}\n\n"
-    "Rewrites:\n"
-    "1.\n"
-    "2."
+    "Rewrite:\n1."
 )
 
 relevance_prompt = ChatPromptTemplate.from_template("""
@@ -240,7 +241,7 @@ parser_prompt = ChatPromptTemplate.from_template(
 # Helper Functions
 def parse_rewrites(raw_response: str) -> list[str]:
     lines = raw_response.strip().split("\n")
-    return [line.strip("0123456789. ").strip() for line in lines if line.strip()][:2]
+    return [line.strip("0123456789. ").strip() for line in lines if line.strip()][:1]
 
 def hybrid_retrieve(inputs, exclude_terms=None):
     bm25_retriever = inputs["bm25_retriever"]
@@ -393,7 +394,7 @@ select_and_prompt = RunnableLambda(lambda x:
 answer_chain = (
     prepare_answer_inputs
     | select_and_prompt
-    | answer_llm
+    | relevance_llm
 )
 
 def RExtract(pydantic_class: Type[BaseModel], llm, prompt):
@@ -463,19 +464,17 @@ def chat_interface(message, history):
         "query": message,
         "all_queries": [message],
         "all_texts": all_chunks,
-        "k_per_query": 10,
+        "k_per_query": 8,
         "alpha": 0.5,
         "vectorstore": vectorstore,
         "bm25_retriever": bm25_retriever,
     }
     full_response = ""
-    collected = None
 
     # Stream the response to user
     for chunk in full_pipeline.stream(inputs):
         if isinstance(chunk, dict) and "answer" in chunk:
             full_response += chunk["answer"]
-            collected = chunk
             yield full_response
         elif isinstance(chunk, str):
             full_response += chunk
