@@ -112,8 +112,8 @@ python app.py
 | Purpose            | Model Name               | Provider |
 | ------------------ | ------------------------ | -------- |
 | Query Rewriting    | `phi-3-mini-4k-instruct` | NVIDIA   |
-| Scope Classifier   | `llama-3-70b-instruct`   | NVIDIA   |
-| Answer Generator   | `gpt-4o`                 | OpenAI   |
+| Scope Classifier   | `mistral-7b-instruct-v0.3`   | NVIDIA   |
+| Answer Generator   | `llama-3.1-nemotron-70b-instruct` | NVIDIA   |
 | Fallback Humor LLM | `mixtral-8x22b-instruct` | NVIDIA   |
 
 ---
