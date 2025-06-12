@@ -377,7 +377,8 @@ select_and_prompt = RunnableLambda(lambda x:
 answer_chain = (
     prepare_answer_inputs
     | select_and_prompt
-    | relevance_llm
+    #| relevance_llm
+    | answer_llm
 )
 
 def RExtract(pydantic_class: Type[BaseModel], llm, prompt):
@@ -472,46 +473,55 @@ def chat_interface(message, history, request: gr.Request):
     if full_response:
         update_knowledge_base(session_id, message, full_response) 
 
-with gr.Blocks(css="""
-     html, body, .gradio-container {
-        height: 100%;
-        margin: 0;
-        padding: 0;
-    }
-    .gradio-container {
-        width: 90%;
-        max-width: 1000px;
-        margin: 0 auto;
-        padding: 1rem;
-    }
-    .chatbox-container {
-        display: flex;
-        flex-direction: column;
-        height: 95%;
-        overflow-y: auto;
-    }
-    .chatbot {
-        flex: 1;
-        overflow-y: auto;
-        min-height: 500px;
-    }
-    .textbox {
-        margin-top: 1rem;
-    }
-    #component-523 {
-        height: 98%;
-    }
-""") as demo:
-    with gr.Column(elem_classes="chatbox-container"):
-        gr.Markdown("## 💬 Ask Krishna's AI Assistant")
-        gr.Markdown("💡 Ask anything about Krishna Vamsi Dhulipalla")
-        chatbot = gr.Chatbot(elem_classes="chatbot")
-        textbox = gr.Textbox(placeholder="Ask a question about Krishna...", elem_classes="textbox")
-
 demo = gr.ChatInterface(
     fn=chat_interface,
     title="💬 Ask Krishna's AI Assistant",
-    description="💡 Ask anything about Krishna Vamsi Dhulipalla",
+    css= """
+    html, body {
+        margin: 0;
+        padding: 0;
+        overflow-x: hidden; /* prevent horizontal scrollbars on body */
+    }
+    .column:nth-child(2) {
+        max-width: 800px;
+        margin: 0 auto;
+        width: 100%;
+    }
+    .float {
+        display: none;
+    }
+    .bubble-wrap {
+        background: #0f0f11 !important;
+    }
+    .gr-group {
+        border-radius: 2rem !important;
+    }
+    .flex {
+        border: none !important;
+    }
+    footer {
+        display: none !important;
+    }
+    ::-webkit-scrollbar {
+    width: 1px;
+    height: 1px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.05); /* very light thumb */
+    border-radius: 10px;
+}
+
+/* Scrollbar - Firefox */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255,255,255,0.05) transparent;
+}
+    """,
     examples=[
         "Give me an overview of Krishna Vamsi Dhulipalla's work experience across different roles?",
         "What programming languages and tools does Krishna use for data science?",
