@@ -8,9 +8,9 @@ import re
 import hashlib
 import gradio as gr
 from functools import partial
-import threading
 from collections import defaultdict
 from pathlib import Path
+from threading import Lock
 from typing import List, Dict, Any, Optional, List, Literal, Type
 import numpy as np
 from dotenv import load_dotenv
@@ -48,11 +48,8 @@ if not Path(CHUNKS_PATH).exists():
     raise FileNotFoundError(f"Chunks file not found at {CHUNKS_PATH}")
 
 KRISHNA_BIO = """Krishna Vamsi Dhulipalla completed masters in Computer Science at Virginia Tech, awarded degree in december 2024, with over 3 years of experience across data engineering, machine learning research, and real-time analytics. He specializes in building scalable data systems and intelligent LLM-powered applications, with strong expertise in Python, PyTorch, Hugging Face Transformers, and end-to-end ML pipelines.
-
 He has led projects involving retrieval-augmented generation (RAG), feature selection for genomic classification, fine-tuning domain-specific LLMs (e.g., DNABERT, HyenaDNA), and real-time forecasting systems using Kafka, Spark, and Airflow. His cloud proficiency spans AWS (S3, SageMaker, ECS, CloudWatch), GCP (BigQuery, Cloud Composer), and DevOps tools like Docker, Kubernetes, and MLflow.
-
 Krishna’s research has focused on genomic sequence modeling, transformer optimization, MLOps automation, and cross-domain generalization. He has published work in bioinformatics and machine learning applications for circadian transcription prediction and transcription factor binding.
-
 He holds certifications in NVIDIA’s RAG Agents with LLMs, Google Cloud Data Engineering, and AWS ML Specialization. Krishna is passionate about scalable LLM infrastructure, data-centric AI, and domain-adaptive ML solutions — combining deep technical expertise with real-world engineering impact.
 \n\n
 Beside carrer, Krishna loves hiking, cricket, and exploring new technologies. He is big fan of Marvel Movies and Space exploration.
@@ -103,12 +100,15 @@ class KnowledgeBase(BaseModel):
     tone: Optional[Literal['formal', 'casual', 'playful', 'direct', 'uncertain']] = Field(None, description="Inferred tone or attitude from the user based on recent input")
 
 # Initialize the knowledge base
-knowledge_base = KnowledgeBase()
+# knowledge_base = KnowledgeBase()
+user_kbs = {}
+kb_lock = Lock()
 
 # LLMs
 # repharser_llm = ChatNVIDIA(model="mistralai/mistral-7b-instruct-v0.3") | StrOutputParser()
 repharser_llm = ChatNVIDIA(model="microsoft/phi-3-mini-4k-instruct") | StrOutputParser()
-instruct_llm = ChatNVIDIA(model="mistralai/mixtral-8x22b-instruct-v0.1") | StrOutputParser()
+# instruct_llm = ChatNVIDIA(model="mistralai/mixtral-8x22b-instruct-v0.1") | StrOutputParser()
+instruct_llm = ChatNVIDIA(model="mistralai/mistral-7b-instruct-v0.3") | StrOutputParser()
 relevance_llm = ChatNVIDIA(model="nvidia/llama-3.1-nemotron-70b-instruct") | StrOutputParser()
 answer_llm = ChatOpenAI(
     model="gpt-4o",              
@@ -135,68 +135,47 @@ repharser_prompt = ChatPromptTemplate.from_template(
 
 relevance_prompt = ChatPromptTemplate.from_template("""
 You are Krishna's personal AI assistant classifier.
-
 Your job is to decide whether a user's question can be meaningfully answered using the provided document chunks **or** relevant user memory.
-
 Return a JSON object:
 - "is_out_of_scope": true if the chunks and memory cannot help answer the question
 - "justification": a short sentence explaining your decision
-
 ---
-
 Special instructions:
-
 ✅ Treat short or vague queries like "yes", "tell me more", "go on", or "give me" as follow-up prompts. 
 Assume the user is asking for **continuation** of the previous assistant response or follow-ups stored in memory. Consider that context as *in-scope*.
-
 ✅ Also consider if the user's question can be answered using stored memory (like their name, company, interests, or last follow-up topics).
-
 Do NOT classify these types of queries as "out of scope".
-
 Only mark as out-of-scope if the user asks something truly unrelated to both:
 - Krishna's background
 - Stored user memory
-
 ---
-
 Examples:
-
 Q: "Tell me more"
 Chunks: previously retrieved info about Krishna's ML tools  
 Memory: User previously asked about PyTorch and ML pipelines
-
 Output:
 {{
   "is_out_of_scope": false,
   "justification": "User is requesting a follow-up to a valid context, based on prior conversation"
 }}
-
 Q: "What is Krishna's Hogwarts house?"
 Chunks: None about fiction  
 Memory: User hasn't mentioned fiction/fantasy
-
 Output:
 {{
   "is_out_of_scope": true,
   "justification": "The question is unrelated to Krishna or user context"
 }}
-
 ---
-
 Now your turn.
-
 User Question:
 "{query}"
-
 Chunks:
 {contents}
-
 User Memory (Knowledge Base):
 {memory}
-
 Return ONLY the JSON object.
 """)
-
 
 answer_prompt_relevant = ChatPromptTemplate.from_template(
     "You are Krishna's personal AI assistant. Your job is to answer the user’s question clearly, thoroughly, and professionally using the provided context.\n"
@@ -367,7 +346,7 @@ hybrid_chain = generate_rewrites_chain | retrieve_chain
 extract_validation_inputs = RunnableLambda(lambda x: {
     "query": x["query"],
     "contents": [c["content"] for c in x["chunks"]],
-    "memory": knowledge_base.model_dump_json() 
+    "memory": x["memory"]  
 })
 
 validation_chain = (
@@ -388,7 +367,7 @@ def prepare_answer_inputs(x: Dict) -> Dict:
         "profile": KRISHNA_BIO,
         "context": context,
         "use_fallback": x["validation"]["is_out_of_scope"],
-        "memory": knowledge_base.model_dump_json() 
+        "memory": x["memory"] 
     }
 
 select_and_prompt = RunnableLambda(lambda x: 
@@ -430,63 +409,68 @@ knowledge_extractor = RExtract(
     prompt=parser_prompt        
 )
 
-def update_knowledge_base(user_input: str, assistant_response: str):
-    """Update the knowledge base asynchronously after response is sent"""
-    global knowledge_base
-    
+def get_knowledge_base(session_id: str) -> KnowledgeBase:
+    """Get or create a knowledge base for a session"""
+    with kb_lock:
+        if session_id not in user_kbs:
+            user_kbs[session_id] = KnowledgeBase()
+        return user_kbs[session_id]
+
+def update_knowledge_base(session_id: str, user_input: str, assistant_response: str):
+    """Update the knowledge base for a specific session"""
     try:
-        # print("\n" + "="*50)
-        # print("🔥 STARTING KNOWLEDGE BASE UPDATE")
-        # print(f"User Input: {user_input}")
-        # print(f"Assistant Response: {assistant_response[:100]}...")
-        
-        # Prepare input for knowledge extractor
+        kb = get_knowledge_base(session_id)
         kb_input = {
-            "know_base": knowledge_base.model_dump_json(),  # Fixed deprecation
+            "know_base": kb.model_dump_json(),
             "input": user_input,
             "output": assistant_response
         }
-
-        #print("🧠 Calling knowledge extractor...")
         new_kb = knowledge_extractor.invoke(kb_input)
-        knowledge_base = new_kb  # Update global knowledge base
-
-        # Detailed debug output
-        print("✅ KNOWLEDGE BASE UPDATED SUCCESSFULLY")
-        
+        with kb_lock:
+            user_kbs[session_id] = new_kb
+        print(f"✅ KNOWLEDGE BASE UPDATED FOR SESSION {session_id}")
     except Exception as e:
         print(f"❌ KNOWLEDGE BASE UPDATE FAILED: {str(e)}")
-        import traceback
-        traceback.print_exc()
 
-# Full Pipeline
-full_pipeline = hybrid_chain | RunnableAssign({"validation": validation_chain}) | answer_chain
+# New chain to preserve memory through the pipeline
+preserve_memory_chain = RunnableLambda(lambda x: {
+    **hybrid_chain.invoke(x),  
+    "memory": x["memory"]     
+})
 
+# Full pipeline
+full_pipeline = (
+    preserve_memory_chain 
+    | RunnableAssign({"validation": validation_chain}) 
+    | answer_chain
+)
 
-def chat_interface(message, history):
+def chat_interface(message, history, request: gr.Request):
+    """Modified chat interface with session support"""
+    session_id = request.session_hash
+    kb = get_knowledge_base(session_id)
+    
+    # Initialize inputs with session-specific KB
     inputs = {
         "query": message,
         "all_queries": [message],
         "all_texts": all_chunks,
-        "k_per_query": 8,
+        "k_per_query": 7,
         "alpha": 0.5,
         "vectorstore": vectorstore,
         "bm25_retriever": bm25_retriever,
+        "memory": kb.model_dump_json()
     }
+    
     full_response = ""
-
-    # Stream the response to user
     for chunk in full_pipeline.stream(inputs):
-        if isinstance(chunk, dict) and "answer" in chunk:
-            full_response += chunk["answer"]
-            yield full_response
-        elif isinstance(chunk, str):
+        if isinstance(chunk, str):
             full_response += chunk
             yield full_response
-
-    # After streaming completes, update KB in background thread
+    
+    # Update KB after response
     if full_response:
-        update_knowledge_base(message, full_response)  
+        update_knowledge_base(session_id, message, full_response) 
 
 with gr.Blocks(css="""
      html, body, .gradio-container {
@@ -500,20 +484,17 @@ with gr.Blocks(css="""
         margin: 0 auto;
         padding: 1rem;
     }
-
     .chatbox-container {
         display: flex;
         flex-direction: column;
         height: 95%;
         overflow-y: auto;
     }
-
     .chatbot {
         flex: 1;
         overflow-y: auto;
         min-height: 500px;
     }
-
     .textbox {
         margin-top: 1rem;
     }
@@ -532,10 +513,15 @@ demo = gr.ChatInterface(
     title="💬 Ask Krishna's AI Assistant",
     description="💡 Ask anything about Krishna Vamsi Dhulipalla",
     examples=[
-        "Give me an overview of Krishna Vamsi Dhulipalla’s work experience across different roles?",
+        "Give me an overview of Krishna Vamsi Dhulipalla's work experience across different roles?",
         "What programming languages and tools does Krishna use for data science?",
         "Can this chatbot tell me what Krishna's chatbot architecture looks like and how it works?"
-    ],
+    ]
 )
-
-demo.launch(max_threads=4, prevent_thread_lock=True, debug=True)
+# Launch with request support
+demo.queue()
+demo.launch(
+    max_threads=4,
+    prevent_thread_lock=True,
+    debug=True
+)
