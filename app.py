@@ -38,7 +38,7 @@ if not api_key:
     raise RuntimeError("🚨 NVIDIA_API_KEY not found in environment! Please add it in Hugging Face Secrets.")
 
 # Constants
-FAISS_PATH = "faiss_store/v61_600_150"
+FAISS_PATH = "faiss_store/v64_600-150"
 CHUNKS_PATH = "all_chunks.json"
 
 if not Path(FAISS_PATH).exists():
@@ -99,6 +99,14 @@ class KnowledgeBase(BaseModel):
     last_followups: List[str] = Field(default_factory=list, description="List of follow-up suggestions from the last assistant response")
     tone: Optional[Literal['formal', 'casual', 'playful', 'direct', 'uncertain']] = Field(None, description="Inferred tone or attitude from the user based on recent input")
 
+    def dump_truncated(self, max_len: int = 500):
+        memory = self.dict()
+        if len(memory["last_input"]) > max_len:
+            memory["last_input"] = memory["last_input"][:max_len] + "..."
+        if len(memory["last_output"]) > max_len:
+            memory["last_output"] = memory["last_output"][:max_len] + "..."
+        return memory
+
 # Initialize the knowledge base
 # knowledge_base = KnowledgeBase()
 user_kbs = {}
@@ -106,9 +114,9 @@ kb_lock = Lock()
 
 # LLMs
 # repharser_llm = ChatNVIDIA(model="mistralai/mistral-7b-instruct-v0.3") | StrOutputParser()
-repharser_llm = ChatNVIDIA(model="microsoft/phi-3-mini-4k-instruct") | StrOutputParser()
-# instruct_llm = ChatNVIDIA(model="mistralai/mixtral-8x22b-instruct-v0.1") | StrOutputParser()
-instruct_llm = ChatNVIDIA(model="mistralai/mistral-7b-instruct-v0.3") | StrOutputParser()
+#repharser_llm = ChatNVIDIA(model="microsoft/phi-3-mini-4k-instruct") | StrOutputParser()
+instruct_llm = ChatNVIDIA(model="mistralai/mixtral-8x22b-instruct-v0.1") | StrOutputParser()
+rephraser_llm = ChatNVIDIA(model="mistralai/mistral-7b-instruct-v0.3") | StrOutputParser()
 relevance_llm = ChatNVIDIA(model="nvidia/llama-3.1-nemotron-70b-instruct") | StrOutputParser()
 answer_llm = ChatOpenAI(
     model="gpt-4o",              
@@ -121,59 +129,92 @@ answer_llm = ChatOpenAI(
 # Prompts
 repharser_prompt = ChatPromptTemplate.from_template(
     "You are a smart retrieval assistant helping a search engine understand user intent more precisely.\n\n"
-    "Given a user question, generate **1 diverse rewrite** that is semantically equivalent but phrased differently. \n"
-    "The rewrite should be optimized for **retrieval from a hybrid system** using BM25 (keyword match) and dense vector embeddings.\n\n"
+    "Your job is to rewrite the user's message into a clearer, more descriptive query for information retrieval.\n\n"
+    "Context:\n"
+    "- The user may sometimes respond with short or vague messages like 'B', 'yes', or 'tell me more'.\n"
+    "- In such cases, refer to the user's previous assistant message or `last_followups` list to understand the actual intent.\n"
+    "- Expand their reply based on that context to create a full meaningful query.\n\n"
+    "User Query:\n{query}\n\n"
+    "Last Follow-up Suggestions:\n{memory}\n\n"
     "Guidelines:\n"
-    "- Expand abbreviations or implied intent when useful\n"
-    "- Add relevant technical terms, tools, frameworks, or synonyms (e.g., 'LLM', 'pipeline', 'project')\n"
-    "- Rephrase using different sentence structure or tone\n"
-    "- Use field-specific vocabulary (e.g., data science, ML, software, research) if it fits the query\n"
+    "- Expand abbreviations or implied selections\n"
+    "- Reconstruct full intent if the query is a reply to an earlier assistant suggestion\n"
+    "- Rephrase using domain-specific terms (e.g., ML, infrastructure, research, deployment)\n"
+    "- Focus on maximizing retrievability via keyword-rich formulation\n\n"
     "- Prioritize clarity and retrievability over stylistic variation\n\n"
-    "Original Question:\n{query}\n\n"
-    "Rewrite:\n1."
+    "Expanded Rewrite:\n1."
 )
 
 relevance_prompt = ChatPromptTemplate.from_template("""
-You are Krishna's personal AI assistant classifier.
-Your job is to decide whether a user's question can be meaningfully answered using the provided document chunks **or** relevant user memory.
+You are Krishna's personal AI assistant classifier and chunk reranker.
+
+Your job has two goals:
+1. Classify whether a user's question can be meaningfully answered using the retrieved document chunks or user memory.
+2. If it can, rerank the chunks from most to least relevant to the question.
+
 Return a JSON object:
-- "is_out_of_scope": true if the chunks and memory cannot help answer the question
-- "justification": a short sentence explaining your decision
+- "is_out_of_scope": true if the **rewritten query**, original query, and memory offer no path to answer the user’s intent
+- "justification": short explanation of your decision
+- "reranked_chunks": a list of chunk indices ordered by decreasing relevance (only if in-scope)
+
 ---
-Special instructions:
-✅ Treat short or vague queries like "yes", "tell me more", "go on", or "give me" as follow-up prompts. 
-Assume the user is asking for **continuation** of the previous assistant response or follow-ups stored in memory. Consider that context as *in-scope*.
-✅ Also consider if the user's question can be answered using stored memory (like their name, company, interests, or last follow-up topics).
-Do NOT classify these types of queries as "out of scope".
-Only mark as out-of-scope if the user asks something truly unrelated to both:
-- Krishna's background
-- Stored user memory
+
+Special Instructions:
+
+✅ If the user input is vague, short, or a follow-up (e.g., "yes", "A", "B", "go on", "sure"), check:
+• If the assistant previously showed suggestions or follow-up questions (in memory → `last_followups`)
+• If the rewritten query adds meaningful context (e.g., "B" → "Tell me more about Data-Centric AI")
+
+If **any of the above** resolve the intent, treat it as in-scope.
+
+❌ Mark as out-of-scope only if:
+- The query (even after rewriting) has no clear relevance to Krishna's profile or user memory
+- There are no helpful document chunks or memory fields to answer it
+
+🚫 Do not infer meaning through metaphor or vague similarity — only use concrete, literal context.
+
 ---
+
 Examples:
-Q: "Tell me more"
-Chunks: previously retrieved info about Krishna's ML tools  
-Memory: User previously asked about PyTorch and ML pipelines
+
+Q: "B"
+Rewritten Query: "Tell me more about Data-Centric AI for Real-Time Analytics"
+last_followups: [ ... contains that option ... ]
+Memory: user showed interest in analytics pipelines
+
 Output:
 {{
   "is_out_of_scope": false,
-  "justification": "User is requesting a follow-up to a valid context, based on prior conversation"
+  "justification": "User is selecting a previous assistant suggestion",
+  "reranked_chunks": [0, 2, 1]
 }}
+
 Q: "What is Krishna's Hogwarts house?"
-Chunks: None about fiction  
-Memory: User hasn't mentioned fiction/fantasy
+Chunks: none on fiction
+Memory: no fantasy topics
+
 Output:
 {{
   "is_out_of_scope": true,
-  "justification": "The question is unrelated to Krishna or user context"
+  "justification": "Fictional topic unrelated to Krishna or conversation"
 }}
+
 ---
+
 Now your turn.
-User Question:
+
+Original User Question:
 "{query}"
+
+Rewritten Query (if available):
+"{rewritten_query}"
+
 Chunks:
 {contents}
+
 User Memory (Knowledge Base):
 {memory}
+
 Return ONLY the JSON object.
 """)
 
@@ -325,16 +366,18 @@ def safe_json_parse(s: str) -> Dict:
 # Rewrite generation
 rephraser_chain = (
     repharser_prompt
-    | repharser_llm
+    | rephraser_llm
     | RunnableLambda(parse_rewrites)
 )
 
 generate_rewrites_chain = (
     RunnableAssign({
-        "rewrites": lambda x: rephraser_chain.invoke({"query": x["query"]})
+        "rewrites": lambda x: rephraser_chain.invoke({"query": x["query"],
+                                                       "memory": x["memory"]})
     })
     | RunnableAssign({
-        "all_queries": lambda x: [x["query"]] + x["rewrites"]
+        "all_queries": lambda x: [x["query"]] + x["rewrites"],
+        "rewritten_query": lambda x: x["rewrites"][0] if x["rewrites"] else x["query"]
     })
 )
 
@@ -345,8 +388,11 @@ hybrid_chain = generate_rewrites_chain | retrieve_chain
 # Validation
 extract_validation_inputs = RunnableLambda(lambda x: {
     "query": x["query"],
-    "contents": [c["content"] for c in x["chunks"]],
-    "memory": x["memory"]  
+    "rewritten_query": x.get("rewritten_query", x["query"]),
+    "contents": "\n".join(
+        f"Chunk #{i}: {chunk['content']}" for i, chunk in enumerate(x["chunks"])
+    ),
+    "memory": json.dumps(x["memory"])
 })
 
 validation_chain = (
@@ -432,6 +478,19 @@ def update_knowledge_base(session_id: str, user_input: str, assistant_response: 
         print(f"✅ KNOWLEDGE BASE UPDATED FOR SESSION {session_id}")
     except Exception as e:
         print(f"❌ KNOWLEDGE BASE UPDATE FAILED: {str(e)}")
+        
+def reorder_chunks_if_needed(inputs):
+    validation = inputs.get("validation", {})
+    chunks = inputs.get("chunks", [])
+
+    if not validation.get("is_out_of_scope", True) and "reranked_chunks" in validation:
+        try:
+            ranked_indices = validation["reranked_chunks"]
+            inputs["chunks"] = [chunks[i] for i in ranked_indices if i < len(chunks)]
+        except Exception as e:
+            print("⚠️ Failed to reorder chunks:", e)
+
+    return inputs
 
 # New chain to preserve memory through the pipeline
 preserve_memory_chain = RunnableLambda(lambda x: {
@@ -443,6 +502,8 @@ preserve_memory_chain = RunnableLambda(lambda x: {
 full_pipeline = (
     preserve_memory_chain 
     | RunnableAssign({"validation": validation_chain}) 
+    | RunnableLambda(reorder_chunks_if_needed)
+    #| PPrint()
     | answer_chain
 )
 
@@ -460,7 +521,7 @@ def chat_interface(message, history, request: gr.Request):
         "alpha": 0.5,
         "vectorstore": vectorstore,
         "bm25_retriever": bm25_retriever,
-        "memory": kb.model_dump_json()
+        "memory": json.dumps(kb.dump_truncated())
     }
     
     full_response = ""
@@ -506,6 +567,11 @@ demo = gr.ChatInterface(
     width: 1px;
     height: 1px;
 }
+ .gradio-container{
+        max-width: 1000px !important;
+        margin: 0 auto;
+        width:100%;
+    }
 
 ::-webkit-scrollbar-track {
     background: transparent;
