@@ -12,7 +12,7 @@ A memory-grounded, retrieval-augmented AI assistant built with LangChain, FAISS,
 - 🤖 **LLM-Powered Pipelines**: Uses OpenAI GPT-4o and NVIDIA NIMs (e.g. LLaMA-3, Mixtral) for rewriting, validation, and final answer generation
 - 🧠 **Memory Module**: Stores user preferences, recent topics, and inferred tone using a structured `KnowledgeBase` schema
 - 🛠️ **Custom Architecture**:
-  - Query → Rewriting → Hybrid Retriever → Scope Validator → LLM Answer
+  - Query → Rewriting → Hybrid Retriever → Scope Validator → Re-Ranker → LLM Answer
   - Fallback humor model (Mixtral) for out-of-scope queries
 - 🧩 **Document Grounding**: Powered by Krishna’s actual markdown files like `profile.md`, `goals.md`, and `chatbot_architecture.md`
 - 📊 **Enriched Vector Store**: Chunks include LLM-generated summaries and synthetic queries for better search performance
@@ -25,13 +25,13 @@ A memory-grounded, retrieval-augmented AI assistant built with LangChain, FAISS,
 ```text
 User Query
    ↓
-[LLM1] → Rephrase into 3 diverse subqueries
+[LLM1] → Rephrase into 3 diverse subqueries and handle follow up question
    ↓
 Hybrid Retrieval (BM25 + FAISS)
    ↓
-[LLM2] → Classify: In-scope or Out-of-scope
+[LLM2] → Classify: In-scope or Out-of-scope And Re-Ranking
    ↓
-   ├─ In-scope → Top-k Chunks → GPT-4o
+   ├─ In-scope → Re-Ranking Chunks → Top-k Chunks → GPT-4o
    └─ Out-of-scope → Mixtral (funny fallback)
    ↓
 Final Answer + Async Memory Update
@@ -72,7 +72,7 @@ All answers are grounded in curated markdown files:
 
 1. **User input** is rewritten into subqueries (LLM1)
 2. **Retriever** fetches relevant chunks using BM25 and FAISS
-3. **Classifier LLM** decides if results are relevant to Krishna
+3. **Classifier LLM** decides if results are relevant to Krishna and re-ranks all the chunks
 4. **GPT-4o** generates final answer using top-k chunks
 5. **Memory is updated** asynchronously with every turn
 
