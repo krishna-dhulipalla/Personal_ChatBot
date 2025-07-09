@@ -83,7 +83,7 @@ All answers are grounded in curated markdown files:
 - What programming languages does Krishna know?
 - Tell me about Krishna’s chatbot architecture
 - Can this chatbot explain Krishna's work at Virginia Tech?
-- What tools has Krishna used for data engineering?
+- What are the krishna's future plan?
 
 ---
 
