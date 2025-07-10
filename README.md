@@ -127,4 +127,4 @@ python app.py
 
 ## 📜 License
 
-MIT License © Krishna Vamsi Dhulipalla
+Apache License © Krishna Vamsi Dhulipalla
